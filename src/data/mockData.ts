@@ -54,6 +54,10 @@ export interface VocationalProfile {
   carrerasRecomendadasPorFortalezas: string[];
 }
 
+
+
+
+
 // Mock Students Data
 export const students: Student[] = [
   {
