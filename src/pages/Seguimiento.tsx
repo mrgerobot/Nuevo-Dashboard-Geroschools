@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { DashboardLayout } from "@/components/layout/DashboardLayout";
 import { KPICard } from "@/components/ui/KPICard";
@@ -7,21 +7,44 @@ import { CoachInteractionChart } from "@/components/charts/CoachInteractionChart
 import { Button } from "@/components/ui/button";
 import { trackingRecords, getCoachInteractionStats } from "@/data/mockData";
 import { CheckCircle, Users, AlertCircle, Eye, ExternalLink, ChevronLeft, ChevronRight } from "lucide-react";
+import { useFilters } from "@/contexts/FiltersContext";
 
 const ITEMS_PER_PAGE = 8;
 
 export default function Seguimiento() {
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
-  
-  const coachStats = getCoachInteractionStats();
-  const finalizados = trackingRecords.filter(t => t.estado === "Finalizado").length;
-  const conInteraccion = trackingRecords.filter(t => t.interaccionCoach !== "Sin comenzar").length;
-  const sinComenzar = trackingRecords.filter(t => t.estado === "Sin comenzar").length;
+  const { appliedFilters } = useFilters();
 
-  const totalPages = Math.ceil(trackingRecords.length / ITEMS_PER_PAGE);
+  useEffect(() => {setCurrentPage(1);}, [appliedFilters]);
+  
+  const matchesFilters = (s: (typeof trackingRecords)[number]) => {
+  
+    if (appliedFilters.semestre) {
+      if (String(s.semestre) !== appliedFilters.semestre) return false;
+    }
+  
+    if (appliedFilters.estado) {
+      if (s.estado !== appliedFilters.estado) return false;
+    }
+  
+    if (appliedFilters.interaccion) {
+      if (s.interaccionCoach !== appliedFilters.interaccion) return false;
+    }
+  
+    return true;
+  };
+  
+
+  const filteredStudents = trackingRecords.filter(matchesFilters);
+  const coachStats = getCoachInteractionStats(filteredStudents);
+  const finalizados = filteredStudents.filter(t => t.estado === "Finalizado").length;
+  const conInteraccion = filteredStudents.filter(t => t.interaccionCoach !== "Sin comenzar").length;
+  const sinComenzar = filteredStudents.filter(t => t.estado === "Sin comenzar").length;
+
+  const totalPages = Math.ceil(filteredStudents.length / ITEMS_PER_PAGE);
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-  const paginatedRecords = trackingRecords.slice(startIndex, startIndex + ITEMS_PER_PAGE);
+  const paginatedRecords = filteredStudents.slice(startIndex, startIndex + ITEMS_PER_PAGE);
 
   return (
     <DashboardLayout title="Seguimiento">
@@ -137,8 +160,8 @@ export default function Seguimiento() {
         <div className="flex items-center justify-between px-6 py-4 border-t border-border">
           <p className="text-sm text-muted-foreground">
             Mostrando {startIndex + 1} a{" "}
-            {Math.min(startIndex + ITEMS_PER_PAGE, trackingRecords.length)} de{" "}
-            {trackingRecords.length} registros
+            {Math.min(startIndex + ITEMS_PER_PAGE, filteredStudents.length)} de{" "}
+            {filteredStudents.length} registros
           </p>
           <div className="flex items-center gap-2">
             <Button

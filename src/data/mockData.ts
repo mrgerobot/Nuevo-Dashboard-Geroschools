@@ -75,7 +75,7 @@ export const students: Student[] = [
     institucionInteres1: "University of Oxford",
     institucionInteres2: "Columbia University",
     institucionInteres3: "Universidad Panamericana",
-    probabilidadElegirTec: "3. Baja"
+    probabilidadElegirTec: "Baja"
   },
   {
     id: "A01665505",
@@ -92,7 +92,7 @@ export const students: Student[] = [
     institucionInteres1: "University of Alberta",
     institucionInteres2: "University of Adelaide",
     institucionInteres3: "Tecnológico de Monterrey",
-    probabilidadElegirTec: "3. Baja"
+    probabilidadElegirTec: "Baja"
   },
   {
     id: "A01665715",
@@ -109,7 +109,7 @@ export const students: Student[] = [
     institucionInteres1: "New York University (NYU)",
     institucionInteres2: "New York University (NYU)",
     institucionInteres3: "New York University (NYU)",
-    probabilidadElegirTec: "3. Baja"
+    probabilidadElegirTec: "Baja"
   },
   {
     id: "A01666481",
@@ -126,7 +126,7 @@ export const students: Student[] = [
     institucionInteres1: "California Institute of Technology (Caltech)",
     institucionInteres2: "Université de Montréal",
     institucionInteres3: "Stanford University",
-    probabilidadElegirTec: "3. Baja"
+    probabilidadElegirTec: "Baja"
   },
   {
     id: "A01667142",
@@ -143,7 +143,7 @@ export const students: Student[] = [
     institucionInteres1: "University of Florida",
     institucionInteres2: "University of California, Los Angeles (UCLA)",
     institucionInteres3: "California Institute of Technology (Caltech)",
-    probabilidadElegirTec: "3. Baja"
+    probabilidadElegirTec: "Baja"
   },
   {
     id: "A01668227",
@@ -160,7 +160,7 @@ export const students: Student[] = [
     institucionInteres1: "Universidad Anáhuac",
     institucionInteres2: "Universidad Nacional de San Agustín de Arequipa (UNSA)",
     institucionInteres3: "Universidad Panamericana",
-    probabilidadElegirTec: "3. Baja"
+    probabilidadElegirTec: "Baja"
   },
   {
     id: "A01827153",
@@ -177,7 +177,7 @@ export const students: Student[] = [
     institucionInteres1: "University of Michigan-Ann Arbor",
     institucionInteres2: "Arizona State University",
     institucionInteres3: "Instituto TEC",
-    probabilidadElegirTec: "3. Baja"
+    probabilidadElegirTec: "Baja"
   },
   {
     id: "A01665150",
@@ -194,7 +194,7 @@ export const students: Student[] = [
     institucionInteres1: "No especifica institución de interés",
     institucionInteres2: "No especifica institución de interés",
     institucionInteres3: "No especifica institución de interés",
-    probabilidadElegirTec: "4. No especifica institución de interés"
+    probabilidadElegirTec: "No especifica institución de interés"
   },
   {
     id: "A01665556",
@@ -211,7 +211,7 @@ export const students: Student[] = [
     institucionInteres1: "No especifica institución de interés",
     institucionInteres2: "No especifica institución de interés",
     institucionInteres3: "No especifica institución de interés",
-    probabilidadElegirTec: "4. No especifica institución de interés"
+    probabilidadElegirTec: "No especifica institución de interés"
   },
   {
     id: "A01826584",
@@ -228,7 +228,7 @@ export const students: Student[] = [
     institucionInteres1: "Tecnológico de Monterrey",
     institucionInteres2: "Universidad Iberoamericana",
     institucionInteres3: "ITAM",
-    probabilidadElegirTec: "1. Alta"
+    probabilidadElegirTec: "Alta"
   },
   {
     id: "A01666373",
@@ -245,7 +245,7 @@ export const students: Student[] = [
     institucionInteres1: "Tecnológico de Monterrey",
     institucionInteres2: "UNAM",
     institucionInteres3: "IPN",
-    probabilidadElegirTec: "1. Alta"
+    probabilidadElegirTec: "Alta"
   },
   {
     id: "A01665106",
@@ -262,7 +262,7 @@ export const students: Student[] = [
     institucionInteres1: "Tecnológico de Monterrey",
     institucionInteres2: "Universidad Anáhuac",
     institucionInteres3: "ITAM",
-    probabilidadElegirTec: "2. Media"
+    probabilidadElegirTec: "Media"
   },
   {
     id: "A01665732",
@@ -279,7 +279,7 @@ export const students: Student[] = [
     institucionInteres1: "No especifica institución de interés",
     institucionInteres2: "No especifica institución de interés",
     institucionInteres3: "No especifica institución de interés",
-    probabilidadElegirTec: "5. Falta completar actividad"
+    probabilidadElegirTec: "Falta completar actividad"
   }
 ];
 
@@ -662,11 +662,11 @@ export const getTopInstituciones = () => {
     .map(([name, count]) => ({ name, count }));
 };
 
-export const getCoachInteractionStats = () => {
-  const sinComenzar = trackingRecords.filter(t => t.interaccionCoach === "Sin comenzar").length;
-  const baja = trackingRecords.filter(t => t.interaccionCoach === "BAJA").length;
-  const media = trackingRecords.filter(t => t.interaccionCoach === "MEDIA").length;
-  const alta = trackingRecords.filter(t => t.interaccionCoach === "ALTA").length;
+export const getCoachInteractionStats = (records: TrackingRecord[] = trackingRecords) => {
+  const sinComenzar = records.filter(t => t.interaccionCoach === "Sin comenzar").length;
+  const baja = records.filter(t => t.interaccionCoach === "BAJA").length;
+  const media = records.filter(t => t.interaccionCoach === "MEDIA").length;
+  const alta = records.filter(t => t.interaccionCoach === "ALTA").length;
 
   return [
     { name: "Sin comenzar", value: sinComenzar },
