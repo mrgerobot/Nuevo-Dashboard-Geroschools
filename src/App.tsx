@@ -8,6 +8,7 @@ import Poblacion from "./pages/Poblacion";
 import Seguimiento from "./pages/Seguimiento";
 import PerfilEstudiante from "./pages/PerfilEstudiante";
 import NotFound from "./pages/NotFound";
+import { FiltersProvider } from "@/contexts/FiltersContext";
 
 const queryClient = new QueryClient();
 
@@ -16,17 +17,19 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Resumen />} />
-          <Route path="/resumen" element={<Resumen />} />
-          <Route path="/poblacion" element={<Poblacion />} />
-          <Route path="/seguimiento" element={<Seguimiento />} />
-          <Route path="/estudiante" element={<PerfilEstudiante />} />
-          <Route path="/estudiante/:id" element={<PerfilEstudiante />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
+      <FiltersProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Resumen />} />
+            <Route path="/resumen" element={<Resumen />} />
+            <Route path="/poblacion" element={<Poblacion />} />
+            <Route path="/seguimiento" element={<Seguimiento />} />
+            <Route path="/estudiante" element={<PerfilEstudiante />} />
+            <Route path="/estudiante/:id" element={<PerfilEstudiante />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </FiltersProvider>
     </TooltipProvider>
   </QueryClientProvider>
 );

@@ -22,9 +22,9 @@ interface FilterDrawerProps {
 
 const filterOptions = {
   campus: [
-    { value: "cdmx", label: "Ciudad de México - Tec" },
-    { value: "mty", label: "Monterrey" },
-    { value: "gdl", label: "Guadalajara" },
+    { value: "Ciudad de México - Tec", label: "Ciudad de México - Tec" },
+    { value: "Monterrey", label: "Monterrey" },
+    { value: "Guadalajara", label: "Guadalajara" },
   ],
   semestre: [
     { value: "1", label: "1er Semestre" },
@@ -37,24 +37,35 @@ const filterOptions = {
     { value: "PTM14", label: "PTM14" },
   ],
   probabilidad: [
-    { value: "alta", label: "Alta" },
-    { value: "media", label: "Media" },
-    { value: "baja", label: "Baja" },
-    { value: "no-especifica", label: "No especifica institución" },
-    { value: "falta-completar", label: "Falta completar actividad" },
+    { value: "Alta", label: "Alta" },
+    { value: "Media", label: "Media" },
+    { value: "Baja", label: "Baja" },
+    { value: "No especifica institución", label: "No especifica institución" },
+    { value: "Falta completar actividad", label: "Falta completar actividad" },
   ],
   estado: [
-    { value: "sin-comenzar", label: "Sin comenzar" },
-    { value: "en-progreso", label: "En progreso" },
-    { value: "finalizado", label: "Finalizado" },
+    { value: "Sin comenzar", label: "Sin comenzar" },
+    { value: "En progreso", label: "En progreso" },
+    { value: "Finalizado", label: "Finalizado" },
   ],
   interaccion: [
-    { value: "sin-comenzar", label: "Sin comenzar" },
-    { value: "baja", label: "Baja" },
-    { value: "media", label: "Media" },
-    { value: "alta", label: "Alta" },
+    { value: "Sin comenzar", label: "Sin comenzar" },
+    { value: "Baja", label: "Baja" },
+    { value: "Media", label: "Media" },
+    { value: "Alta", label: "Alta" },
   ],
 };
+
+
+const getFilterLabel = (key: string, value: string) => {
+  const options = (filterOptions as Record<
+    string,
+    { value: string; label: string }[]
+  >)[key];
+
+  return options?.find((o) => o.value === value)?.label ?? value;
+};
+
 
 export function FilterDrawer({
   isOpen,
@@ -106,7 +117,7 @@ export function FilterDrawer({
                     variant="secondary"
                     className="bg-secondary text-secondary-foreground"
                   >
-                    {value}
+                    {getFilterLabel(key, value)}
                     <button
                       onClick={() => onFilterChange(key, "")}
                       className="ml-1 hover:text-primary"

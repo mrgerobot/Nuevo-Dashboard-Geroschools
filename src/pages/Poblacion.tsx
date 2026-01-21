@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { DashboardLayout } from "@/components/layout/DashboardLayout";
 import { StatusChip } from "@/components/ui/StatusChip";
@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { students } from "@/data/mockData";
 import { Search, Eye, Download, ChevronLeft, ChevronRight } from "lucide-react";
+import { useFilters } from "@/contexts/FiltersContext";
 
 const ITEMS_PER_PAGE = 8;
 
@@ -13,12 +14,47 @@ export default function Poblacion() {
   const navigate = useNavigate();
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  const { appliedFilters } = useFilters();
+
+  useEffect(() => {setCurrentPage(1);}, [search, appliedFilters]);
+
+
+  const matchesFilters = (s: (typeof students)[number]) => {
+  if (appliedFilters.campus) {
+    if (s.campusSede !== appliedFilters.campus) return false;
+  }
+
+  if (appliedFilters.semestre) {
+    if (String(s.semestre) !== appliedFilters.semestre) return false;
+  }
+
+  if (appliedFilters.grupo) {
+    if (s.grupoDivision !== appliedFilters.grupo) return false;
+  }
+
+  if (appliedFilters.probabilidad) {
+    if (s.probabilidadElegirTec !== appliedFilters.probabilidad) return false;
+  }
+
+  if (appliedFilters.estado) {
+    // example: if your data has s.estado
+    // if (s.estado !== appliedFilters.estado) return false;
+  }
+
+  if (appliedFilters.interaccion) {
+    // example: if your data has s.interaccionCoach
+    // if (s.interaccionCoach !== appliedFilters.interaccion) return false;
+  }
+
+  return true;
+};
+
 
   const filteredStudents = students.filter(
     (s) =>
       s.nombreCompleto.toLowerCase().includes(search.toLowerCase()) ||
       s.correoInstitucional.toLowerCase().includes(search.toLowerCase())
-  );
+  ).filter(matchesFilters);
 
   const totalPages = Math.ceil(filteredStudents.length / ITEMS_PER_PAGE);
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
@@ -38,7 +74,6 @@ export default function Poblacion() {
             value={search}
             onChange={(e) => {
               setSearch(e.target.value);
-              setCurrentPage(1);
             }}
             className="pl-10"
           />

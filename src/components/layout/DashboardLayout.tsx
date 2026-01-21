@@ -2,6 +2,7 @@ import { useState, ReactNode } from "react";
 import { Sidebar } from "./Sidebar";
 import { Header } from "./Header";
 import { FilterDrawer } from "./FilterDrawer";
+import { useFilters } from "@/contexts/FiltersContext";
 
 interface DashboardLayoutProps {
   children: ReactNode;
@@ -15,21 +16,18 @@ export function DashboardLayout({
   title,
   subtitle = "Última actualización: 26/03/2025 a las 16:34 hs.",
   showFilter = true,
+
 }: DashboardLayoutProps) {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
-  const [filters, setFilters] = useState<Record<string, string>>({});
-
-  const handleFilterChange = (key: string, value: string) => {
-    setFilters((prev) => ({ ...prev, [key]: value }));
-  };
+  const { draftFilters, setDraftFilter, applyFilters, clearFilters } = useFilters();
 
   const handleApplyFilters = () => {
+    applyFilters();       // <-- THIS is where appliedFilters is updated
     setIsFilterOpen(false);
-    // Filter logic would be implemented here
   };
 
   const handleClearFilters = () => {
-    setFilters({});
+    clearFilters();       // clears both draft + applied
   };
 
   return (
@@ -46,14 +44,16 @@ export function DashboardLayout({
         {children}
       </main>
 
-      <FilterDrawer
-        isOpen={isFilterOpen}
-        onClose={() => setIsFilterOpen(false)}
-        filters={filters}
-        onFilterChange={handleFilterChange}
-        onApply={handleApplyFilters}
-        onClear={handleClearFilters}
-      />
+      {showFilter && (
+        <FilterDrawer
+          isOpen={isFilterOpen}
+          onClose={() => setIsFilterOpen(false)}
+          filters={draftFilters}
+          onFilterChange={setDraftFilter}
+          onApply={handleApplyFilters}
+          onClear={handleClearFilters}
+        />
+      )}
     </div>
   );
 }
