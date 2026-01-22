@@ -88,6 +88,20 @@ export default function PerfilEstudiante() {
               </div>
             </div>
           </div>
+          
+          {/* Status Chips */}
+          {tracking && (
+            <div className="flex flex-wrap gap-3">
+              <div className="flex items-center gap-2">
+                <span className="text-sm text-muted-foreground">Estado:</span>
+                <StatusChip status={tracking.estado} />
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-sm text-muted-foreground">Coach:</span>
+                <StatusChip status={tracking.interaccionCoach} />
+              </div>
+            </div>
+          )}
 
           {/* Academic Data Card */}
           <div className="bg-card rounded-xl border border-border p-6">
@@ -142,20 +156,6 @@ export default function PerfilEstudiante() {
             <p className="text-sm text-muted-foreground mb-2">Probabilidad de elegir el Tec</p>
             <StatusChip status={student.probabilidadElegirTec} className="text-sm px-4 py-1" />
           </div>
-
-          {/* Status Chips */}
-          {tracking && (
-            <div className="flex flex-wrap gap-3">
-              <div className="flex items-center gap-2">
-                <span className="text-sm text-muted-foreground">Estado:</span>
-                <StatusChip status={tracking.estado} />
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="text-sm text-muted-foreground">Coach:</span>
-                <StatusChip status={tracking.interaccionCoach} />
-              </div>
-            </div>
-          )}
         </div>
 
         {/* Right Column - Tabs */}
@@ -182,7 +182,7 @@ export default function PerfilEstudiante() {
                   <div className="bg-card rounded-xl border border-border p-6">
                     <h3 className="font-semibold text-foreground mb-4">Arquetipos de personalidad</h3>
                     <div className="space-y-3">
-                      {vocational.rankingArquetiposPersonalidad.slice(0, 3).map((arq, index) => (
+                      {vocational.rankingArquetiposPersonalidad.slice(0, 6).map((arq, index) => (
                         <div key={arq.tipo} className="space-y-2">
                           <div className="flex items-center justify-between">
                             <span className="font-medium text-sm">{arq.tipo}</span>
@@ -195,6 +195,27 @@ export default function PerfilEstudiante() {
                             />
                           </div>
                           <p className="text-xs text-muted-foreground">{arq.descripcion}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Arquetipos */}
+                  <div className="bg-card rounded-xl border border-border p-6">
+                    <h3 className="font-semibold text-foreground mb-4">Inteligencias múltiples</h3>
+                    <div className="space-y-3">
+                      {vocational.rankingInteligenciasMultiples.slice(0, 6).map((arq, index) => (
+                        <div key={arq.tipo} className="space-y-2">
+                          <div className="flex items-center justify-between">
+                            <span className="font-medium text-sm">{arq.tipo}</span>
+                            <StatusChip status={arq.nivel} />
+                          </div>
+                          <div className="h-2 bg-muted rounded-full overflow-hidden">
+                            <div 
+                              className="h-full bg-primary rounded-full"
+                              style={{ width: arq.nivel === "Alta" ? "100%" : arq.nivel === "Media" ? "66%" : "33%" }}
+                            />
+                          </div>
                         </div>
                       ))}
                     </div>

@@ -1,6 +1,7 @@
 import { NavLink, useLocation } from "react-router-dom";
 import { LayoutDashboard, Users, ClipboardList, UserCircle, MessageCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
+import geroLogo from "@/assets/gero-logo.png";
 
 const navigation = [
   { name: "Resumen", href: "/", icon: LayoutDashboard },
@@ -15,8 +16,8 @@ export function Sidebar() {
   return (
     <aside className="fixed left-0 top-0 h-screen w-60 bg-sidebar-bg flex flex-col z-50">
       {/* Logo */}
-      <div className="px-6 py-8">
-        <h1 className="text-4xl font-bold text-sidebar-fg tracking-tight">gero</h1>
+      <div className="px-6 py-8 flex justify-center">
+        <img src={geroLogo} alt="Gero" className="h-28 w-auto" />
       </div>
 
       {/* Navigation */}

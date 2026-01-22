@@ -6,8 +6,9 @@ import { StatusChip } from "@/components/ui/StatusChip";
 import { CoachInteractionChart } from "@/components/charts/CoachInteractionChart";
 import { Button } from "@/components/ui/button";
 import { trackingRecords, getCoachInteractionStats } from "@/data/mockData";
-import { CheckCircle, Users, AlertCircle, Eye, ExternalLink, ChevronLeft, ChevronRight } from "lucide-react";
+import { Search, Download, CheckCircle, Users, AlertCircle, Eye, ExternalLink, ChevronLeft, ChevronRight } from "lucide-react";
 import { useFilters } from "@/contexts/FiltersContext";
+import { Input } from "@/components/ui/input";
 
 const ITEMS_PER_PAGE = 8;
 
@@ -15,6 +16,8 @@ export default function Seguimiento() {
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const { appliedFilters } = useFilters();
+  const [search, setSearch] = useState("");
+
 
   useEffect(() => {setCurrentPage(1);}, [appliedFilters]);
   
@@ -36,7 +39,12 @@ export default function Seguimiento() {
   };
   
 
-  const filteredStudents = trackingRecords.filter(matchesFilters);
+  const filteredStudents = trackingRecords.filter(
+    (s) =>
+      s.nombreCompleto.toLowerCase().includes(search.toLowerCase()) ||
+      s.correo.toLowerCase().includes(search.toLowerCase())
+  ).filter(matchesFilters);
+
   const coachStats = getCoachInteractionStats(filteredStudents);
   const finalizados = filteredStudents.filter(t => t.estado === "Finalizado").length;
   const conInteraccion = filteredStudents.filter(t => t.interaccionCoach !== "Sin comenzar").length;
@@ -58,17 +66,36 @@ export default function Seguimiento() {
           accentColor
         />
         <KPICard
-          title="Estudiantes con interacción del coach"
-          value={conInteraccion}
-          subtitle="Han interactuado con el sistema"
-          icon={<Users className="h-5 w-5" />}
-        />
-        <KPICard
           title="Estudiantes sin comenzar"
           value={sinComenzar}
           subtitle="Pendientes de iniciar"
           icon={<AlertCircle className="h-5 w-5" />}
         />
+        <KPICard
+          title="Estudiantes con interacción del coach"
+          value={conInteraccion}
+          subtitle="Han interactuado con el sistema"
+          icon={<Users className="h-5 w-5" />}
+        />
+      </div>
+
+      {/* Search and Controls */}
+      <div className="flex items-center justify-between mb-6">
+        <div className="relative w-96">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          <Input
+            placeholder="Buscar por nombre, correo o matrícula…"
+            value={search}
+            onChange={(e) => {
+              setSearch(e.target.value);
+            }}
+            className="pl-10"
+          />
+        </div>
+        <Button variant="outline" className="border-border">
+          <Download className="h-4 w-4 mr-2" />
+          Exportar datos
+        </Button>
       </div>
 
       {/* Tracking Table */}
