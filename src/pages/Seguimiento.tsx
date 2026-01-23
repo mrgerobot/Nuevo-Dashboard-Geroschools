@@ -127,15 +127,34 @@ export default function Seguimiento() {
                   <td className="text-center">{record.semestre}</td>
                   <td>{record.grupoDivision}</td>
                   <td className="text-sm">{record.campusSede}</td>
-                  <td className="text-sm max-w-32 truncate" title="Carreras de interés">
-                    <p>{"- " + record.carreraInteres1}</p>
-                    <p>{"- " + record.carreraInteres2}</p>
-                    <p>{"- " + record.carreraInteres3}</p>
+                  <td className="text-sm max-w-32" title="Carreras de interés">
+                    {record.carreraInteres1 !== "No manifiesta carrera de interés" && (
+                      <p>1. {record.carreraInteres1}</p>
+                    )}
+
+                    {record.carreraInteres2 !== "No manifiesta carrera de interés" && (
+                      <p>2. {record.carreraInteres2}</p>
+                    )}
+
+                    {record.carreraInteres3 !== "No manifiesta carrera de interés" && (
+                      <p>3. {record.carreraInteres3}</p>
+                    )}
                   </td>
-                  <td className="text-sm max-w-32 truncate" title="Instituciones de interés">
-                    <p>{"- " + record.institucionInteres1}</p>
-                    <p>{"- " + record.institucionInteres2}</p>
-                    <p>{"- " + record.institucionInteres3}</p>
+                  <td className="text-sm max-w-32" title="Instituciones de interés">
+                    {record.institucionInteres1 !== "No especifica institución de interés" && (
+                      <p>1. {record.institucionInteres1}</p>
+                    )}
+
+                    {record.institucionInteres2 !== "No especifica institución de interés" && (
+                      <p>2. {record.institucionInteres2}</p>
+                    )}
+
+                    {record.institucionInteres3 !== "No especifica institución de interés" && (
+                      <p>3. {record.institucionInteres3}</p>
+                    )}
+                  </td>
+                  <td>
+                    <StatusChip status={record.probabilidadElegirTec} />
                   </td>
                   <td>
                     <StatusChip status={record.estado} />
