@@ -6,8 +6,6 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { 
   getStudentById, 
-  getTrackingById, 
-  getVocationalProfileById,
   students 
 } from "@/data/mockData";
 import { ArrowLeft, Mail, Phone, MapPin, GraduationCap, BookOpen, MessageSquare, CheckCircle } from "lucide-react";
@@ -19,8 +17,8 @@ export default function PerfilEstudiante() {
   // If no ID, show the first student as default
   const studentId = id || students[0].id;
   const student = getStudentById(studentId);
-  const tracking = getTrackingById(studentId);
-  const vocational = getVocationalProfileById(studentId);
+  const tracking = getStudentById(studentId);
+  const vocational = getStudentById(studentId);
 
   if (!student) {
     return (

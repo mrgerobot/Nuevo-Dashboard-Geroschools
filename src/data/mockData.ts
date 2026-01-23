@@ -6,6 +6,7 @@ export interface Student {
   semestre: string;
   grupoDivision: string;
   campusSede: string;
+  mentor: string;
   correoPersonal: string;
   telefono: string;
   carreraInteres1: string;
@@ -15,30 +16,12 @@ export interface Student {
   institucionInteres2: string;
   institucionInteres3: string;
   probabilidadElegirTec: string;
-}
-
-export interface TrackingRecord {
-  id: string;
-  nombreCompleto: string;
-  correo: string;
-  semestre: string;
-  curso: string;
   estado: 'Sin comenzar' | 'En progreso' | 'Finalizado';
   avanceConocete: string;
   avanceAutoconocimiento: string;
   reporteEstudiantesUrl: string;
   reporteFamiliasUrl: string;
   interaccionCoach: 'Sin comenzar' | 'BAJA' | 'MEDIA' | 'ALTA';
-}
-
-export interface VocationalProfile {
-  id: string;
-  correo: string;
-  nombre: string;
-  apellido: string;
-  institucion: string;
-  anioSemestre: string;
-  grupoDivision: string;
   estiloDeVida: string;
   rankingArquetiposPersonalidad: {
     tipo: string;
@@ -55,9 +38,6 @@ export interface VocationalProfile {
 }
 
 
-
-
-
 // Mock Students Data
 export const students: Student[] = [
   {
@@ -67,6 +47,7 @@ export const students: Student[] = [
     semestre: "4",
     grupoDivision: "PTM14",
     campusSede: "Ciudad de México - Tec",
+    mentor: "Burritony McGee",
     correoPersonal: "maarroyoh07@gmail.com",
     telefono: "5539321285",
     carreraInteres1: "Derecho",
@@ -75,7 +56,65 @@ export const students: Student[] = [
     institucionInteres1: "University of Oxford",
     institucionInteres2: "Columbia University",
     institucionInteres3: "Universidad Panamericana",
-    probabilidadElegirTec: "Baja"
+    probabilidadElegirTec: "Baja",
+    estado: 'Sin comenzar',
+    avanceConocete: "Falta ¿Cuán preparado estás?",
+    avanceAutoconocimiento: "Faltan todas las actividades",
+    reporteEstudiantesUrl: "",
+    reporteFamiliasUrl: "",
+    interaccionCoach: "Sin comenzar",
+    estiloDeVida: "Busca combinar rutina con flexibilidad, priorizando equilibrio entre lo personal y lo profesional. Valora la estabilidad pero también la posibilidad de innovar en su entorno laboral.",
+    rankingArquetiposPersonalidad: [
+      { tipo: "Emprendedor", nivel: "Alta", descripcion: "Disfruta liderar y motivar a otros. Tiene iniciativa y se enfoca en lograr resultados concretos." },
+      { tipo: "Social", nivel: "Alta", descripcion: "Disfruta ayudar a otros y trabajar en equipo. Se muestra empático/a y atento/a a las necesidades de quienes lo rodean." },
+      { tipo: "Investigativo", nivel: "Alta", descripcion: "Disfruta analizar información y buscar patrones. Le motiva resolver problemas complejos y entender cómo funcionan las cosas." },
+      { tipo: "Convencional", nivel: "Media", descripcion: "Valora la estructura, pero también puede adaptarse a situaciones más flexibles." },
+      { tipo: "Realista", nivel: "Baja", descripcion: "Prefiere actividades más conceptuales o abstractas que lo manual o repetitivo." },
+      { tipo: "Artístico", nivel: "Baja", descripcion: "Prefiere entornos más concretos o lógicos que los expresivos o artísticos." }
+    ],
+    orientacionIntereses: [
+      "El hacer práctico, el movimiento y la resolución de problemas con sus propias manos.",
+      "Las relaciones humanas, la empatía y el trabajo colaborativo."
+    ],
+    rankingInteligenciasMultiples: [
+      { tipo: "Lingüístico-verbal", nivel: "Alta" },
+      { tipo: "Lógico-matemática", nivel: "Alta" },
+      { tipo: "Corporal-kinestésica", nivel: "Alta" },
+      { tipo: "Musical", nivel: "Alta" },
+      { tipo: "Intrapersonal", nivel: "Alta" },
+      { tipo: "Visual-espacial", nivel: "Alta" },
+      { tipo: "Interpersonal", nivel: "Alta" },
+      { tipo: "Naturalista", nivel: "Media" }
+    ],
+    habilidadesCognitivas: [
+      { tipo: "Abstracto", nivel: "Media" },
+      { tipo: "Numérico", nivel: "Alta" },
+      { tipo: "Verbal", nivel: "Alta" }
+    ],
+    habilidadesBlandas: [
+      { tipo: "Gestión del tiempo", nivel: "Media" },
+      { tipo: "Estrategias y hábitos de estudio", nivel: "Media" },
+      { tipo: "Inteligencia emocional", nivel: "Alta" },
+      { tipo: "Perseverancia", nivel: "Media" }
+    ],
+    rankingAreaEstudio: [
+      { area: "Negocios", porcentaje: 37.5 },
+      { area: "Ciencias Sociales y Gobierno", porcentaje: 25 },
+      { area: "Medicina y Ciencias de la Salud", porcentaje: 25 },
+      { area: "Humanidades y Educación", porcentaje: 12.5 }
+    ],
+    carrerasRecomendadasPorIntereses: [
+      "Licenciado en Desarrollo de Talento y Cultura Organizacional (LDO)",
+      "Licenciado en Comunicación (LC)",
+      "Licenciado en Psicología Clínica y de la Salud (LPS)",
+      "Licenciado en Gobierno y Transformación Pública (LTP)"
+    ],
+    carrerasRecomendadasPorFortalezas: [
+      "Licenciado en Estrategia y Transformación de Negocios (LAE/BBA)",
+      "Licenciado en Contaduría Pública y Finanzas (LCPF/BFA)",
+      "Ingeniero en Tecnologías Computacionales (ITC/BCT)",
+      "Licenciado en Diseño (LDI)"
+    ]
   },
   {
     id: "A01665505",
@@ -84,6 +123,7 @@ export const students: Student[] = [
     semestre: "4",
     grupoDivision: "PBB14",
     campusSede: "Ciudad de México - Tec",
+    mentor: "Burritony McGee",
     correoPersonal: "No informa contacto",
     telefono: "No informa contacto",
     carreraInteres1: "Administración",
@@ -92,7 +132,65 @@ export const students: Student[] = [
     institucionInteres1: "University of Alberta",
     institucionInteres2: "University of Adelaide",
     institucionInteres3: "Tecnológico de Monterrey",
-    probabilidadElegirTec: "Baja"
+    probabilidadElegirTec: "Baja",
+    estado: "En progreso",
+    avanceConocete: "Finalizado",
+    avanceAutoconocimiento: "Finalizado",
+    reporteEstudiantesUrl: "https://drive.google.com/file/d/1jWALl2lWHLpt2XZFFX7dlGh5GuvJDSFv/view",
+    reporteFamiliasUrl: "https://drive.google.com/file/d/1rAATgh1SYxuaidqXb-ndbLRphxXaGMMW/view",
+    interaccionCoach: "Sin comenzar",
+    estiloDeVida: "Busca combinar rutina con flexibilidad, priorizando equilibrio entre lo personal y lo profesional. Valora la estabilidad pero también la posibilidad de innovar en su entorno laboral.",
+    rankingArquetiposPersonalidad: [
+      { tipo: "Emprendedor", nivel: "Alta", descripcion: "Disfruta liderar y motivar a otros. Tiene iniciativa y se enfoca en lograr resultados concretos." },
+      { tipo: "Social", nivel: "Alta", descripcion: "Disfruta ayudar a otros y trabajar en equipo. Se muestra empático/a y atento/a a las necesidades de quienes lo rodean." },
+      { tipo: "Investigativo", nivel: "Alta", descripcion: "Disfruta analizar información y buscar patrones. Le motiva resolver problemas complejos y entender cómo funcionan las cosas." },
+      { tipo: "Convencional", nivel: "Media", descripcion: "Valora la estructura, pero también puede adaptarse a situaciones más flexibles." },
+      { tipo: "Realista", nivel: "Baja", descripcion: "Prefiere actividades más conceptuales o abstractas que lo manual o repetitivo." },
+      { tipo: "Artístico", nivel: "Baja", descripcion: "Prefiere entornos más concretos o lógicos que los expresivos o artísticos." }
+    ],
+    orientacionIntereses: [
+      "El hacer práctico, el movimiento y la resolución de problemas con sus propias manos.",
+      "Las relaciones humanas, la empatía y el trabajo colaborativo."
+    ],
+    rankingInteligenciasMultiples: [
+      { tipo: "Lingüístico-verbal", nivel: "Alta" },
+      { tipo: "Lógico-matemática", nivel: "Alta" },
+      { tipo: "Corporal-kinestésica", nivel: "Alta" },
+      { tipo: "Musical", nivel: "Alta" },
+      { tipo: "Intrapersonal", nivel: "Alta" },
+      { tipo: "Visual-espacial", nivel: "Alta" },
+      { tipo: "Interpersonal", nivel: "Alta" },
+      { tipo: "Naturalista", nivel: "Media" }
+    ],
+    habilidadesCognitivas: [
+      { tipo: "Abstracto", nivel: "Media" },
+      { tipo: "Numérico", nivel: "Alta" },
+      { tipo: "Verbal", nivel: "Alta" }
+    ],
+    habilidadesBlandas: [
+      { tipo: "Gestión del tiempo", nivel: "Media" },
+      { tipo: "Estrategias y hábitos de estudio", nivel: "Media" },
+      { tipo: "Inteligencia emocional", nivel: "Alta" },
+      { tipo: "Perseverancia", nivel: "Media" }
+    ],
+    rankingAreaEstudio: [
+      { area: "Negocios", porcentaje: 37.5 },
+      { area: "Ciencias Sociales y Gobierno", porcentaje: 25 },
+      { area: "Medicina y Ciencias de la Salud", porcentaje: 25 },
+      { area: "Humanidades y Educación", porcentaje: 12.5 }
+    ],
+    carrerasRecomendadasPorIntereses: [
+      "Licenciado en Desarrollo de Talento y Cultura Organizacional (LDO)",
+      "Licenciado en Comunicación (LC)",
+      "Licenciado en Psicología Clínica y de la Salud (LPS)",
+      "Licenciado en Gobierno y Transformación Pública (LTP)"
+    ],
+    carrerasRecomendadasPorFortalezas: [
+      "Licenciado en Estrategia y Transformación de Negocios (LAE/BBA)",
+      "Licenciado en Contaduría Pública y Finanzas (LCPF/BFA)",
+      "Ingeniero en Tecnologías Computacionales (ITC/BCT)",
+      "Licenciado en Diseño (LDI)"
+    ]
   },
   {
     id: "A01665715",
@@ -101,6 +199,7 @@ export const students: Student[] = [
     semestre: "4",
     grupoDivision: "PTM14",
     campusSede: "Ciudad de México - Tec",
+    mentor: "Burritony McGee",
     correoPersonal: "andrecansecor@outlook.com",
     telefono: "5534858977",
     carreraInteres1: "Cine / Dirección Cinematográfica",
@@ -109,7 +208,65 @@ export const students: Student[] = [
     institucionInteres1: "New York University (NYU)",
     institucionInteres2: "New York University (NYU)",
     institucionInteres3: "New York University (NYU)",
-    probabilidadElegirTec: "Baja"
+    probabilidadElegirTec: "Baja",
+    estado: "Finalizado",
+    avanceConocete: "Finalizado",
+    avanceAutoconocimiento: "Finalizado",
+    reporteEstudiantesUrl: "https://drive.google.com/file/d/1VX-DPtlm4ExLSRZm4nIZktEgU32aCzGJ/view",
+    reporteFamiliasUrl: "https://drive.google.com/file/d/14YMT3et4Iaiqg3A9SwNuqbhBYuMHy5ww/view",
+    interaccionCoach: "MEDIA",
+    estiloDeVida: "Busca combinar rutina con flexibilidad, priorizando equilibrio entre lo personal y lo profesional. Valora la estabilidad pero también la posibilidad de innovar en su entorno laboral.",
+    rankingArquetiposPersonalidad: [
+      { tipo: "Emprendedor", nivel: "Alta", descripcion: "Disfruta liderar y motivar a otros. Tiene iniciativa y se enfoca en lograr resultados concretos." },
+      { tipo: "Social", nivel: "Alta", descripcion: "Disfruta ayudar a otros y trabajar en equipo. Se muestra empático/a y atento/a a las necesidades de quienes lo rodean." },
+      { tipo: "Investigativo", nivel: "Alta", descripcion: "Disfruta analizar información y buscar patrones. Le motiva resolver problemas complejos y entender cómo funcionan las cosas." },
+      { tipo: "Convencional", nivel: "Media", descripcion: "Valora la estructura, pero también puede adaptarse a situaciones más flexibles." },
+      { tipo: "Realista", nivel: "Baja", descripcion: "Prefiere actividades más conceptuales o abstractas que lo manual o repetitivo." },
+      { tipo: "Artístico", nivel: "Baja", descripcion: "Prefiere entornos más concretos o lógicos que los expresivos o artísticos." }
+    ],
+    orientacionIntereses: [
+      "El hacer práctico, el movimiento y la resolución de problemas con sus propias manos.",
+      "Las relaciones humanas, la empatía y el trabajo colaborativo."
+    ],
+    rankingInteligenciasMultiples: [
+      { tipo: "Lingüístico-verbal", nivel: "Alta" },
+      { tipo: "Lógico-matemática", nivel: "Alta" },
+      { tipo: "Corporal-kinestésica", nivel: "Alta" },
+      { tipo: "Musical", nivel: "Alta" },
+      { tipo: "Intrapersonal", nivel: "Alta" },
+      { tipo: "Visual-espacial", nivel: "Alta" },
+      { tipo: "Interpersonal", nivel: "Alta" },
+      { tipo: "Naturalista", nivel: "Media" }
+    ],
+    habilidadesCognitivas: [
+      { tipo: "Abstracto", nivel: "Media" },
+      { tipo: "Numérico", nivel: "Alta" },
+      { tipo: "Verbal", nivel: "Alta" }
+    ],
+    habilidadesBlandas: [
+      { tipo: "Gestión del tiempo", nivel: "Media" },
+      { tipo: "Estrategias y hábitos de estudio", nivel: "Media" },
+      { tipo: "Inteligencia emocional", nivel: "Alta" },
+      { tipo: "Perseverancia", nivel: "Media" }
+    ],
+    rankingAreaEstudio: [
+      { area: "Negocios", porcentaje: 37.5 },
+      { area: "Ciencias Sociales y Gobierno", porcentaje: 25 },
+      { area: "Medicina y Ciencias de la Salud", porcentaje: 25 },
+      { area: "Humanidades y Educación", porcentaje: 12.5 }
+    ],
+    carrerasRecomendadasPorIntereses: [
+      "Licenciado en Desarrollo de Talento y Cultura Organizacional (LDO)",
+      "Licenciado en Comunicación (LC)",
+      "Licenciado en Psicología Clínica y de la Salud (LPS)",
+      "Licenciado en Gobierno y Transformación Pública (LTP)"
+    ],
+    carrerasRecomendadasPorFortalezas: [
+      "Licenciado en Estrategia y Transformación de Negocios (LAE/BBA)",
+      "Licenciado en Contaduría Pública y Finanzas (LCPF/BFA)",
+      "Ingeniero en Tecnologías Computacionales (ITC/BCT)",
+      "Licenciado en Diseño (LDI)"
+    ]
   },
   {
     id: "A01666481",
@@ -118,6 +275,7 @@ export const students: Student[] = [
     semestre: "4",
     grupoDivision: "PBB14",
     campusSede: "Ciudad de México - Tec",
+    mentor: "Burritony McGee",
     correoPersonal: "moraguessal.alonso@gmail.com",
     telefono: "5624115240",
     carreraInteres1: "Ingeniería Aeroespacial",
@@ -126,7 +284,65 @@ export const students: Student[] = [
     institucionInteres1: "California Institute of Technology (Caltech)",
     institucionInteres2: "Université de Montréal",
     institucionInteres3: "Stanford University",
-    probabilidadElegirTec: "Baja"
+    probabilidadElegirTec: "Baja",
+    estado: "Finalizado",
+    avanceConocete: "Finalizado",
+    avanceAutoconocimiento: "Finalizado",
+    reporteEstudiantesUrl: "https://drive.google.com/file/d/1AwkaxhAFxcTE9iZ2iryM_koaa58pvb8y/view",
+    reporteFamiliasUrl: "https://drive.google.com/file/d/1LzoU8UjS9dsGTqoB7gApoQ66ltj8s0qy/view",
+    interaccionCoach: "MEDIA",
+    estiloDeVida: "Busca combinar rutina con flexibilidad, priorizando equilibrio entre lo personal y lo profesional. Valora la estabilidad pero también la posibilidad de innovar en su entorno laboral.",
+    rankingArquetiposPersonalidad: [
+      { tipo: "Emprendedor", nivel: "Alta", descripcion: "Disfruta liderar y motivar a otros. Tiene iniciativa y se enfoca en lograr resultados concretos." },
+      { tipo: "Social", nivel: "Alta", descripcion: "Disfruta ayudar a otros y trabajar en equipo. Se muestra empático/a y atento/a a las necesidades de quienes lo rodean." },
+      { tipo: "Investigativo", nivel: "Alta", descripcion: "Disfruta analizar información y buscar patrones. Le motiva resolver problemas complejos y entender cómo funcionan las cosas." },
+      { tipo: "Convencional", nivel: "Media", descripcion: "Valora la estructura, pero también puede adaptarse a situaciones más flexibles." },
+      { tipo: "Realista", nivel: "Baja", descripcion: "Prefiere actividades más conceptuales o abstractas que lo manual o repetitivo." },
+      { tipo: "Artístico", nivel: "Baja", descripcion: "Prefiere entornos más concretos o lógicos que los expresivos o artísticos." }
+    ],
+    orientacionIntereses: [
+      "El hacer práctico, el movimiento y la resolución de problemas con sus propias manos.",
+      "Las relaciones humanas, la empatía y el trabajo colaborativo."
+    ],
+    rankingInteligenciasMultiples: [
+      { tipo: "Lingüístico-verbal", nivel: "Alta" },
+      { tipo: "Lógico-matemática", nivel: "Alta" },
+      { tipo: "Corporal-kinestésica", nivel: "Alta" },
+      { tipo: "Musical", nivel: "Alta" },
+      { tipo: "Intrapersonal", nivel: "Alta" },
+      { tipo: "Visual-espacial", nivel: "Alta" },
+      { tipo: "Interpersonal", nivel: "Alta" },
+      { tipo: "Naturalista", nivel: "Media" }
+    ],
+    habilidadesCognitivas: [
+      { tipo: "Abstracto", nivel: "Media" },
+      { tipo: "Numérico", nivel: "Alta" },
+      { tipo: "Verbal", nivel: "Alta" }
+    ],
+    habilidadesBlandas: [
+      { tipo: "Gestión del tiempo", nivel: "Media" },
+      { tipo: "Estrategias y hábitos de estudio", nivel: "Media" },
+      { tipo: "Inteligencia emocional", nivel: "Alta" },
+      { tipo: "Perseverancia", nivel: "Media" }
+    ],
+    rankingAreaEstudio: [
+      { area: "Negocios", porcentaje: 37.5 },
+      { area: "Ciencias Sociales y Gobierno", porcentaje: 25 },
+      { area: "Medicina y Ciencias de la Salud", porcentaje: 25 },
+      { area: "Humanidades y Educación", porcentaje: 12.5 }
+    ],
+    carrerasRecomendadasPorIntereses: [
+      "Licenciado en Desarrollo de Talento y Cultura Organizacional (LDO)",
+      "Licenciado en Comunicación (LC)",
+      "Licenciado en Psicología Clínica y de la Salud (LPS)",
+      "Licenciado en Gobierno y Transformación Pública (LTP)"
+    ],
+    carrerasRecomendadasPorFortalezas: [
+      "Licenciado en Estrategia y Transformación de Negocios (LAE/BBA)",
+      "Licenciado en Contaduría Pública y Finanzas (LCPF/BFA)",
+      "Ingeniero en Tecnologías Computacionales (ITC/BCT)",
+      "Licenciado en Diseño (LDI)"
+    ]
   },
   {
     id: "A01667142",
@@ -135,6 +351,7 @@ export const students: Student[] = [
     semestre: "4",
     grupoDivision: "PBB14",
     campusSede: "Ciudad de México - Tec",
+    mentor: "Burritony McGee",
     correoPersonal: "zaga8890@outlook.es",
     telefono: "5526956119",
     carreraInteres1: "Finanzas",
@@ -143,7 +360,65 @@ export const students: Student[] = [
     institucionInteres1: "University of Florida",
     institucionInteres2: "University of California, Los Angeles (UCLA)",
     institucionInteres3: "California Institute of Technology (Caltech)",
-    probabilidadElegirTec: "Baja"
+    probabilidadElegirTec: "Baja",
+    estado: "Finalizado",
+    avanceConocete: "Finalizado",
+    avanceAutoconocimiento: "Finalizado",
+    reporteEstudiantesUrl: "https://drive.google.com/file/d/1AwkaxhAFxcTE9iZ2iryM_koaa58pvb8y/view",
+    reporteFamiliasUrl: "https://drive.google.com/file/d/1LzoU8UjS9dsGTqoB7gApoQ66ltj8s0qy/view",
+    interaccionCoach: "MEDIA",
+    estiloDeVida: "Busca combinar rutina con flexibilidad, priorizando equilibrio entre lo personal y lo profesional. Valora la estabilidad pero también la posibilidad de innovar en su entorno laboral.",
+    rankingArquetiposPersonalidad: [
+      { tipo: "Emprendedor", nivel: "Alta", descripcion: "Disfruta liderar y motivar a otros. Tiene iniciativa y se enfoca en lograr resultados concretos." },
+      { tipo: "Social", nivel: "Alta", descripcion: "Disfruta ayudar a otros y trabajar en equipo. Se muestra empático/a y atento/a a las necesidades de quienes lo rodean." },
+      { tipo: "Investigativo", nivel: "Alta", descripcion: "Disfruta analizar información y buscar patrones. Le motiva resolver problemas complejos y entender cómo funcionan las cosas." },
+      { tipo: "Convencional", nivel: "Media", descripcion: "Valora la estructura, pero también puede adaptarse a situaciones más flexibles." },
+      { tipo: "Realista", nivel: "Baja", descripcion: "Prefiere actividades más conceptuales o abstractas que lo manual o repetitivo." },
+      { tipo: "Artístico", nivel: "Baja", descripcion: "Prefiere entornos más concretos o lógicos que los expresivos o artísticos." }
+    ],
+    orientacionIntereses: [
+      "El hacer práctico, el movimiento y la resolución de problemas con sus propias manos.",
+      "Las relaciones humanas, la empatía y el trabajo colaborativo."
+    ],
+    rankingInteligenciasMultiples: [
+      { tipo: "Lingüístico-verbal", nivel: "Alta" },
+      { tipo: "Lógico-matemática", nivel: "Alta" },
+      { tipo: "Corporal-kinestésica", nivel: "Alta" },
+      { tipo: "Musical", nivel: "Alta" },
+      { tipo: "Intrapersonal", nivel: "Alta" },
+      { tipo: "Visual-espacial", nivel: "Alta" },
+      { tipo: "Interpersonal", nivel: "Alta" },
+      { tipo: "Naturalista", nivel: "Media" }
+    ],
+    habilidadesCognitivas: [
+      { tipo: "Abstracto", nivel: "Media" },
+      { tipo: "Numérico", nivel: "Alta" },
+      { tipo: "Verbal", nivel: "Alta" }
+    ],
+    habilidadesBlandas: [
+      { tipo: "Gestión del tiempo", nivel: "Media" },
+      { tipo: "Estrategias y hábitos de estudio", nivel: "Media" },
+      { tipo: "Inteligencia emocional", nivel: "Alta" },
+      { tipo: "Perseverancia", nivel: "Media" }
+    ],
+    rankingAreaEstudio: [
+      { area: "Negocios", porcentaje: 37.5 },
+      { area: "Ciencias Sociales y Gobierno", porcentaje: 25 },
+      { area: "Medicina y Ciencias de la Salud", porcentaje: 25 },
+      { area: "Humanidades y Educación", porcentaje: 12.5 }
+    ],
+    carrerasRecomendadasPorIntereses: [
+      "Licenciado en Desarrollo de Talento y Cultura Organizacional (LDO)",
+      "Licenciado en Comunicación (LC)",
+      "Licenciado en Psicología Clínica y de la Salud (LPS)",
+      "Licenciado en Gobierno y Transformación Pública (LTP)"
+    ],
+    carrerasRecomendadasPorFortalezas: [
+      "Licenciado en Estrategia y Transformación de Negocios (LAE/BBA)",
+      "Licenciado en Contaduría Pública y Finanzas (LCPF/BFA)",
+      "Ingeniero en Tecnologías Computacionales (ITC/BCT)",
+      "Licenciado en Diseño (LDI)"
+    ]
   },
   {
     id: "A01668227",
@@ -152,6 +427,7 @@ export const students: Student[] = [
     semestre: "4",
     grupoDivision: "PBB14",
     campusSede: "Ciudad de México - Tec",
+    mentor: "Burritony McGee",
     correoPersonal: "No informa contacto",
     telefono: "No informa contacto",
     carreraInteres1: "Derecho",
@@ -160,7 +436,65 @@ export const students: Student[] = [
     institucionInteres1: "Universidad Anáhuac",
     institucionInteres2: "Universidad Nacional de San Agustín de Arequipa (UNSA)",
     institucionInteres3: "Universidad Panamericana",
-    probabilidadElegirTec: "Baja"
+    probabilidadElegirTec: "Baja",
+    estado: "En progreso",
+    avanceConocete: "Finalizado",
+    avanceAutoconocimiento: "Finalizado",
+    reporteEstudiantesUrl: "",
+    reporteFamiliasUrl: "",
+    interaccionCoach: "Sin comenzar",
+    estiloDeVida: "Busca combinar rutina con flexibilidad, priorizando equilibrio entre lo personal y lo profesional. Valora la estabilidad pero también la posibilidad de innovar en su entorno laboral.",
+    rankingArquetiposPersonalidad: [
+      { tipo: "Emprendedor", nivel: "Alta", descripcion: "Disfruta liderar y motivar a otros. Tiene iniciativa y se enfoca en lograr resultados concretos." },
+      { tipo: "Social", nivel: "Alta", descripcion: "Disfruta ayudar a otros y trabajar en equipo. Se muestra empático/a y atento/a a las necesidades de quienes lo rodean." },
+      { tipo: "Investigativo", nivel: "Alta", descripcion: "Disfruta analizar información y buscar patrones. Le motiva resolver problemas complejos y entender cómo funcionan las cosas." },
+      { tipo: "Convencional", nivel: "Media", descripcion: "Valora la estructura, pero también puede adaptarse a situaciones más flexibles." },
+      { tipo: "Realista", nivel: "Baja", descripcion: "Prefiere actividades más conceptuales o abstractas que lo manual o repetitivo." },
+      { tipo: "Artístico", nivel: "Baja", descripcion: "Prefiere entornos más concretos o lógicos que los expresivos o artísticos." }
+    ],
+    orientacionIntereses: [
+      "El hacer práctico, el movimiento y la resolución de problemas con sus propias manos.",
+      "Las relaciones humanas, la empatía y el trabajo colaborativo."
+    ],
+    rankingInteligenciasMultiples: [
+      { tipo: "Lingüístico-verbal", nivel: "Alta" },
+      { tipo: "Lógico-matemática", nivel: "Alta" },
+      { tipo: "Corporal-kinestésica", nivel: "Alta" },
+      { tipo: "Musical", nivel: "Alta" },
+      { tipo: "Intrapersonal", nivel: "Alta" },
+      { tipo: "Visual-espacial", nivel: "Alta" },
+      { tipo: "Interpersonal", nivel: "Alta" },
+      { tipo: "Naturalista", nivel: "Media" }
+    ],
+    habilidadesCognitivas: [
+      { tipo: "Abstracto", nivel: "Media" },
+      { tipo: "Numérico", nivel: "Alta" },
+      { tipo: "Verbal", nivel: "Alta" }
+    ],
+    habilidadesBlandas: [
+      { tipo: "Gestión del tiempo", nivel: "Media" },
+      { tipo: "Estrategias y hábitos de estudio", nivel: "Media" },
+      { tipo: "Inteligencia emocional", nivel: "Alta" },
+      { tipo: "Perseverancia", nivel: "Media" }
+    ],
+    rankingAreaEstudio: [
+      { area: "Negocios", porcentaje: 37.5 },
+      { area: "Ciencias Sociales y Gobierno", porcentaje: 25 },
+      { area: "Medicina y Ciencias de la Salud", porcentaje: 25 },
+      { area: "Humanidades y Educación", porcentaje: 12.5 }
+    ],
+    carrerasRecomendadasPorIntereses: [
+      "Licenciado en Desarrollo de Talento y Cultura Organizacional (LDO)",
+      "Licenciado en Comunicación (LC)",
+      "Licenciado en Psicología Clínica y de la Salud (LPS)",
+      "Licenciado en Gobierno y Transformación Pública (LTP)"
+    ],
+    carrerasRecomendadasPorFortalezas: [
+      "Licenciado en Estrategia y Transformación de Negocios (LAE/BBA)",
+      "Licenciado en Contaduría Pública y Finanzas (LCPF/BFA)",
+      "Ingeniero en Tecnologías Computacionales (ITC/BCT)",
+      "Licenciado en Diseño (LDI)"
+    ]
   },
   {
     id: "A01827153",
@@ -169,6 +503,7 @@ export const students: Student[] = [
     semestre: "4",
     grupoDivision: "PBB14",
     campusSede: "Ciudad de México - Tec",
+    mentor: "Burritony McGee",
     correoPersonal: "No informa contacto",
     telefono: "No informa contacto",
     carreraInteres1: "Ingeniería Civil",
@@ -177,7 +512,65 @@ export const students: Student[] = [
     institucionInteres1: "University of Michigan-Ann Arbor",
     institucionInteres2: "Arizona State University",
     institucionInteres3: "Instituto TEC",
-    probabilidadElegirTec: "Baja"
+    probabilidadElegirTec: "Baja",
+    estado: "Finalizado",
+    avanceConocete: "Finalizado",
+    avanceAutoconocimiento: "Finalizado",
+    reporteEstudiantesUrl: "https://drive.google.com/file/d/1Iuyd0gadMJbu3iiZfYZU-bAOuw2ZBlsY/view",
+    reporteFamiliasUrl: "https://drive.google.com/file/d/1jE77HmG0QTYARXeu_go3QIvD9K6_C70Z/view",
+    interaccionCoach: "MEDIA",
+    estiloDeVida: "Busca combinar rutina con flexibilidad, priorizando equilibrio entre lo personal y lo profesional. Valora la estabilidad pero también la posibilidad de innovar en su entorno laboral.",
+    rankingArquetiposPersonalidad: [
+      { tipo: "Emprendedor", nivel: "Alta", descripcion: "Disfruta liderar y motivar a otros. Tiene iniciativa y se enfoca en lograr resultados concretos." },
+      { tipo: "Social", nivel: "Alta", descripcion: "Disfruta ayudar a otros y trabajar en equipo. Se muestra empático/a y atento/a a las necesidades de quienes lo rodean." },
+      { tipo: "Investigativo", nivel: "Alta", descripcion: "Disfruta analizar información y buscar patrones. Le motiva resolver problemas complejos y entender cómo funcionan las cosas." },
+      { tipo: "Convencional", nivel: "Media", descripcion: "Valora la estructura, pero también puede adaptarse a situaciones más flexibles." },
+      { tipo: "Realista", nivel: "Baja", descripcion: "Prefiere actividades más conceptuales o abstractas que lo manual o repetitivo." },
+      { tipo: "Artístico", nivel: "Baja", descripcion: "Prefiere entornos más concretos o lógicos que los expresivos o artísticos." }
+    ],
+    orientacionIntereses: [
+      "El hacer práctico, el movimiento y la resolución de problemas con sus propias manos.",
+      "Las relaciones humanas, la empatía y el trabajo colaborativo."
+    ],
+    rankingInteligenciasMultiples: [
+      { tipo: "Lingüístico-verbal", nivel: "Alta" },
+      { tipo: "Lógico-matemática", nivel: "Alta" },
+      { tipo: "Corporal-kinestésica", nivel: "Alta" },
+      { tipo: "Musical", nivel: "Alta" },
+      { tipo: "Intrapersonal", nivel: "Alta" },
+      { tipo: "Visual-espacial", nivel: "Alta" },
+      { tipo: "Interpersonal", nivel: "Alta" },
+      { tipo: "Naturalista", nivel: "Media" }
+    ],
+    habilidadesCognitivas: [
+      { tipo: "Abstracto", nivel: "Media" },
+      { tipo: "Numérico", nivel: "Alta" },
+      { tipo: "Verbal", nivel: "Alta" }
+    ],
+    habilidadesBlandas: [
+      { tipo: "Gestión del tiempo", nivel: "Media" },
+      { tipo: "Estrategias y hábitos de estudio", nivel: "Media" },
+      { tipo: "Inteligencia emocional", nivel: "Alta" },
+      { tipo: "Perseverancia", nivel: "Media" }
+    ],
+    rankingAreaEstudio: [
+      { area: "Negocios", porcentaje: 37.5 },
+      { area: "Ciencias Sociales y Gobierno", porcentaje: 25 },
+      { area: "Medicina y Ciencias de la Salud", porcentaje: 25 },
+      { area: "Humanidades y Educación", porcentaje: 12.5 }
+    ],
+    carrerasRecomendadasPorIntereses: [
+      "Licenciado en Desarrollo de Talento y Cultura Organizacional (LDO)",
+      "Licenciado en Comunicación (LC)",
+      "Licenciado en Psicología Clínica y de la Salud (LPS)",
+      "Licenciado en Gobierno y Transformación Pública (LTP)"
+    ],
+    carrerasRecomendadasPorFortalezas: [
+      "Licenciado en Estrategia y Transformación de Negocios (LAE/BBA)",
+      "Licenciado en Contaduría Pública y Finanzas (LCPF/BFA)",
+      "Ingeniero en Tecnologías Computacionales (ITC/BCT)",
+      "Licenciado en Diseño (LDI)"
+    ]
   },
   {
     id: "A01665150",
@@ -186,6 +579,7 @@ export const students: Student[] = [
     semestre: "4",
     grupoDivision: "PBB14",
     campusSede: "Ciudad de México - Tec",
+    mentor: "Burritony McGee",
     correoPersonal: "martinezf87536@gmail.com",
     telefono: "5534070609",
     carreraInteres1: "No manifiesta carrera de interés",
@@ -194,7 +588,65 @@ export const students: Student[] = [
     institucionInteres1: "No especifica institución de interés",
     institucionInteres2: "No especifica institución de interés",
     institucionInteres3: "No especifica institución de interés",
-    probabilidadElegirTec: "No especifica institución de interés"
+    probabilidadElegirTec: "No especifica institución de interés",
+    estado: "Finalizado",
+    avanceConocete: "Finalizado",
+    avanceAutoconocimiento: "Finalizado",
+    reporteEstudiantesUrl: "https://drive.google.com/file/d/1AwkaxhAFxcTE9iZ2iryM_koaa58pvb8y/view",
+    reporteFamiliasUrl: "https://drive.google.com/file/d/1LzoU8UjS9dsGTqoB7gApoQ66ltj8s0qy/view",
+    interaccionCoach: "MEDIA",
+    estiloDeVida: "Busca combinar rutina con flexibilidad, priorizando equilibrio entre lo personal y lo profesional. Valora la estabilidad pero también la posibilidad de innovar en su entorno laboral.",
+    rankingArquetiposPersonalidad: [
+      { tipo: "Emprendedor", nivel: "Alta", descripcion: "Disfruta liderar y motivar a otros. Tiene iniciativa y se enfoca en lograr resultados concretos." },
+      { tipo: "Social", nivel: "Alta", descripcion: "Disfruta ayudar a otros y trabajar en equipo. Se muestra empático/a y atento/a a las necesidades de quienes lo rodean." },
+      { tipo: "Investigativo", nivel: "Alta", descripcion: "Disfruta analizar información y buscar patrones. Le motiva resolver problemas complejos y entender cómo funcionan las cosas." },
+      { tipo: "Convencional", nivel: "Media", descripcion: "Valora la estructura, pero también puede adaptarse a situaciones más flexibles." },
+      { tipo: "Realista", nivel: "Baja", descripcion: "Prefiere actividades más conceptuales o abstractas que lo manual o repetitivo." },
+      { tipo: "Artístico", nivel: "Baja", descripcion: "Prefiere entornos más concretos o lógicos que los expresivos o artísticos." }
+    ],
+    orientacionIntereses: [
+      "El hacer práctico, el movimiento y la resolución de problemas con sus propias manos.",
+      "Las relaciones humanas, la empatía y el trabajo colaborativo."
+    ],
+    rankingInteligenciasMultiples: [
+      { tipo: "Lingüístico-verbal", nivel: "Alta" },
+      { tipo: "Lógico-matemática", nivel: "Alta" },
+      { tipo: "Corporal-kinestésica", nivel: "Alta" },
+      { tipo: "Musical", nivel: "Alta" },
+      { tipo: "Intrapersonal", nivel: "Alta" },
+      { tipo: "Visual-espacial", nivel: "Alta" },
+      { tipo: "Interpersonal", nivel: "Alta" },
+      { tipo: "Naturalista", nivel: "Media" }
+    ],
+    habilidadesCognitivas: [
+      { tipo: "Abstracto", nivel: "Media" },
+      { tipo: "Numérico", nivel: "Alta" },
+      { tipo: "Verbal", nivel: "Alta" }
+    ],
+    habilidadesBlandas: [
+      { tipo: "Gestión del tiempo", nivel: "Media" },
+      { tipo: "Estrategias y hábitos de estudio", nivel: "Media" },
+      { tipo: "Inteligencia emocional", nivel: "Alta" },
+      { tipo: "Perseverancia", nivel: "Media" }
+    ],
+    rankingAreaEstudio: [
+      { area: "Negocios", porcentaje: 37.5 },
+      { area: "Ciencias Sociales y Gobierno", porcentaje: 25 },
+      { area: "Medicina y Ciencias de la Salud", porcentaje: 25 },
+      { area: "Humanidades y Educación", porcentaje: 12.5 }
+    ],
+    carrerasRecomendadasPorIntereses: [
+      "Licenciado en Desarrollo de Talento y Cultura Organizacional (LDO)",
+      "Licenciado en Comunicación (LC)",
+      "Licenciado en Psicología Clínica y de la Salud (LPS)",
+      "Licenciado en Gobierno y Transformación Pública (LTP)"
+    ],
+    carrerasRecomendadasPorFortalezas: [
+      "Licenciado en Estrategia y Transformación de Negocios (LAE/BBA)",
+      "Licenciado en Contaduría Pública y Finanzas (LCPF/BFA)",
+      "Ingeniero en Tecnologías Computacionales (ITC/BCT)",
+      "Licenciado en Diseño (LDI)"
+    ]
   },
   {
     id: "A01665556",
@@ -203,6 +655,7 @@ export const students: Student[] = [
     semestre: "4",
     grupoDivision: "PBB14",
     campusSede: "Ciudad de México - Tec",
+    mentor: "Orenthal James Simpson",
     correoPersonal: "brujardon@gmail.com",
     telefono: "5586713621",
     carreraInteres1: "No manifiesta carrera de interés",
@@ -211,7 +664,65 @@ export const students: Student[] = [
     institucionInteres1: "No especifica institución de interés",
     institucionInteres2: "No especifica institución de interés",
     institucionInteres3: "No especifica institución de interés",
-    probabilidadElegirTec: "No especifica institución de interés"
+    probabilidadElegirTec: "No especifica institución de interés",
+    estado: "Finalizado",
+    avanceConocete: "Finalizado",
+    avanceAutoconocimiento: "Finalizado",
+    reporteEstudiantesUrl: "https://drive.google.com/file/d/1iWKoqJzadS4oMOD4QQHHk71ypITTWfJF/view",
+    reporteFamiliasUrl: "https://drive.google.com/file/d/1bJBUsji-bRdsPJ9-5CE_GnbcMbWFyFts/view",
+    interaccionCoach: "ALTA",
+    estiloDeVida: "Busca combinar rutina con flexibilidad, priorizando equilibrio entre lo personal y lo profesional. Valora la estabilidad pero también la posibilidad de innovar en su entorno laboral.",
+    rankingArquetiposPersonalidad: [
+      { tipo: "Emprendedor", nivel: "Alta", descripcion: "Disfruta liderar y motivar a otros. Tiene iniciativa y se enfoca en lograr resultados concretos." },
+      { tipo: "Social", nivel: "Alta", descripcion: "Disfruta ayudar a otros y trabajar en equipo. Se muestra empático/a y atento/a a las necesidades de quienes lo rodean." },
+      { tipo: "Investigativo", nivel: "Alta", descripcion: "Disfruta analizar información y buscar patrones. Le motiva resolver problemas complejos y entender cómo funcionan las cosas." },
+      { tipo: "Convencional", nivel: "Media", descripcion: "Valora la estructura, pero también puede adaptarse a situaciones más flexibles." },
+      { tipo: "Realista", nivel: "Baja", descripcion: "Prefiere actividades más conceptuales o abstractas que lo manual o repetitivo." },
+      { tipo: "Artístico", nivel: "Baja", descripcion: "Prefiere entornos más concretos o lógicos que los expresivos o artísticos." }
+    ],
+    orientacionIntereses: [
+      "El hacer práctico, el movimiento y la resolución de problemas con sus propias manos.",
+      "Las relaciones humanas, la empatía y el trabajo colaborativo."
+    ],
+    rankingInteligenciasMultiples: [
+      { tipo: "Lingüístico-verbal", nivel: "Alta" },
+      { tipo: "Lógico-matemática", nivel: "Alta" },
+      { tipo: "Corporal-kinestésica", nivel: "Alta" },
+      { tipo: "Musical", nivel: "Alta" },
+      { tipo: "Intrapersonal", nivel: "Alta" },
+      { tipo: "Visual-espacial", nivel: "Alta" },
+      { tipo: "Interpersonal", nivel: "Alta" },
+      { tipo: "Naturalista", nivel: "Media" }
+    ],
+    habilidadesCognitivas: [
+      { tipo: "Abstracto", nivel: "Media" },
+      { tipo: "Numérico", nivel: "Alta" },
+      { tipo: "Verbal", nivel: "Alta" }
+    ],
+    habilidadesBlandas: [
+      { tipo: "Gestión del tiempo", nivel: "Media" },
+      { tipo: "Estrategias y hábitos de estudio", nivel: "Media" },
+      { tipo: "Inteligencia emocional", nivel: "Alta" },
+      { tipo: "Perseverancia", nivel: "Media" }
+    ],
+    rankingAreaEstudio: [
+      { area: "Negocios", porcentaje: 37.5 },
+      { area: "Ciencias Sociales y Gobierno", porcentaje: 25 },
+      { area: "Medicina y Ciencias de la Salud", porcentaje: 25 },
+      { area: "Humanidades y Educación", porcentaje: 12.5 }
+    ],
+    carrerasRecomendadasPorIntereses: [
+      "Licenciado en Desarrollo de Talento y Cultura Organizacional (LDO)",
+      "Licenciado en Comunicación (LC)",
+      "Licenciado en Psicología Clínica y de la Salud (LPS)",
+      "Licenciado en Gobierno y Transformación Pública (LTP)"
+    ],
+    carrerasRecomendadasPorFortalezas: [
+      "Licenciado en Estrategia y Transformación de Negocios (LAE/BBA)",
+      "Licenciado en Contaduría Pública y Finanzas (LCPF/BFA)",
+      "Ingeniero en Tecnologías Computacionales (ITC/BCT)",
+      "Licenciado en Diseño (LDI)"
+    ]
   },
   {
     id: "A01826584",
@@ -220,6 +731,7 @@ export const students: Student[] = [
     semestre: "4",
     grupoDivision: "PBB14",
     campusSede: "Ciudad de México - Tec",
+    mentor: "Orenthal James Simpson",
     correoPersonal: "isabella.guzman@gmail.com",
     telefono: "5512345678",
     carreraInteres1: "Psicología",
@@ -228,7 +740,65 @@ export const students: Student[] = [
     institucionInteres1: "Tecnológico de Monterrey",
     institucionInteres2: "Universidad Iberoamericana",
     institucionInteres3: "ITAM",
-    probabilidadElegirTec: "Alta"
+    probabilidadElegirTec: "Alta",
+    estado: "Finalizado",
+    avanceConocete: "Finalizado",
+    avanceAutoconocimiento: "Finalizado",
+    reporteEstudiantesUrl: "https://drive.google.com/file/d/1u1iGKUkVqooJ653N8FAWVxotaltRmEsv/view",
+    reporteFamiliasUrl: "https://drive.google.com/file/d/1tTw-c-rc8tNcYCgZHAVDfkqtK2m0uvHQ/view",
+    interaccionCoach: "BAJA",
+    estiloDeVida: "Busca combinar rutina con flexibilidad, priorizando equilibrio entre lo personal y lo profesional. Valora la estabilidad pero también la posibilidad de innovar en su entorno laboral.",
+    rankingArquetiposPersonalidad: [
+      { tipo: "Emprendedor", nivel: "Alta", descripcion: "Disfruta liderar y motivar a otros. Tiene iniciativa y se enfoca en lograr resultados concretos." },
+      { tipo: "Social", nivel: "Alta", descripcion: "Disfruta ayudar a otros y trabajar en equipo. Se muestra empático/a y atento/a a las necesidades de quienes lo rodean." },
+      { tipo: "Investigativo", nivel: "Alta", descripcion: "Disfruta analizar información y buscar patrones. Le motiva resolver problemas complejos y entender cómo funcionan las cosas." },
+      { tipo: "Convencional", nivel: "Media", descripcion: "Valora la estructura, pero también puede adaptarse a situaciones más flexibles." },
+      { tipo: "Realista", nivel: "Baja", descripcion: "Prefiere actividades más conceptuales o abstractas que lo manual o repetitivo." },
+      { tipo: "Artístico", nivel: "Baja", descripcion: "Prefiere entornos más concretos o lógicos que los expresivos o artísticos." }
+    ],
+    orientacionIntereses: [
+      "El hacer práctico, el movimiento y la resolución de problemas con sus propias manos.",
+      "Las relaciones humanas, la empatía y el trabajo colaborativo."
+    ],
+    rankingInteligenciasMultiples: [
+      { tipo: "Lingüístico-verbal", nivel: "Alta" },
+      { tipo: "Lógico-matemática", nivel: "Alta" },
+      { tipo: "Corporal-kinestésica", nivel: "Alta" },
+      { tipo: "Musical", nivel: "Alta" },
+      { tipo: "Intrapersonal", nivel: "Alta" },
+      { tipo: "Visual-espacial", nivel: "Alta" },
+      { tipo: "Interpersonal", nivel: "Alta" },
+      { tipo: "Naturalista", nivel: "Media" }
+    ],
+    habilidadesCognitivas: [
+      { tipo: "Abstracto", nivel: "Media" },
+      { tipo: "Numérico", nivel: "Alta" },
+      { tipo: "Verbal", nivel: "Alta" }
+    ],
+    habilidadesBlandas: [
+      { tipo: "Gestión del tiempo", nivel: "Media" },
+      { tipo: "Estrategias y hábitos de estudio", nivel: "Media" },
+      { tipo: "Inteligencia emocional", nivel: "Alta" },
+      { tipo: "Perseverancia", nivel: "Media" }
+    ],
+    rankingAreaEstudio: [
+      { area: "Negocios", porcentaje: 37.5 },
+      { area: "Ciencias Sociales y Gobierno", porcentaje: 25 },
+      { area: "Medicina y Ciencias de la Salud", porcentaje: 25 },
+      { area: "Humanidades y Educación", porcentaje: 12.5 }
+    ],
+    carrerasRecomendadasPorIntereses: [
+      "Licenciado en Desarrollo de Talento y Cultura Organizacional (LDO)",
+      "Licenciado en Comunicación (LC)",
+      "Licenciado en Psicología Clínica y de la Salud (LPS)",
+      "Licenciado en Gobierno y Transformación Pública (LTP)"
+    ],
+    carrerasRecomendadasPorFortalezas: [
+      "Licenciado en Estrategia y Transformación de Negocios (LAE/BBA)",
+      "Licenciado en Contaduría Pública y Finanzas (LCPF/BFA)",
+      "Ingeniero en Tecnologías Computacionales (ITC/BCT)",
+      "Licenciado en Diseño (LDI)"
+    ]
   },
   {
     id: "A01666373",
@@ -237,6 +807,7 @@ export const students: Student[] = [
     semestre: "4",
     grupoDivision: "PBB14",
     campusSede: "Ciudad de México - Tec",
+    mentor: "Orenthal James Simpson",
     correoPersonal: "joaquin.montealegre@gmail.com",
     telefono: "5567891234",
     carreraInteres1: "Ingeniería Industrial",
@@ -245,7 +816,65 @@ export const students: Student[] = [
     institucionInteres1: "Tecnológico de Monterrey",
     institucionInteres2: "UNAM",
     institucionInteres3: "IPN",
-    probabilidadElegirTec: "Alta"
+    probabilidadElegirTec: "Alta",
+    estado: "Finalizado",
+    avanceConocete: "Finalizado",
+    avanceAutoconocimiento: "Finalizado",
+    reporteEstudiantesUrl: "https://drive.google.com/file/d/1AwkaxhAFxcTE9iZ2iryM_koaa58pvb8y/view",
+    reporteFamiliasUrl: "https://drive.google.com/file/d/1LzoU8UjS9dsGTqoB7gApoQ66ltj8s0qy/view",
+    interaccionCoach: "MEDIA",
+    estiloDeVida: "Busca combinar rutina con flexibilidad, priorizando equilibrio entre lo personal y lo profesional. Valora la estabilidad pero también la posibilidad de innovar en su entorno laboral.",
+    rankingArquetiposPersonalidad: [
+      { tipo: "Emprendedor", nivel: "Alta", descripcion: "Disfruta liderar y motivar a otros. Tiene iniciativa y se enfoca en lograr resultados concretos." },
+      { tipo: "Social", nivel: "Alta", descripcion: "Disfruta ayudar a otros y trabajar en equipo. Se muestra empático/a y atento/a a las necesidades de quienes lo rodean." },
+      { tipo: "Investigativo", nivel: "Alta", descripcion: "Disfruta analizar información y buscar patrones. Le motiva resolver problemas complejos y entender cómo funcionan las cosas." },
+      { tipo: "Convencional", nivel: "Media", descripcion: "Valora la estructura, pero también puede adaptarse a situaciones más flexibles." },
+      { tipo: "Realista", nivel: "Baja", descripcion: "Prefiere actividades más conceptuales o abstractas que lo manual o repetitivo." },
+      { tipo: "Artístico", nivel: "Baja", descripcion: "Prefiere entornos más concretos o lógicos que los expresivos o artísticos." }
+    ],
+    orientacionIntereses: [
+      "El hacer práctico, el movimiento y la resolución de problemas con sus propias manos.",
+      "Las relaciones humanas, la empatía y el trabajo colaborativo."
+    ],
+    rankingInteligenciasMultiples: [
+      { tipo: "Lingüístico-verbal", nivel: "Alta" },
+      { tipo: "Lógico-matemática", nivel: "Alta" },
+      { tipo: "Corporal-kinestésica", nivel: "Alta" },
+      { tipo: "Musical", nivel: "Alta" },
+      { tipo: "Intrapersonal", nivel: "Alta" },
+      { tipo: "Visual-espacial", nivel: "Alta" },
+      { tipo: "Interpersonal", nivel: "Alta" },
+      { tipo: "Naturalista", nivel: "Media" }
+    ],
+    habilidadesCognitivas: [
+      { tipo: "Abstracto", nivel: "Media" },
+      { tipo: "Numérico", nivel: "Alta" },
+      { tipo: "Verbal", nivel: "Alta" }
+    ],
+    habilidadesBlandas: [
+      { tipo: "Gestión del tiempo", nivel: "Media" },
+      { tipo: "Estrategias y hábitos de estudio", nivel: "Media" },
+      { tipo: "Inteligencia emocional", nivel: "Alta" },
+      { tipo: "Perseverancia", nivel: "Media" }
+    ],
+    rankingAreaEstudio: [
+      { area: "Negocios", porcentaje: 37.5 },
+      { area: "Ciencias Sociales y Gobierno", porcentaje: 25 },
+      { area: "Medicina y Ciencias de la Salud", porcentaje: 25 },
+      { area: "Humanidades y Educación", porcentaje: 12.5 }
+    ],
+    carrerasRecomendadasPorIntereses: [
+      "Licenciado en Desarrollo de Talento y Cultura Organizacional (LDO)",
+      "Licenciado en Comunicación (LC)",
+      "Licenciado en Psicología Clínica y de la Salud (LPS)",
+      "Licenciado en Gobierno y Transformación Pública (LTP)"
+    ],
+    carrerasRecomendadasPorFortalezas: [
+      "Licenciado en Estrategia y Transformación de Negocios (LAE/BBA)",
+      "Licenciado en Contaduría Pública y Finanzas (LCPF/BFA)",
+      "Ingeniero en Tecnologías Computacionales (ITC/BCT)",
+      "Licenciado en Diseño (LDI)"
+    ]
   },
   {
     id: "A01665106",
@@ -254,6 +883,7 @@ export const students: Student[] = [
     semestre: "4",
     grupoDivision: "PTM14",
     campusSede: "Ciudad de México - Tec",
+    mentor: "Orenthal James Simpson",
     correoPersonal: "jacobo.djaddah@gmail.com",
     telefono: "5543217890",
     carreraInteres1: "Economía",
@@ -262,7 +892,65 @@ export const students: Student[] = [
     institucionInteres1: "Tecnológico de Monterrey",
     institucionInteres2: "Universidad Anáhuac",
     institucionInteres3: "ITAM",
-    probabilidadElegirTec: "Media"
+    probabilidadElegirTec: "Media",
+    estado: "Finalizado",
+    avanceConocete: "Finalizado",
+    avanceAutoconocimiento: "Finalizado",
+    reporteEstudiantesUrl: "https://drive.google.com/file/d/1AwkaxhAFxcTE9iZ2iryM_koaa58pvb8y/view",
+    reporteFamiliasUrl: "https://drive.google.com/file/d/1LzoU8UjS9dsGTqoB7gApoQ66ltj8s0qy/view",
+    interaccionCoach: "MEDIA",
+    estiloDeVida: "Busca combinar rutina con flexibilidad, priorizando equilibrio entre lo personal y lo profesional. Valora la estabilidad pero también la posibilidad de innovar en su entorno laboral.",
+    rankingArquetiposPersonalidad: [
+      { tipo: "Emprendedor", nivel: "Alta", descripcion: "Disfruta liderar y motivar a otros. Tiene iniciativa y se enfoca en lograr resultados concretos." },
+      { tipo: "Social", nivel: "Alta", descripcion: "Disfruta ayudar a otros y trabajar en equipo. Se muestra empático/a y atento/a a las necesidades de quienes lo rodean." },
+      { tipo: "Investigativo", nivel: "Alta", descripcion: "Disfruta analizar información y buscar patrones. Le motiva resolver problemas complejos y entender cómo funcionan las cosas." },
+      { tipo: "Convencional", nivel: "Media", descripcion: "Valora la estructura, pero también puede adaptarse a situaciones más flexibles." },
+      { tipo: "Realista", nivel: "Baja", descripcion: "Prefiere actividades más conceptuales o abstractas que lo manual o repetitivo." },
+      { tipo: "Artístico", nivel: "Baja", descripcion: "Prefiere entornos más concretos o lógicos que los expresivos o artísticos." }
+    ],
+    orientacionIntereses: [
+      "El hacer práctico, el movimiento y la resolución de problemas con sus propias manos.",
+      "Las relaciones humanas, la empatía y el trabajo colaborativo."
+    ],
+    rankingInteligenciasMultiples: [
+      { tipo: "Lingüístico-verbal", nivel: "Alta" },
+      { tipo: "Lógico-matemática", nivel: "Alta" },
+      { tipo: "Corporal-kinestésica", nivel: "Alta" },
+      { tipo: "Musical", nivel: "Alta" },
+      { tipo: "Intrapersonal", nivel: "Alta" },
+      { tipo: "Visual-espacial", nivel: "Alta" },
+      { tipo: "Interpersonal", nivel: "Alta" },
+      { tipo: "Naturalista", nivel: "Media" }
+    ],
+    habilidadesCognitivas: [
+      { tipo: "Abstracto", nivel: "Media" },
+      { tipo: "Numérico", nivel: "Alta" },
+      { tipo: "Verbal", nivel: "Alta" }
+    ],
+    habilidadesBlandas: [
+      { tipo: "Gestión del tiempo", nivel: "Media" },
+      { tipo: "Estrategias y hábitos de estudio", nivel: "Media" },
+      { tipo: "Inteligencia emocional", nivel: "Alta" },
+      { tipo: "Perseverancia", nivel: "Media" }
+    ],
+    rankingAreaEstudio: [
+      { area: "Negocios", porcentaje: 37.5 },
+      { area: "Ciencias Sociales y Gobierno", porcentaje: 25 },
+      { area: "Medicina y Ciencias de la Salud", porcentaje: 25 },
+      { area: "Humanidades y Educación", porcentaje: 12.5 }
+    ],
+    carrerasRecomendadasPorIntereses: [
+      "Licenciado en Desarrollo de Talento y Cultura Organizacional (LDO)",
+      "Licenciado en Comunicación (LC)",
+      "Licenciado en Psicología Clínica y de la Salud (LPS)",
+      "Licenciado en Gobierno y Transformación Pública (LTP)"
+    ],
+    carrerasRecomendadasPorFortalezas: [
+      "Licenciado en Estrategia y Transformación de Negocios (LAE/BBA)",
+      "Licenciado en Contaduría Pública y Finanzas (LCPF/BFA)",
+      "Ingeniero en Tecnologías Computacionales (ITC/BCT)",
+      "Licenciado en Diseño (LDI)"
+    ]
   },
   {
     id: "A01665732",
@@ -271,6 +959,7 @@ export const students: Student[] = [
     semestre: "4",
     grupoDivision: "PBB14",
     campusSede: "Ciudad de México - Tec",
+    mentor: "Orenthal James Simpson",
     correoPersonal: "ivan.arenas@gmail.com",
     telefono: "5598765432",
     carreraInteres1: "No manifiesta carrera de interés",
@@ -279,193 +968,393 @@ export const students: Student[] = [
     institucionInteres1: "No especifica institución de interés",
     institucionInteres2: "No especifica institución de interés",
     institucionInteres3: "No especifica institución de interés",
-    probabilidadElegirTec: "Falta completar actividad"
-  }
-];
-
-// Mock Tracking Data
-export const trackingRecords: TrackingRecord[] = [
-  {
-    id: "A01665732",
-    nombreCompleto: "Iván Alejandro Arenas Castro",
-    correo: "A01665732@tec.mx",
-    semestre: "4",
-    curso: "PBB14",
+    probabilidadElegirTec: "Falta completar actividad",
     estado: "Sin comenzar",
     avanceConocete: "Falta ¿Cuán preparado estás?",
     avanceAutoconocimiento: "Faltan todas las actividades",
     reporteEstudiantesUrl: "",
     reporteFamiliasUrl: "",
-    interaccionCoach: "Sin comenzar"
+    interaccionCoach: "Sin comenzar",
+    estiloDeVida: "Busca combinar rutina con flexibilidad, priorizando equilibrio entre lo personal y lo profesional. Valora la estabilidad pero también la posibilidad de innovar en su entorno laboral.",
+    rankingArquetiposPersonalidad: [
+      { tipo: "Emprendedor", nivel: "Alta", descripcion: "Disfruta liderar y motivar a otros. Tiene iniciativa y se enfoca en lograr resultados concretos." },
+      { tipo: "Social", nivel: "Alta", descripcion: "Disfruta ayudar a otros y trabajar en equipo. Se muestra empático/a y atento/a a las necesidades de quienes lo rodean." },
+      { tipo: "Investigativo", nivel: "Alta", descripcion: "Disfruta analizar información y buscar patrones. Le motiva resolver problemas complejos y entender cómo funcionan las cosas." },
+      { tipo: "Convencional", nivel: "Media", descripcion: "Valora la estructura, pero también puede adaptarse a situaciones más flexibles." },
+      { tipo: "Realista", nivel: "Baja", descripcion: "Prefiere actividades más conceptuales o abstractas que lo manual o repetitivo." },
+      { tipo: "Artístico", nivel: "Baja", descripcion: "Prefiere entornos más concretos o lógicos que los expresivos o artísticos." }
+    ],
+    orientacionIntereses: [
+      "El hacer práctico, el movimiento y la resolución de problemas con sus propias manos.",
+      "Las relaciones humanas, la empatía y el trabajo colaborativo."
+    ],
+    rankingInteligenciasMultiples: [
+      { tipo: "Lingüístico-verbal", nivel: "Alta" },
+      { tipo: "Lógico-matemática", nivel: "Alta" },
+      { tipo: "Corporal-kinestésica", nivel: "Alta" },
+      { tipo: "Musical", nivel: "Alta" },
+      { tipo: "Intrapersonal", nivel: "Alta" },
+      { tipo: "Visual-espacial", nivel: "Alta" },
+      { tipo: "Interpersonal", nivel: "Alta" },
+      { tipo: "Naturalista", nivel: "Media" }
+    ],
+    habilidadesCognitivas: [
+      { tipo: "Abstracto", nivel: "Media" },
+      { tipo: "Numérico", nivel: "Alta" },
+      { tipo: "Verbal", nivel: "Alta" }
+    ],
+    habilidadesBlandas: [
+      { tipo: "Gestión del tiempo", nivel: "Media" },
+      { tipo: "Estrategias y hábitos de estudio", nivel: "Media" },
+      { tipo: "Inteligencia emocional", nivel: "Alta" },
+      { tipo: "Perseverancia", nivel: "Media" }
+    ],
+    rankingAreaEstudio: [
+      { area: "Negocios", porcentaje: 37.5 },
+      { area: "Ciencias Sociales y Gobierno", porcentaje: 25 },
+      { area: "Medicina y Ciencias de la Salud", porcentaje: 25 },
+      { area: "Humanidades y Educación", porcentaje: 12.5 }
+    ],
+    carrerasRecomendadasPorIntereses: [
+      "Licenciado en Desarrollo de Talento y Cultura Organizacional (LDO)",
+      "Licenciado en Comunicación (LC)",
+      "Licenciado en Psicología Clínica y de la Salud (LPS)",
+      "Licenciado en Gobierno y Transformación Pública (LTP)"
+    ],
+    carrerasRecomendadasPorFortalezas: [
+      "Licenciado en Estrategia y Transformación de Negocios (LAE/BBA)",
+      "Licenciado en Contaduría Pública y Finanzas (LCPF/BFA)",
+      "Ingeniero en Tecnologías Computacionales (ITC/BCT)",
+      "Licenciado en Diseño (LDI)"
+    ]
   },
   {
     id: "A01667358",
     nombreCompleto: "Alejandro Balmaceda Cahue",
-    correo: "A01667358@tec.mx",
+    correoInstitucional: "A01667358@tec.mx",
     semestre: "4",
-    curso: "PBB14",
+    grupoDivision: "PBB14",
+    campusSede: "Monterrey",
+    mentor: "Orenthal James Simpson",
+    correoPersonal: "ale.balma@gmail.com",
+    telefono: "5598765632",
+    carreraInteres1: "No manifiesta carrera de interés",
+    carreraInteres2: "No manifiesta carrera de interés",
+    carreraInteres3: "No manifiesta carrera de interés",
+    institucionInteres1: "No especifica institución de interés",
+    institucionInteres2: "No especifica institución de interés",
+    institucionInteres3: "No especifica institución de interés",
+    probabilidadElegirTec: "Falta completar actividad",
     estado: "Finalizado",
     avanceConocete: "Finalizado",
     avanceAutoconocimiento: "Finalizado",
     reporteEstudiantesUrl: "https://drive.google.com/file/d/1So0ORz2EDFaY67SeYow5sXZlGNGRgGUa/view",
     reporteFamiliasUrl: "https://drive.google.com/file/d/1oYZxUw7zyYBKvSkWtPp9pgRfBciim29q/view",
-    interaccionCoach: "MEDIA"
-  },
-  {
-    id: "A01827153",
-    nombreCompleto: "Alejandro Rodríguez López",
-    correo: "A01827153@tec.mx",
-    semestre: "4",
-    curso: "PBB14",
-    estado: "Finalizado",
-    avanceConocete: "Finalizado",
-    avanceAutoconocimiento: "Finalizado",
-    reporteEstudiantesUrl: "https://drive.google.com/file/d/1Iuyd0gadMJbu3iiZfYZU-bAOuw2ZBlsY/view",
-    reporteFamiliasUrl: "https://drive.google.com/file/d/1jE77HmG0QTYARXeu_go3QIvD9K6_C70Z/view",
-    interaccionCoach: "MEDIA"
+    interaccionCoach: "MEDIA",
+    estiloDeVida: "Busca combinar rutina con flexibilidad, priorizando equilibrio entre lo personal y lo profesional. Valora la estabilidad pero también la posibilidad de innovar en su entorno laboral.",
+    rankingArquetiposPersonalidad: [
+      { tipo: "Emprendedor", nivel: "Alta", descripcion: "Disfruta liderar y motivar a otros. Tiene iniciativa y se enfoca en lograr resultados concretos." },
+      { tipo: "Social", nivel: "Alta", descripcion: "Disfruta ayudar a otros y trabajar en equipo. Se muestra empático/a y atento/a a las necesidades de quienes lo rodean." },
+      { tipo: "Investigativo", nivel: "Alta", descripcion: "Disfruta analizar información y buscar patrones. Le motiva resolver problemas complejos y entender cómo funcionan las cosas." },
+      { tipo: "Convencional", nivel: "Media", descripcion: "Valora la estructura, pero también puede adaptarse a situaciones más flexibles." },
+      { tipo: "Realista", nivel: "Baja", descripcion: "Prefiere actividades más conceptuales o abstractas que lo manual o repetitivo." },
+      { tipo: "Artístico", nivel: "Baja", descripcion: "Prefiere entornos más concretos o lógicos que los expresivos o artísticos." }
+    ],
+    orientacionIntereses: [
+      "El hacer práctico, el movimiento y la resolución de problemas con sus propias manos.",
+      "Las relaciones humanas, la empatía y el trabajo colaborativo."
+    ],
+    rankingInteligenciasMultiples: [
+      { tipo: "Lingüístico-verbal", nivel: "Alta" },
+      { tipo: "Lógico-matemática", nivel: "Alta" },
+      { tipo: "Corporal-kinestésica", nivel: "Alta" },
+      { tipo: "Musical", nivel: "Alta" },
+      { tipo: "Intrapersonal", nivel: "Alta" },
+      { tipo: "Visual-espacial", nivel: "Alta" },
+      { tipo: "Interpersonal", nivel: "Alta" },
+      { tipo: "Naturalista", nivel: "Media" }
+    ],
+    habilidadesCognitivas: [
+      { tipo: "Abstracto", nivel: "Media" },
+      { tipo: "Numérico", nivel: "Alta" },
+      { tipo: "Verbal", nivel: "Alta" }
+    ],
+    habilidadesBlandas: [
+      { tipo: "Gestión del tiempo", nivel: "Media" },
+      { tipo: "Estrategias y hábitos de estudio", nivel: "Media" },
+      { tipo: "Inteligencia emocional", nivel: "Alta" },
+      { tipo: "Perseverancia", nivel: "Media" }
+    ],
+    rankingAreaEstudio: [
+      { area: "Negocios", porcentaje: 37.5 },
+      { area: "Ciencias Sociales y Gobierno", porcentaje: 25 },
+      { area: "Medicina y Ciencias de la Salud", porcentaje: 25 },
+      { area: "Humanidades y Educación", porcentaje: 12.5 }
+    ],
+    carrerasRecomendadasPorIntereses: [
+      "Licenciado en Desarrollo de Talento y Cultura Organizacional (LDO)",
+      "Licenciado en Comunicación (LC)",
+      "Licenciado en Psicología Clínica y de la Salud (LPS)",
+      "Licenciado en Gobierno y Transformación Pública (LTP)"
+    ],
+    carrerasRecomendadasPorFortalezas: [
+      "Licenciado en Estrategia y Transformación de Negocios (LAE/BBA)",
+      "Licenciado en Contaduría Pública y Finanzas (LCPF/BFA)",
+      "Ingeniero en Tecnologías Computacionales (ITC/BCT)",
+      "Licenciado en Diseño (LDI)"
+    ]
   },
   {
     id: "A01667354",
     nombreCompleto: "Alexa Itzamná Sánchez Martínez",
-    correo: "A01667354@tec.mx",
+    correoInstitucional: "A01667354@tec.mx",
     semestre: "4",
-    curso: "PBB14",
+    grupoDivision: "PBB14",
+    campusSede: "Monterrey",
+    mentor: "Orenthal James Simpson",
+    correoPersonal: "alexa.itz@gmail.com",
+    telefono: "5595765432",
+    carreraInteres1: "No manifiesta carrera de interés",
+    carreraInteres2: "No manifiesta carrera de interés",
+    carreraInteres3: "No manifiesta carrera de interés",
+    institucionInteres1: "No especifica institución de interés",
+    institucionInteres2: "No especifica institución de interés",
+    institucionInteres3: "No especifica institución de interés",
+    probabilidadElegirTec: "Falta completar actividad",
     estado: "Finalizado",
     avanceConocete: "Finalizado",
     avanceAutoconocimiento: "Finalizado",
     reporteEstudiantesUrl: "https://drive.google.com/file/d/13UA3YbCEaOoFBZKycQy5MTEZ0olgKVk8/view",
     reporteFamiliasUrl: "https://drive.google.com/file/d/1e7PkaKO9-kgDrV49lOHPsJYHAW1XKeOp/view",
-    interaccionCoach: "MEDIA"
-  },
-  {
-    id: "A01666481",
-    nombreCompleto: "Alonso Moragues Salgado",
-    correo: "A01666481@tec.mx",
-    semestre: "4",
-    curso: "PBB14",
-    estado: "Finalizado",
-    avanceConocete: "Finalizado",
-    avanceAutoconocimiento: "Finalizado",
-    reporteEstudiantesUrl: "https://drive.google.com/file/d/1AwkaxhAFxcTE9iZ2iryM_koaa58pvb8y/view",
-    reporteFamiliasUrl: "https://drive.google.com/file/d/1LzoU8UjS9dsGTqoB7gApoQ66ltj8s0qy/view",
-    interaccionCoach: "MEDIA"
-  },
-  {
-    id: "A01665715",
-    nombreCompleto: "André Sofía Canseco Rivera",
-    correo: "A01665715@tec.mx",
-    semestre: "4",
-    curso: "PTM14",
-    estado: "Finalizado",
-    avanceConocete: "Finalizado",
-    avanceAutoconocimiento: "Finalizado",
-    reporteEstudiantesUrl: "https://drive.google.com/file/d/1VX-DPtlm4ExLSRZm4nIZktEgU32aCzGJ/view",
-    reporteFamiliasUrl: "https://drive.google.com/file/d/14YMT3et4Iaiqg3A9SwNuqbhBYuMHy5ww/view",
-    interaccionCoach: "MEDIA"
-  },
-  {
-    id: "A01665556",
-    nombreCompleto: "Bruno Jardón Bandera",
-    correo: "A01665556@tec.mx",
-    semestre: "4",
-    curso: "PBB14",
-    estado: "Finalizado",
-    avanceConocete: "Finalizado",
-    avanceAutoconocimiento: "Finalizado",
-    reporteEstudiantesUrl: "https://drive.google.com/file/d/1iWKoqJzadS4oMOD4QQHHk71ypITTWfJF/view",
-    reporteFamiliasUrl: "https://drive.google.com/file/d/1bJBUsji-bRdsPJ9-5CE_GnbcMbWFyFts/view",
-    interaccionCoach: "ALTA"
+    interaccionCoach: "MEDIA",
+    estiloDeVida: "Busca combinar rutina con flexibilidad, priorizando equilibrio entre lo personal y lo profesional. Valora la estabilidad pero también la posibilidad de innovar en su entorno laboral.",
+    rankingArquetiposPersonalidad: [
+      { tipo: "Emprendedor", nivel: "Alta", descripcion: "Disfruta liderar y motivar a otros. Tiene iniciativa y se enfoca en lograr resultados concretos." },
+      { tipo: "Social", nivel: "Alta", descripcion: "Disfruta ayudar a otros y trabajar en equipo. Se muestra empático/a y atento/a a las necesidades de quienes lo rodean." },
+      { tipo: "Investigativo", nivel: "Alta", descripcion: "Disfruta analizar información y buscar patrones. Le motiva resolver problemas complejos y entender cómo funcionan las cosas." },
+      { tipo: "Convencional", nivel: "Media", descripcion: "Valora la estructura, pero también puede adaptarse a situaciones más flexibles." },
+      { tipo: "Realista", nivel: "Baja", descripcion: "Prefiere actividades más conceptuales o abstractas que lo manual o repetitivo." },
+      { tipo: "Artístico", nivel: "Baja", descripcion: "Prefiere entornos más concretos o lógicos que los expresivos o artísticos." }
+    ],
+    orientacionIntereses: [
+      "El hacer práctico, el movimiento y la resolución de problemas con sus propias manos.",
+      "Las relaciones humanas, la empatía y el trabajo colaborativo."
+    ],
+    rankingInteligenciasMultiples: [
+      { tipo: "Lingüístico-verbal", nivel: "Alta" },
+      { tipo: "Lógico-matemática", nivel: "Alta" },
+      { tipo: "Corporal-kinestésica", nivel: "Alta" },
+      { tipo: "Musical", nivel: "Alta" },
+      { tipo: "Intrapersonal", nivel: "Alta" },
+      { tipo: "Visual-espacial", nivel: "Alta" },
+      { tipo: "Interpersonal", nivel: "Alta" },
+      { tipo: "Naturalista", nivel: "Media" }
+    ],
+    habilidadesCognitivas: [
+      { tipo: "Abstracto", nivel: "Media" },
+      { tipo: "Numérico", nivel: "Alta" },
+      { tipo: "Verbal", nivel: "Alta" }
+    ],
+    habilidadesBlandas: [
+      { tipo: "Gestión del tiempo", nivel: "Media" },
+      { tipo: "Estrategias y hábitos de estudio", nivel: "Media" },
+      { tipo: "Inteligencia emocional", nivel: "Alta" },
+      { tipo: "Perseverancia", nivel: "Media" }
+    ],
+    rankingAreaEstudio: [
+      { area: "Negocios", porcentaje: 37.5 },
+      { area: "Ciencias Sociales y Gobierno", porcentaje: 25 },
+      { area: "Medicina y Ciencias de la Salud", porcentaje: 25 },
+      { area: "Humanidades y Educación", porcentaje: 12.5 }
+    ],
+    carrerasRecomendadasPorIntereses: [
+      "Licenciado en Desarrollo de Talento y Cultura Organizacional (LDO)",
+      "Licenciado en Comunicación (LC)",
+      "Licenciado en Psicología Clínica y de la Salud (LPS)",
+      "Licenciado en Gobierno y Transformación Pública (LTP)"
+    ],
+    carrerasRecomendadasPorFortalezas: [
+      "Licenciado en Estrategia y Transformación de Negocios (LAE/BBA)",
+      "Licenciado en Contaduría Pública y Finanzas (LCPF/BFA)",
+      "Ingeniero en Tecnologías Computacionales (ITC/BCT)",
+      "Licenciado en Diseño (LDI)"
+    ]
   },
   {
     id: "A01667558",
     nombreCompleto: "Camila Belem García López",
-    correo: "A01667558@tec.mx",
+    correoInstitucional: "A01667558@tec.mx",
     semestre: "4",
-    curso: "PBB14",
+    grupoDivision: "PBB14",
+    campusSede: "Guadalajara",
+    mentor: "Ginger Spice",
+    correoPersonal: "camigarcia@gmail.com",
+    telefono: "5595765433",
+    carreraInteres1: "No manifiesta carrera de interés",
+    carreraInteres2: "No manifiesta carrera de interés",
+    carreraInteres3: "No manifiesta carrera de interés",
+    institucionInteres1: "No especifica institución de interés",
+    institucionInteres2: "No especifica institución de interés",
+    institucionInteres3: "No especifica institución de interés",
+    probabilidadElegirTec: "Falta completar actividad",
     estado: "Finalizado",
     avanceConocete: "Finalizado",
     avanceAutoconocimiento: "Finalizado",
     reporteEstudiantesUrl: "https://drive.google.com/file/d/1smXgHJ5NU5KSoVF_1bmzaDVxXi_LlGsE/view",
     reporteFamiliasUrl: "https://drive.google.com/file/d/1N0EHP6kuhabmqFyU-QdH7To2REOzq1TN/view",
-    interaccionCoach: "BAJA"
+    interaccionCoach: "BAJA",
+    estiloDeVida: "Busca combinar rutina con flexibilidad, priorizando equilibrio entre lo personal y lo profesional. Valora la estabilidad pero también la posibilidad de innovar en su entorno laboral.",
+    rankingArquetiposPersonalidad: [
+      { tipo: "Emprendedor", nivel: "Alta", descripcion: "Disfruta liderar y motivar a otros. Tiene iniciativa y se enfoca en lograr resultados concretos." },
+      { tipo: "Social", nivel: "Alta", descripcion: "Disfruta ayudar a otros y trabajar en equipo. Se muestra empático/a y atento/a a las necesidades de quienes lo rodean." },
+      { tipo: "Investigativo", nivel: "Alta", descripcion: "Disfruta analizar información y buscar patrones. Le motiva resolver problemas complejos y entender cómo funcionan las cosas." },
+      { tipo: "Convencional", nivel: "Media", descripcion: "Valora la estructura, pero también puede adaptarse a situaciones más flexibles." },
+      { tipo: "Realista", nivel: "Baja", descripcion: "Prefiere actividades más conceptuales o abstractas que lo manual o repetitivo." },
+      { tipo: "Artístico", nivel: "Baja", descripcion: "Prefiere entornos más concretos o lógicos que los expresivos o artísticos." }
+    ],
+    orientacionIntereses: [
+      "El hacer práctico, el movimiento y la resolución de problemas con sus propias manos.",
+      "Las relaciones humanas, la empatía y el trabajo colaborativo."
+    ],
+    rankingInteligenciasMultiples: [
+      { tipo: "Lingüístico-verbal", nivel: "Alta" },
+      { tipo: "Lógico-matemática", nivel: "Alta" },
+      { tipo: "Corporal-kinestésica", nivel: "Alta" },
+      { tipo: "Musical", nivel: "Alta" },
+      { tipo: "Intrapersonal", nivel: "Alta" },
+      { tipo: "Visual-espacial", nivel: "Alta" },
+      { tipo: "Interpersonal", nivel: "Alta" },
+      { tipo: "Naturalista", nivel: "Media" }
+    ],
+    habilidadesCognitivas: [
+      { tipo: "Abstracto", nivel: "Media" },
+      { tipo: "Numérico", nivel: "Alta" },
+      { tipo: "Verbal", nivel: "Alta" }
+    ],
+    habilidadesBlandas: [
+      { tipo: "Gestión del tiempo", nivel: "Media" },
+      { tipo: "Estrategias y hábitos de estudio", nivel: "Media" },
+      { tipo: "Inteligencia emocional", nivel: "Alta" },
+      { tipo: "Perseverancia", nivel: "Media" }
+    ],
+    rankingAreaEstudio: [
+      { area: "Negocios", porcentaje: 37.5 },
+      { area: "Ciencias Sociales y Gobierno", porcentaje: 25 },
+      { area: "Medicina y Ciencias de la Salud", porcentaje: 25 },
+      { area: "Humanidades y Educación", porcentaje: 12.5 }
+    ],
+    carrerasRecomendadasPorIntereses: [
+      "Licenciado en Desarrollo de Talento y Cultura Organizacional (LDO)",
+      "Licenciado en Comunicación (LC)",
+      "Licenciado en Psicología Clínica y de la Salud (LPS)",
+      "Licenciado en Gobierno y Transformación Pública (LTP)"
+    ],
+    carrerasRecomendadasPorFortalezas: [
+      "Licenciado en Estrategia y Transformación de Negocios (LAE/BBA)",
+      "Licenciado en Contaduría Pública y Finanzas (LCPF/BFA)",
+      "Ingeniero en Tecnologías Computacionales (ITC/BCT)",
+      "Licenciado en Diseño (LDI)"
+    ]
   },
   {
     id: "A01667153",
     nombreCompleto: "Juan Carlos Quintero Lacorte",
-    correo: "A01667153@tec.mx",
+    correoInstitucional: "A01667153@tec.mx",
     semestre: "4",
-    curso: "PBB14",
+    grupoDivision: "PBB14",
+    campusSede: "Guadalajara",
+    mentor: "Ginger Spice",
+    correoPersonal: "johnnycarloni@gmail.com",
+    telefono: "5595765432",
+    carreraInteres1: "No manifiesta carrera de interés",
+    carreraInteres2: "No manifiesta carrera de interés",
+    carreraInteres3: "No manifiesta carrera de interés",
+    institucionInteres1: "No especifica institución de interés",
+    institucionInteres2: "No especifica institución de interés",
+    institucionInteres3: "No especifica institución de interés",
+    probabilidadElegirTec: "Falta completar actividad",
     estado: "En progreso",
     avanceConocete: "Finalizado",
     avanceAutoconocimiento: "Finalizado",
     reporteEstudiantesUrl: "https://drive.google.com/file/d/19Vke7b7KrnodtFnKQKczywDfD0V3QAd0/view",
     reporteFamiliasUrl: "https://drive.google.com/file/d/16K2pZjVn7_lJv07bU0-FyNzO1VHj6_Hy/view",
-    interaccionCoach: "Sin comenzar"
-  },
-  {
-    id: "A01668227",
-    nombreCompleto: "Juan Pablo Rivera Ayala",
-    correo: "A01668227@tec.mx",
-    semestre: "4",
-    curso: "PBB14",
-    estado: "En progreso",
-    avanceConocete: "Finalizado",
-    avanceAutoconocimiento: "Finalizado",
-    reporteEstudiantesUrl: "",
-    reporteFamiliasUrl: "",
-    interaccionCoach: "Sin comenzar"
+    interaccionCoach: "Sin comenzar",
+    estiloDeVida: "Busca combinar rutina con flexibilidad, priorizando equilibrio entre lo personal y lo profesional. Valora la estabilidad pero también la posibilidad de innovar en su entorno laboral.",
+    rankingArquetiposPersonalidad: [
+      { tipo: "Emprendedor", nivel: "Alta", descripcion: "Disfruta liderar y motivar a otros. Tiene iniciativa y se enfoca en lograr resultados concretos." },
+      { tipo: "Social", nivel: "Alta", descripcion: "Disfruta ayudar a otros y trabajar en equipo. Se muestra empático/a y atento/a a las necesidades de quienes lo rodean." },
+      { tipo: "Investigativo", nivel: "Alta", descripcion: "Disfruta analizar información y buscar patrones. Le motiva resolver problemas complejos y entender cómo funcionan las cosas." },
+      { tipo: "Convencional", nivel: "Media", descripcion: "Valora la estructura, pero también puede adaptarse a situaciones más flexibles." },
+      { tipo: "Realista", nivel: "Baja", descripcion: "Prefiere actividades más conceptuales o abstractas que lo manual o repetitivo." },
+      { tipo: "Artístico", nivel: "Baja", descripcion: "Prefiere entornos más concretos o lógicos que los expresivos o artísticos." }
+    ],
+    orientacionIntereses: [
+      "El hacer práctico, el movimiento y la resolución de problemas con sus propias manos.",
+      "Las relaciones humanas, la empatía y el trabajo colaborativo."
+    ],
+    rankingInteligenciasMultiples: [
+      { tipo: "Lingüístico-verbal", nivel: "Alta" },
+      { tipo: "Lógico-matemática", nivel: "Alta" },
+      { tipo: "Corporal-kinestésica", nivel: "Alta" },
+      { tipo: "Musical", nivel: "Alta" },
+      { tipo: "Intrapersonal", nivel: "Alta" },
+      { tipo: "Visual-espacial", nivel: "Alta" },
+      { tipo: "Interpersonal", nivel: "Alta" },
+      { tipo: "Naturalista", nivel: "Media" }
+    ],
+    habilidadesCognitivas: [
+      { tipo: "Abstracto", nivel: "Media" },
+      { tipo: "Numérico", nivel: "Alta" },
+      { tipo: "Verbal", nivel: "Alta" }
+    ],
+    habilidadesBlandas: [
+      { tipo: "Gestión del tiempo", nivel: "Media" },
+      { tipo: "Estrategias y hábitos de estudio", nivel: "Media" },
+      { tipo: "Inteligencia emocional", nivel: "Alta" },
+      { tipo: "Perseverancia", nivel: "Media" }
+    ],
+    rankingAreaEstudio: [
+      { area: "Negocios", porcentaje: 37.5 },
+      { area: "Ciencias Sociales y Gobierno", porcentaje: 25 },
+      { area: "Medicina y Ciencias de la Salud", porcentaje: 25 },
+      { area: "Humanidades y Educación", porcentaje: 12.5 }
+    ],
+    carrerasRecomendadasPorIntereses: [
+      "Licenciado en Desarrollo de Talento y Cultura Organizacional (LDO)",
+      "Licenciado en Comunicación (LC)",
+      "Licenciado en Psicología Clínica y de la Salud (LPS)",
+      "Licenciado en Gobierno y Transformación Pública (LTP)"
+    ],
+    carrerasRecomendadasPorFortalezas: [
+      "Licenciado en Estrategia y Transformación de Negocios (LAE/BBA)",
+      "Licenciado en Contaduría Pública y Finanzas (LCPF/BFA)",
+      "Ingeniero en Tecnologías Computacionales (ITC/BCT)",
+      "Licenciado en Diseño (LDI)"
+    ]
   },
   {
     id: "A01667478",
     nombreCompleto: "Luna Michelle Garduño López",
-    correo: "A01667478@tec.mx",
+    correoInstitucional: "A01667478@tec.mx",
     semestre: "4",
-    curso: "PTM14",
+    grupoDivision: "PTM14",
+    campusSede: "Guadalajara",
+    mentor: "Ginger Spice",
+    correoPersonal: "moonmichelle@gmail.com",
+    telefono: "5595765452",
+    carreraInteres1: "No manifiesta carrera de interés",
+    carreraInteres2: "No manifiesta carrera de interés",
+    carreraInteres3: "No manifiesta carrera de interés",
+    institucionInteres1: "No especifica institución de interés",
+    institucionInteres2: "No especifica institución de interés",
+    institucionInteres3: "No especifica institución de interés",
+    probabilidadElegirTec: "Falta completar actividad",
     estado: "En progreso",
     avanceConocete: "Finalizado",
     avanceAutoconocimiento: "Finalizado",
     reporteEstudiantesUrl: "https://drive.google.com/file/d/1K30Kos6hwI8-uiK1HTFxAjEqfyEJ6v3P/view",
     reporteFamiliasUrl: "https://drive.google.com/file/d/19Eg5xzG8ycL-mS2hHNjJqUaBIiwos8uV/view",
-    interaccionCoach: "Sin comenzar"
-  },
-  {
-    id: "A01665505",
-    nombreCompleto: "Santiago Martínez",
-    correo: "A01665505@tec.mx",
-    semestre: "4",
-    curso: "PBB14",
-    estado: "En progreso",
-    avanceConocete: "Finalizado",
-    avanceAutoconocimiento: "Finalizado",
-    reporteEstudiantesUrl: "https://drive.google.com/file/d/1jWALl2lWHLpt2XZFFX7dlGh5GuvJDSFv/view",
-    reporteFamiliasUrl: "https://drive.google.com/file/d/1rAATgh1SYxuaidqXb-ndbLRphxXaGMMW/view",
-    interaccionCoach: "Sin comenzar"
-  },
-  {
-    id: "A01826584",
-    nombreCompleto: "Isabella Guzmán Rodríguez",
-    correo: "A01826584@tec.mx",
-    semestre: "4",
-    curso: "PBB14",
-    estado: "Finalizado",
-    avanceConocete: "Finalizado",
-    avanceAutoconocimiento: "Finalizado",
-    reporteEstudiantesUrl: "https://drive.google.com/file/d/1u1iGKUkVqooJ653N8FAWVxotaltRmEsv/view",
-    reporteFamiliasUrl: "https://drive.google.com/file/d/1tTw-c-rc8tNcYCgZHAVDfkqtK2m0uvHQ/view",
-    interaccionCoach: "BAJA"
-  }
-];
-
-// Mock Vocational Profiles
-export const vocationalProfiles: VocationalProfile[] = [
-  {
-    id: "A01826584",
-    correo: "A01826584@tec.mx",
-    nombre: "Isabella",
-    apellido: "Guzmán Rodríguez",
-    institucion: "Ciudad de México - Tec",
-    anioSemestre: "4",
-    grupoDivision: "PBB14",
+    interaccionCoach: "Sin comenzar",
     estiloDeVida: "Busca combinar rutina con flexibilidad, priorizando equilibrio entre lo personal y lo profesional. Valora la estabilidad pero también la posibilidad de innovar en su entorno laboral.",
     rankingArquetiposPersonalidad: [
       { tipo: "Emprendedor", nivel: "Alta", descripcion: "Disfruta liderar y motivar a otros. Tiene iniciativa y se enfoca en lograr resultados concretos." },
@@ -521,12 +1410,27 @@ export const vocationalProfiles: VocationalProfile[] = [
   },
   {
     id: "A01665669",
-    correo: "A01665669@tec.mx",
-    nombre: "Armando",
-    apellido: "Puente Romero",
-    institucion: "Ciudad de México - Tec",
-    anioSemestre: "4",
+    correoInstitucional: "A01665669@tec.mx",
+    nombreCompleto: "Armando Puente Romero",
+    campusSede: "Guadalajara",
+    mentor: "Ginger Spice",
+    semestre: "4",
     grupoDivision: "PBB14",
+    correoPersonal: "armanbridge@gmail.com",
+    telefono: "5595785452",
+    carreraInteres1: "No manifiesta carrera de interés",
+    carreraInteres2: "No manifiesta carrera de interés",
+    carreraInteres3: "No manifiesta carrera de interés",
+    institucionInteres1: "No especifica institución de interés",
+    institucionInteres2: "No especifica institución de interés",
+    institucionInteres3: "No especifica institución de interés",
+    probabilidadElegirTec: "Falta completar actividad",
+    estado: "En progreso",
+    avanceConocete: "Finalizado",
+    avanceAutoconocimiento: "Finalizado",
+    reporteEstudiantesUrl: "https://drive.google.com/file/d/1K30Kos6hwI8-uiK1HTFxAjEqfyEJ6v3P/view",
+    reporteFamiliasUrl: "https://drive.google.com/file/d/19Eg5xzG8ycL-mS2hHNjJqUaBIiwos8uV/view",
+    interaccionCoach: "Sin comenzar",
     estiloDeVida: "Busca combinar rutina con flexibilidad, priorizando equilibrio entre lo personal y lo profesional.",
     rankingArquetiposPersonalidad: [
       { tipo: "Convencional", nivel: "Alta", descripcion: "Se siente cómodo/a con rutinas, normas y procedimientos claros. Le gusta mantener todo ordenado y organizado." },
@@ -587,14 +1491,6 @@ export const getStudentById = (id: string): Student | undefined => {
   return students.find(s => s.id === id);
 };
 
-export const getTrackingById = (id: string): TrackingRecord | undefined => {
-  return trackingRecords.find(t => t.id === id);
-};
-
-export const getVocationalProfileById = (id: string): VocationalProfile | undefined => {
-  return vocationalProfiles.find(v => v.id === id);
-};
-
 // Statistics helpers
 export const getOverviewStats = () => {
   const total = students.length;
@@ -604,9 +1500,9 @@ export const getOverviewStats = () => {
   const noEspecifica = students.filter(s => s.probabilidadElegirTec.includes("No especifica")).length;
   const faltaCompletar = students.filter(s => s.probabilidadElegirTec.includes("Falta completar")).length;
 
-  const finalizados = trackingRecords.filter(t => t.estado === "Finalizado").length;
-  const enProgreso = trackingRecords.filter(t => t.estado === "En progreso").length;
-  const sinComenzar = trackingRecords.filter(t => t.estado === "Sin comenzar").length;
+  const finalizados = students.filter(t => t.estado === "Finalizado").length;
+  const enProgreso = students.filter(t => t.estado === "En progreso").length;
+  const sinComenzar = students.filter(t => t.estado === "Sin comenzar").length;
 
   return {
     total,
@@ -662,7 +1558,7 @@ export const getTopInstituciones = () => {
     .map(([name, count]) => ({ name, count }));
 };
 
-export const getCoachInteractionStats = (records: TrackingRecord[] = trackingRecords) => {
+export const getCoachInteractionStats = (records: Student[] = students) => {
   const sinComenzar = records.filter(t => t.interaccionCoach === "Sin comenzar").length;
   const baja = records.filter(t => t.interaccionCoach === "BAJA").length;
   const media = records.filter(t => t.interaccionCoach === "MEDIA").length;

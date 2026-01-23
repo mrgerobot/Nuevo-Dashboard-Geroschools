@@ -5,7 +5,7 @@ import { KPICard } from "@/components/ui/KPICard";
 import { StatusChip } from "@/components/ui/StatusChip";
 import { CoachInteractionChart } from "@/components/charts/CoachInteractionChart";
 import { Button } from "@/components/ui/button";
-import { trackingRecords, getCoachInteractionStats } from "@/data/mockData";
+import { students, getCoachInteractionStats } from "@/data/mockData";
 import { Search, Download, CheckCircle, Users, AlertCircle, Eye, ExternalLink, ChevronLeft, ChevronRight } from "lucide-react";
 import { useFilters } from "@/contexts/FiltersContext";
 import { Input } from "@/components/ui/input";
@@ -21,7 +21,7 @@ export default function Seguimiento() {
 
   useEffect(() => {setCurrentPage(1);}, [appliedFilters]);
   
-  const matchesFilters = (s: (typeof trackingRecords)[number]) => {
+  const matchesFilters = (s: (typeof students)[number]) => {
   
     if (appliedFilters.semestre) {
       if (String(s.semestre) !== appliedFilters.semestre) return false;
@@ -39,10 +39,10 @@ export default function Seguimiento() {
   };
   
 
-  const filteredStudents = trackingRecords.filter(
+  const filteredStudents = students.filter(
     (s) =>
       s.nombreCompleto.toLowerCase().includes(search.toLowerCase()) ||
-      s.correo.toLowerCase().includes(search.toLowerCase())
+      s.correoInstitucional.toLowerCase().includes(search.toLowerCase())
   ).filter(matchesFilters);
 
   const coachStats = getCoachInteractionStats(filteredStudents);
@@ -107,10 +107,12 @@ export default function Seguimiento() {
                 <th>Nombre completo</th>
                 <th>Correo</th>
                 <th>Semestre</th>
-                <th>Curso</th>
-                <th>Estado</th>
-                <th>Conócete</th>
-                <th>Autoconocimiento</th>
+                <th>Grupo</th>
+                <th>Campus</th>
+                <th>Carreras de interés</th> {/*lista de las carreras todo junto*/}
+                <th>Instituciones de interés</th> {/*lista de las instituciones todo junto*/}
+                <th>Probabilidad de elegir el TEC</th>
+                <th>Estado</th> {/*si terminó todo -> finalizado, si no se marca la(s) actividad(es) que le falta(n)*/}
                 <th>Reporte estudiantes</th>
                 <th>Reporte familias</th>
                 <th>Interacción coach</th>
@@ -121,18 +123,29 @@ export default function Seguimiento() {
               {paginatedRecords.map((record) => (
                 <tr key={record.id}>
                   <td className="font-medium">{record.nombreCompleto}</td>
-                  <td className="text-sm">{record.correo}</td>
+                  <td className="text-sm">{record.correoInstitucional}</td>
                   <td className="text-center">{record.semestre}</td>
-                  <td>{record.curso}</td>
+                  <td>{record.grupoDivision}</td>
+                  <td className="text-sm">{record.campusSede}</td>
+                  <td className="text-sm max-w-32 truncate" title="Carreras de interés">
+                    <p>{"- " + record.carreraInteres1}</p>
+                    <p>{"- " + record.carreraInteres2}</p>
+                    <p>{"- " + record.carreraInteres3}</p>
+                  </td>
+                  <td className="text-sm max-w-32 truncate" title="Instituciones de interés">
+                    <p>{"- " + record.institucionInteres1}</p>
+                    <p>{"- " + record.institucionInteres2}</p>
+                    <p>{"- " + record.institucionInteres3}</p>
+                  </td>
                   <td>
                     <StatusChip status={record.estado} />
                   </td>
-                  <td className="text-sm max-w-24 truncate" title={record.avanceConocete}>
+                  {/* <td className="text-sm max-w-24 truncate" title={record.avanceConocete}>
                     {record.avanceConocete}
                   </td>
                   <td className="text-sm max-w-24 truncate" title={record.avanceAutoconocimiento}>
                     {record.avanceAutoconocimiento}
-                  </td>
+                  </td> */}
                   <td>
                     {record.reporteEstudiantesUrl ? (
                       <a

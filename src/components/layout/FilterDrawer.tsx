@@ -21,6 +21,16 @@ interface FilterDrawerProps {
 }
 
 const filterOptions = {
+  estado: [
+    { value: "Sin comenzar", label: "Sin comenzar" },
+    { value: "En progreso", label: "En progreso" },
+    { value: "Finalizado", label: "Finalizado" },
+  ],
+  mentor: [
+    {value: "Burritony McGee", label: "Burritony McGee"},
+    {value: "Orenthal James Simpson", label: "Orenthal James Simpson"},
+    {value: "Ginger Spice", label: "Ginger Spice"}
+  ],
   campus: [
     { value: "Ciudad de México - Tec", label: "Ciudad de México - Tec" },
     { value: "Monterrey", label: "Monterrey" },
@@ -42,11 +52,6 @@ const filterOptions = {
     { value: "Baja", label: "Baja" },
     { value: "No especifica institución", label: "No especifica institución" },
     { value: "Falta completar actividad", label: "Falta completar actividad" },
-  ],
-  estado: [
-    { value: "Sin comenzar", label: "Sin comenzar" },
-    { value: "En progreso", label: "En progreso" },
-    { value: "Finalizado", label: "Finalizado" },
   ],
   interaccion: [
     { value: "Sin comenzar", label: "Sin comenzar" },

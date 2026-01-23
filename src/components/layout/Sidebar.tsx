@@ -1,7 +1,7 @@
 import { NavLink, useLocation } from "react-router-dom";
 import { LayoutDashboard, Users, ClipboardList, UserCircle, MessageCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
-import geroLogo from "@/assets/gero-logo.png";
+import geroLogo from "@/assets/gero-logo-2.png";
 
 const navigation = [
   { name: "Resumen", href: "/", icon: LayoutDashboard },
