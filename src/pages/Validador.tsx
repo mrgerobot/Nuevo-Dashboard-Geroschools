@@ -11,66 +11,65 @@ type ValidateResponse = {
   campus?: string | null;
 };
 
-const ENDPOINT = "https://staging2.geroeducacion.com/validacion/validar_email.php";
-
 export default function Validar() {
-  const navigate = useNavigate();
-  const location = useLocation() as any;
+    const navigate = useNavigate();
+    const location = useLocation() as any;
 
-  // If already authed, bounce into app
-  const existing = getAuth();
-  const [email, setEmail] = useState(existing?.email ?? "");
-  const [loading, setLoading] = useState(false);
-  const [msg, setMsg] = useState<string>("");
-  const [ok, setOk] = useState<boolean | null>(null);
+    // If already authed, bounce into app
+    const existing = getAuth();
+    const [email, setEmail] = useState(existing?.email ?? "");
+    const [loading, setLoading] = useState(false);
+    const [msg, setMsg] = useState<string>("");
+    const [ok, setOk] = useState<boolean | null>(null);
 
-  const from = location?.state?.from || "/resumen";
+    const from = location?.state?.from || "/resumen";
 
-  async function validate() {
-    setLoading(true);
-    setMsg("");
-    setOk(null);
+    async function validate() {
+        setLoading(true);
+        setMsg("");
+        setOk(null);
 
     try {
-      const body =
-        "email=" +
-        encodeURIComponent(email.trim()) +
-        "&url_origen=" +
-        encodeURIComponent(window.location.href);
+        const body =
+            "email=" +
+            encodeURIComponent(email.trim()) +
+            "&url_origen=" +
+            encodeURIComponent(window.location.href);
 
-      const res = await fetch(ENDPOINT, {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body,
-      });
-
-      const data = (await res.json()) as ValidateResponse;
-
-      if (data.status === "allowed") {
-        setOk(true);
-        setMsg("Email válido. Cargando...");
-
-        setAuth({
-          email: email.trim(),
-          campus: data.campus ?? null,
-          ts: Date.now(),
+        const res = await fetch("/api/validar-email", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, url_origen: window.location.href }),
         });
 
-        navigate(from, { replace: true });
-        return;
-      }
 
-      setOk(false);
-      setMsg(data.message || "No autorizado");
+        const data = (await res.json()) as ValidateResponse;
+
+        if (data.status === "allowed") {
+            setOk(true);
+            setMsg("Email válido. Cargando...");
+
+            setAuth({
+                email: email.trim(),
+                campus: data.campus ?? null,
+                ts: Date.now(),
+            });
+
+            navigate(from, { replace: true });
+            return;
+        }
+
+        setOk(false);
+        setMsg(data.message || "No autorizado");
     } catch {
-      setOk(false);
-      setMsg("Ocurrió un error. Inténtalo nuevamente.");
+        setOk(false);
+        setMsg("Ocurrió un error. Inténtalo nuevamente.");
     } finally {
-      setLoading(false);
+        setLoading(false);
     }
   }
 
-  return (
+   return (
     <div className="min-h-screen flex items-center justify-center p-6 bg-background">
       <Card className="w-full max-w-md">
         <CardHeader>
