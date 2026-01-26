@@ -1,5 +1,7 @@
 import React, { createContext, useContext, useMemo, useState } from "react";
 
+const LOCKED_CAMPUS = localStorage.getItem("user_campus") || "";
+
 export type Filters = Record<string, string>;
 
 type FiltersContextValue = {
@@ -13,11 +15,17 @@ type FiltersContextValue = {
 const FiltersContext = createContext<FiltersContextValue | null>(null);
 
 export function FiltersProvider({ children }: { children: React.ReactNode }) {
-  const [draftFilters, setDraftFilters] = useState<Filters>({});
-  const [appliedFilters, setAppliedFilters] = useState<Filters>({});
+
+  /* aca tengo que pedir que el campus sea el que el tutor tiene en la base de datos y se filtre todo por ese valor! */
+  const baseFilters: Filters = LOCKED_CAMPUS ? { campus: LOCKED_CAMPUS } : {};
+
+  const [draftFilters, setDraftFilters] = useState<Filters>(baseFilters);
+  const [appliedFilters, setAppliedFilters] = useState<Filters>(baseFilters);
+
 
   const setDraftFilter = (key: string, value: string) => {
-    setDraftFilters((prev) => ({ ...prev, [key]: value }));
+      if (key === "campus" && LOCKED_CAMPUS) return;
+      setDraftFilters((prev) => ({ ...prev, [key]: value }));
   };
 
   const applyFilters = () => {
@@ -25,8 +33,8 @@ export function FiltersProvider({ children }: { children: React.ReactNode }) {
   };
 
   const clearFilters = () => {
-    setDraftFilters({});
-    setAppliedFilters({});
+    setDraftFilters(baseFilters);
+    setAppliedFilters(baseFilters);
   };
 
   const value = useMemo(

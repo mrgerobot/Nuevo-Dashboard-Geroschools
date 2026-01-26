@@ -31,11 +31,11 @@ const filterOptions = {
     {value: "Orenthal James Simpson", label: "Orenthal James Simpson"},
     {value: "Ginger Spice", label: "Ginger Spice"}
   ],
-  campus: [
-    { value: "Ciudad de México - Tec", label: "Ciudad de México - Tec" },
-    { value: "Monterrey", label: "Monterrey" },
-    { value: "Guadalajara", label: "Guadalajara" },
-  ],
+  // campus: [
+  //   { value: "Ciudad de México - Tec", label: "Ciudad de México - Tec" },
+  //   { value: "Monterrey", label: "Monterrey" },
+  //   { value: "Guadalajara", label: "Guadalajara" },
+  // ],
   semestre: [
     { value: "1", label: "1er Semestre" },
     { value: "2", label: "2do Semestre" },
@@ -137,7 +137,7 @@ export function FilterDrawer({
 
           {/* Filter Controls */}
           <div className="flex-1 overflow-y-auto px-6 py-4 space-y-5 scrollbar-thin">
-            <div className="space-y-2">
+            {/* <div className="space-y-2">
               <Label className="text-sm font-medium text-foreground">Campus / Sede</Label>
               <Select
                 value={filters.campus || ""}
@@ -154,7 +154,7 @@ export function FilterDrawer({
                   ))}
                 </SelectContent>
               </Select>
-            </div>
+            </div> */}
 
             <div className="space-y-2">
               <Label className="text-sm font-medium text-foreground">Semestre</Label>
