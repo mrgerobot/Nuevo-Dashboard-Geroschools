@@ -1,6 +1,8 @@
 import React, { createContext, useContext, useMemo, useState } from "react";
+import {getAuth } from "@/auth/auth";
 
-const LOCKED_CAMPUS = localStorage.getItem("user_campus") || "";
+const auth = getAuth();
+const LOCKED_CAMPUS = auth?.campus ?? "";
 
 export type Filters = Record<string, string>;
 
