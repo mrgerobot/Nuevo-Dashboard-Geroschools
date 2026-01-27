@@ -374,7 +374,7 @@ export default function PerfilEstudiante() {
                     </p>
                   </div>
 
-                  {/* Internal Notes */}
+                  {/* Internal Notes
                   <div className="bg-card rounded-xl border border-border p-6">
                     <h3 className="font-semibold text-foreground mb-4">Notas internas</h3>
                     <Textarea 
@@ -384,7 +384,7 @@ export default function PerfilEstudiante() {
                     <Button className="mt-3 bg-primary hover:bg-primary/90 text-primary-foreground">
                       Guardar notas
                     </Button>
-                  </div>
+                  </div> */}
                 </>
               ) : (
                 <div className="bg-card rounded-xl border border-border p-6 text-center">

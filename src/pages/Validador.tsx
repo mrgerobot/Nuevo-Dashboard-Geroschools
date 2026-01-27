@@ -21,10 +21,25 @@ export default function Validar() {
     const [loading, setLoading] = useState(false);
     const [msg, setMsg] = useState<string>("");
     const [ok, setOk] = useState<boolean | null>(null);
+    const [entering, setEntering] = useState(false);
+
+      if (entering) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-background">
+        <div className="flex flex-col items-center gap-3">
+          <div className="h-10 w-10 animate-spin rounded-full border-4 border-muted border-t-primary" />
+          <p className="text-sm text-muted-foreground">
+            Cargando dashboard…
+          </p>
+        </div>
+      </div>
+    );
+  }
+
     
     async function validate() {
         setLoading(true);
-        setMsg("");
+        setMsg(""); 
         setOk(null);
 
     try {
@@ -46,7 +61,12 @@ export default function Validar() {
                 ts: Date.now(),
             });
 
-            navigate("/resumen", { replace: true });
+            setEntering(true);
+
+            setTimeout(() => {
+              navigate("/resumen", { replace: true });
+            }, 900);
+
             return;
         }
 
@@ -84,9 +104,13 @@ export default function Validar() {
             </p>
           )}
 
-          <Button className="w-full" onClick={validate} disabled={loading || !email.trim()}>
-            {loading ? "Validando..." : "Validar"}
+          <Button
+            className="w-full"
+            onClick={validate}
+            disabled={entering || loading || !email.trim()}>
+            {entering ? "Cargando..." : loading ? "Validando..." : "Validar"}
           </Button>
+
         </CardContent>
       </Card>
     </div>

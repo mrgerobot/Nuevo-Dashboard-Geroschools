@@ -31,11 +31,11 @@ const filterOptions = {
     {value: "Orenthal James Simpson", label: "Orenthal James Simpson"},
     {value: "Ginger Spice", label: "Ginger Spice"}
   ],
-  // campus: [
-  //   { value: "Ciudad de México - Tec", label: "Ciudad de México - Tec" },
-  //   { value: "Monterrey", label: "Monterrey" },
-  //   { value: "Guadalajara", label: "Guadalajara" },
-  // ],
+  campus: [
+    { value: "Ciudad de México - Tec", label: "Ciudad de México - Tec" },
+    { value: "Monterrey", label: "Monterrey" },
+    { value: "Guadalajara", label: "Guadalajara" },
+  ],
   semestre: [
     { value: "1", label: "1er Semestre" },
     { value: "2", label: "2do Semestre" },
