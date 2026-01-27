@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useMemo, useState } from "react";
+import React, { createContext, useContext, useEffect, useMemo, useState } from "react";
 import {getAuth } from "@/auth/auth";
 
 export type Filters = Record<string, string>;
@@ -6,7 +6,7 @@ export type Filters = Record<string, string>;
 type FiltersContextValue = {
   draftFilters: Filters;
   appliedFilters: Filters;
-  setDraftFilter: (key: string, value: string) => void;
+  setDraftFilter: (key: keyof Filters, value: string) => void;
   applyFilters: () => void;
   clearFilters: () => void;
 };
@@ -14,31 +14,52 @@ type FiltersContextValue = {
 const FiltersContext = createContext<FiltersContextValue | null>(null);
 
 export function FiltersProvider({ children }: { children: React.ReactNode }) {
+  // ✅ Always read auth at runtime (works in incognito after login too)
+  const getLockedCampus = () => {
+    if (typeof window === "undefined") return "";
+    return getAuth()?.campus ?? "";
+  };
 
-  const auth = getAuth();
-  const LOCKED_CAMPUS = auth?.campus ?? "";
-  console.log("El campus por el que hay que filtrar es: ", LOCKED_CAMPUS);
-  
-  /* aca tengo que pedir que el campus sea el que el tutor tiene en la base de datos y se filtre todo por ese valor! */
-  const baseFilters: Filters = LOCKED_CAMPUS ? { campus: LOCKED_CAMPUS } : {};
+  const makeBaseFilters = (): Filters => {
+    const campus = getLockedCampus();
+    return campus ? { campus } : {};
+  };
 
-  const [draftFilters, setDraftFilters] = useState<Filters>(baseFilters);
-  const [appliedFilters, setAppliedFilters] = useState<Filters>(baseFilters);
+  const [draftFilters, setDraftFilters] = useState<Filters>(() => makeBaseFilters());
+  const [appliedFilters, setAppliedFilters] = useState<Filters>(() => makeBaseFilters());
 
+  const setDraftFilter = (key: keyof Filters, value: string) => {
+    const locked = getLockedCampus();
+    if (key === "campus" && locked) return;
 
-  const setDraftFilter = (key: string, value: string) => {
-      if (key === "campus" && LOCKED_CAMPUS) return;
-      setDraftFilters((prev) => ({ ...prev, [key]: value }));
+    setDraftFilters((prev) => ({ ...prev, [key]: value }));
   };
 
   const applyFilters = () => {
-    setAppliedFilters(draftFilters);
+    const locked = getLockedCampus();
+    setAppliedFilters(locked ? { ...draftFilters, campus: locked } : draftFilters);
   };
 
   const clearFilters = () => {
-    setDraftFilters(baseFilters);
-    setAppliedFilters(baseFilters);
+    const base = makeBaseFilters();
+    setDraftFilters(base);
+    setAppliedFilters(base);
   };
+
+  useEffect(() => {
+    const syncCampus = () => {
+      const campus = getLockedCampus();
+      if (!campus) return;
+
+      setDraftFilters((prev) => ({ ...prev, campus }));
+      setAppliedFilters((prev) => ({ ...prev, campus }));
+    };
+
+    syncCampus();
+
+    window.addEventListener("gero:auth-updated", syncCampus);
+    return () => window.removeEventListener("gero:auth-updated", syncCampus);
+  }, []);
 
   const value = useMemo(
     () => ({ draftFilters, appliedFilters, setDraftFilter, applyFilters, clearFilters }),
@@ -50,6 +71,6 @@ export function FiltersProvider({ children }: { children: React.ReactNode }) {
 
 export function useFilters() {
   const ctx = useContext(FiltersContext);
-  if (!ctx) throw new Error("useFilters must be used within FiltersProvider");
+  if (!ctx) throw new Error("useFilters must be used within a FiltersProvider");
   return ctx;
 }
