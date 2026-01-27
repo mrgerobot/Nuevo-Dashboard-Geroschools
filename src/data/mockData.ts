@@ -1492,17 +1492,17 @@ export const getStudentById = (id: string): Student | undefined => {
 };
 
 // Statistics helpers
-export const getOverviewStats = () => {
-  const total = students.length;
-  const alta = students.filter(s => s.probabilidadElegirTec.includes("Alta")).length;
-  const media = students.filter(s => s.probabilidadElegirTec.includes("Media")).length;
-  const baja = students.filter(s => s.probabilidadElegirTec.includes("Baja")).length;
-  const noEspecifica = students.filter(s => s.probabilidadElegirTec.includes("No especifica")).length;
-  const faltaCompletar = students.filter(s => s.probabilidadElegirTec.includes("Falta completar")).length;
+export const getOverviewStats = (rows: typeof students) => {
+  const total = rows.length;
+  const alta = rows.filter(s => s.probabilidadElegirTec.includes("Alta")).length;
+  const media = rows.filter(s => s.probabilidadElegirTec.includes("Media")).length;
+  const baja = rows.filter(s => s.probabilidadElegirTec.includes("Baja")).length;
+  const noEspecifica = rows.filter(s => s.probabilidadElegirTec.includes("No especifica")).length;
+  const faltaCompletar = rows.filter(s => s.probabilidadElegirTec.includes("Falta completar")).length;
 
-  const finalizados = students.filter(t => t.estado === "Finalizado").length;
-  const enProgreso = students.filter(t => t.estado === "En progreso").length;
-  const sinComenzar = students.filter(t => t.estado === "Sin comenzar").length;
+  const finalizados = rows.filter(t => t.estado === "Finalizado").length;
+  const enProgreso = rows.filter(t => t.estado === "En progreso").length;
+  const sinComenzar = rows.filter(t => t.estado === "Sin comenzar").length;
 
   return {
     total,

@@ -4,13 +4,28 @@ import { ProbabilityChart } from "@/components/charts/ProbabilityChart";
 import { ActivityProgressChart } from "@/components/charts/ActivityProgressChart";
 import { TopCarrerasChart } from "@/components/charts/TopCarrerasChart";
 import { TopInstitucionesChart } from "@/components/charts/TopInstitucionesChart";
-import { getOverviewStats, getTopCarreras, getTopInstituciones } from "@/data/mockData";
+import { students, getOverviewStats, getTopCarreras, getTopInstituciones } from "@/data/mockData";
 import { Users, TrendingUp, Target, AlertCircle } from "lucide-react";
+import { useFilters } from "@/contexts/FiltersContext";
+
 
 export default function Resumen() {
-  const stats = getOverviewStats();
+  const { appliedFilters } = useFilters();
+  const campus = appliedFilters.campus;
+  
+  const norm = (v: string) =>
+    v.trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+
+  const scopedStudents = campus
+    ? students.filter((s) => norm(s.campusSede) === norm(campus))
+    : students;
+
+  const stats = getOverviewStats(scopedStudents);
+
   const topCarreras = getTopCarreras();
   const topInstituciones = getTopInstituciones();
+
+  
 
   return (
     <DashboardLayout title="Resumen" showFilter={false}>
