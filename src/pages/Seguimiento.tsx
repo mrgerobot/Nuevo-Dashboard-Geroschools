@@ -20,6 +20,10 @@ export default function Seguimiento() {
 
 
   useEffect(() => {setCurrentPage(1);}, [appliedFilters]);
+
+  console.log("VALIDATOR campus:", appliedFilters.campus);
+  console.log("DATA campuses sample:", Array.from(new Set(students.map(s => s.campusSede))).slice(0, 50));
+
   
   const matchesFilters = (s: (typeof students)[number]) => {
   
