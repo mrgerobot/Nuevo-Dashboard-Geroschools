@@ -38,6 +38,10 @@ export default function Seguimiento() {
     if (appliedFilters.interaccion) {
       if (s.interaccionCoach !== appliedFilters.interaccion) return false;
     }
+
+    if (appliedFilters.campus){
+      if(s.campusSede !== appliedFilters.campus) return false;
+    }
   
     return true;
   };
