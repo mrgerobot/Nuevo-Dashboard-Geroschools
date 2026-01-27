@@ -54,13 +54,15 @@ export function Sidebar() {
 
       {/* Help Section */}
       <div className="px-4 pb-6">
+        <a href={url} target="_blank" rel="noopener noreferrer">
         <p className="text-sidebar-fg/70 text-sm italic mb-3">
           ¿Necesitas asistencia?
         </p>
         <button className="flex items-center gap-2 bg-sidebar-fg/10 hover:bg-sidebar-fg/20 text-sidebar-fg px-4 py-2.5 rounded-lg transition-colors w-full">
           <MessageCircle className="h-4 w-4" />
-          <span className="font-medium text-sm"><a href={url} target="_blank" rel="noopener noreferrer">¡Contáctanos!</a></span>
+          <span className="font-medium text-sm">¡Contáctanos!</span>
         </button>
+        </a>
       </div>
     </aside>
   );
