@@ -1,9 +1,6 @@
 import React, { createContext, useContext, useMemo, useState } from "react";
 import {getAuth } from "@/auth/auth";
 
-const auth = getAuth();
-const LOCKED_CAMPUS = auth?.campus ?? "";
-
 export type Filters = Record<string, string>;
 
 type FiltersContextValue = {
@@ -18,6 +15,10 @@ const FiltersContext = createContext<FiltersContextValue | null>(null);
 
 export function FiltersProvider({ children }: { children: React.ReactNode }) {
 
+  const auth = getAuth();
+  const LOCKED_CAMPUS = auth?.campus ?? "";
+  console.log("El campus por el que hay que filtrar es: ", LOCKED_CAMPUS);
+  
   /* aca tengo que pedir que el campus sea el que el tutor tiene en la base de datos y se filtre todo por ese valor! */
   const baseFilters: Filters = LOCKED_CAMPUS ? { campus: LOCKED_CAMPUS } : {};
 

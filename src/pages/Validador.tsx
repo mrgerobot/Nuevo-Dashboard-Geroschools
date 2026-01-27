@@ -61,6 +61,8 @@ export default function Validar() {
                 ts: Date.now(),
             });
 
+            window.dispatchEvent(new Event("gero:auth-updated"));
+
             setEntering(true);
 
             setTimeout(() => {
