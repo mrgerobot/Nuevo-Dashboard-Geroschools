@@ -9,6 +9,8 @@ import { students, getCoachInteractionStats } from "@/data/mockData";
 import { Search, Download, CheckCircle, Users, AlertCircle, Eye, ExternalLink, ChevronLeft, ChevronRight } from "lucide-react";
 import { useFilters } from "@/contexts/FiltersContext";
 import { Input } from "@/components/ui/input";
+import { exportTableToExcel } from "@/lib/utils";
+
 
 const ITEMS_PER_PAGE = 8;
 
@@ -17,7 +19,6 @@ export default function Seguimiento() {
   const [currentPage, setCurrentPage] = useState(1);
   const { appliedFilters } = useFilters();
   const [search, setSearch] = useState("");
-
 
   useEffect(() => {setCurrentPage(1);}, [appliedFilters]);
 
@@ -62,6 +63,23 @@ export default function Seguimiento() {
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
   const paginatedRecords = filteredStudents.slice(startIndex, startIndex + ITEMS_PER_PAGE);
 
+  const exportColumns = [
+    { key: "semestre", header: "Semestre" },
+    { key: "grupoDivision", header: "Grupo" },
+    { key: "campusSede", header: "Campus" },
+    { key: "mentor", header: "Mentor" },
+    { key: "probabilidadElegirTec", header: "Probabilidad elegir TEC" },
+    { key: "estado", header: "Estado" },
+  ];
+
+  const handleExport = () => {
+  exportTableToExcel(
+    filteredStudents, // <-- exactly what the table is using
+    exportColumns as any,
+    `seguimiento_${new Date().toISOString().slice(0, 10)}`
+  );
+};
+
   return (
     <DashboardLayout title="Seguimiento">
       {/* Mini KPIs */}
@@ -100,7 +118,7 @@ export default function Seguimiento() {
             className="pl-10"
           />
         </div>
-        <Button variant="outline" className="border-border">
+        <Button onClick={handleExport} disabled={!filteredStudents.length} variant="outline" className="border-border">
           <Download className="h-4 w-4 mr-2" />
           Exportar datos
         </Button>
