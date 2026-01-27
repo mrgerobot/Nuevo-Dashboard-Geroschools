@@ -2,6 +2,11 @@ import { NavLink, useLocation } from "react-router-dom";
 import { LayoutDashboard, Users, ClipboardList, UserCircle, MessageCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
 import geroLogo from "@/assets/gero-logo-2.png";
+import { getAuth } from "@/auth/auth";
+
+const auth = getAuth();
+const message = `Hola, soy ${auth?.email ?? "un tutor"} y necesito asistencia con el dashboard.`;
+const url = `https://wa.me/5491162204594?text=${encodeURIComponent(message)}`;
 
 const navigation = [
   { name: "Resumen", href: "/resumen", icon: LayoutDashboard },
@@ -54,7 +59,7 @@ export function Sidebar() {
         </p>
         <button className="flex items-center gap-2 bg-sidebar-fg/10 hover:bg-sidebar-fg/20 text-sidebar-fg px-4 py-2.5 rounded-lg transition-colors w-full">
           <MessageCircle className="h-4 w-4" />
-          <span className="font-medium text-sm">¡Contáctanos!</span>
+          <span className="font-medium text-sm"><a href={url} target="_blank" rel="noopener noreferrer">¡Contáctanos!</a></span>
         </button>
       </div>
     </aside>
