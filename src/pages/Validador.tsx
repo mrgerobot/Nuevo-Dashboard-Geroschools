@@ -21,27 +21,18 @@ export default function Validar() {
     const [loading, setLoading] = useState(false);
     const [msg, setMsg] = useState<string>("");
     const [ok, setOk] = useState<boolean | null>(null);
-
-    const from = location?.state?.from || "/resumen";
-
+    
     async function validate() {
         setLoading(true);
         setMsg("");
         setOk(null);
 
     try {
-        const body =
-            "email=" +
-            encodeURIComponent(email.trim()) +
-            "&url_origen=" +
-            encodeURIComponent(window.location.href);
-
         const res = await fetch("/api/validar-email", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ email, url_origen: window.location.href }),
         });
-
 
         const data = (await res.json()) as ValidateResponse;
 
@@ -55,7 +46,7 @@ export default function Validar() {
                 ts: Date.now(),
             });
 
-            navigate(from, { replace: true });
+            navigate("/resumen", { replace: true });
             return;
         }
 

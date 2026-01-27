@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import geroLogo from "@/assets/gero-logo-2.png";
 
 const navigation = [
-  { name: "Resumen", href: "/", icon: LayoutDashboard },
+  { name: "Resumen", href: "/resumen", icon: LayoutDashboard },
   // { name: "Población", href: "/poblacion", icon: Users },
   { name: "Seguimiento", href: "/seguimiento", icon: ClipboardList },
   { name: "Perfil del estudiante", href: "/estudiante", icon: UserCircle },

@@ -26,10 +26,7 @@ const App = () => (
             <Route path="/validar" element={<Validar />} />
 
             {/* ✅ Default route: if authed go resumen, else go validar */}
-            <Route
-              path="/"
-              element={<Navigate to={getAuth() ? "/resumen" : "/validar"} replace />}
-            />
+            <Route path="/" element={<Navigate to={getAuth() ? "/resumen" : "/validar"} replace />}/>
 
             {/* ✅ Protected routes */}
             <Route
