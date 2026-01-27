@@ -7,38 +7,39 @@ import { saveAs } from "file-saver";
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
-
-export type ExportColumn<T> = {
-  key: keyof T;
-  header: string;
-  format?: (value: any, row: T) => any;
-};
-
-export function exportTableToExcel<T>(
+export function exportAllColumnsToExcel<T extends Record<string, any>>(
   rows: T[],
-  columns: ExportColumn<T>[],
-  filename: string
+  filename: string,
+  options?: {
+    excludeKeys?: (keyof T)[];
+    sheetName?: string;
+  }
 ) {
+  const exclude = new Set<string>((options?.excludeKeys ?? []).map(String));
+  const sheetName = options?.sheetName ?? "Datos";
+
+  // Build a stable header order from the first row
+  const headers =
+    rows.length > 0
+      ? (Object.keys(rows[0]).filter((k) => !exclude.has(k)) as (keyof T)[])
+      : [];
+
   const data = rows.map((row) => {
     const out: Record<string, any> = {};
-    columns.forEach((col) => {
-      const raw = row[col.key];
-      out[col.header] = col.format ? col.format(raw, row) : raw;
-    });
+    for (const h of headers) out[String(h)] = row[h];
     return out;
   });
 
-  const worksheet = XLSX.utils.json_to_sheet(data);
-  const workbook = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(workbook, worksheet, "Datos");
-
-  const buffer = XLSX.write(workbook, {
-    bookType: "xlsx",
-    type: "array",
+  const ws = XLSX.utils.json_to_sheet(data, {
+    header: headers.map(String),
   });
 
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, sheetName);
+
+  const buf = XLSX.write(wb, { bookType: "xlsx", type: "array" });
   saveAs(
-    new Blob([buffer], {
+    new Blob([buf], {
       type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
     }),
     filename.endsWith(".xlsx") ? filename : `${filename}.xlsx`

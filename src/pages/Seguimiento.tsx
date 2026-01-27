@@ -9,7 +9,7 @@ import { students, getCoachInteractionStats } from "@/data/mockData";
 import { Search, Download, CheckCircle, Users, AlertCircle, Eye, ExternalLink, ChevronLeft, ChevronRight } from "lucide-react";
 import { useFilters } from "@/contexts/FiltersContext";
 import { Input } from "@/components/ui/input";
-import { exportTableToExcel } from "@/lib/utils";
+import { exportAllColumnsToExcel } from "@/lib/utils";
 
 
 const ITEMS_PER_PAGE = 8;
@@ -73,12 +73,17 @@ export default function Seguimiento() {
   ];
 
   const handleExport = () => {
-  exportTableToExcel(
-    filteredStudents, // <-- exactly what the table is using
-    exportColumns as any,
-    `seguimiento_${new Date().toISOString().slice(0, 10)}`
-  );
-};
+    exportAllColumnsToExcel(
+      filteredStudents, // ✅ all filtered rows
+      `seguimiento_${new Date().toISOString().slice(0, 10)}.xlsx`,
+      {
+        // optional: if you want to exclude internal keys
+        excludeKeys: [], // e.g. ["id"] as any
+        sheetName: "Seguimiento",
+      }
+    );
+  };
+
 
   return (
     <DashboardLayout title="Seguimiento">
