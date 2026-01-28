@@ -18,61 +18,19 @@ interface FilterDrawerProps {
   onFilterChange: (key: string, value: string) => void;
   onApply: () => void;
   onClear: () => void;
+
+  // NEW
+  filterOptions: Record<string, { value: string; label: string }[]>;
 }
 
-const filterOptions = {
-  estado: [
-    { value: "Sin comenzar", label: "Sin comenzar" },
-    { value: "En progreso", label: "En progreso" },
-    { value: "Finalizado", label: "Finalizado" },
-  ],
-  mentor: [
-    {value: "Burritony McGee", label: "Burritony McGee"},
-    {value: "Orenthal James Simpson", label: "Orenthal James Simpson"},
-    {value: "Ginger Spice", label: "Ginger Spice"}
-  ],
-  campus: [
-    { value: "Ciudad de México - Tec", label: "Ciudad de México - Tec" },
-    { value: "Toluca - Tec", label: "Toluca - Tec" },
-    { value: "Guadalajara", label: "Guadalajara" },
-  ],
-  semestre: [
-    { value: "1", label: "1er Semestre" },
-    { value: "2", label: "2do Semestre" },
-    { value: "3", label: "3er Semestre" },
-    { value: "4", label: "4to Semestre" },
-  ],
-  grupo: [
-    { value: "PBB14", label: "PBB14" },
-    { value: "PTM14", label: "PTM14" },
-  ],
-  probabilidad: [
-    { value: "Alta", label: "Alta" },
-    { value: "Media", label: "Media" },
-    { value: "Baja", label: "Baja" },
-    { value: "No especifica institución", label: "No especifica institución" },
-    { value: "Falta completar actividad", label: "Falta completar actividad" },
-  ],
-  interaccion: [
-    { value: "Sin comenzar", label: "Sin comenzar" },
-    { value: "Baja", label: "Baja" },
-    { value: "Media", label: "Media" },
-    { value: "Alta", label: "Alta" },
-  ],
-};
-
-
-const getFilterLabel = (key: string, value: string) => {
-  const options = (filterOptions as Record<
-    string,
-    { value: string; label: string }[]
-  >)[key];
-
+const getFilterLabel = (
+  filterOptions: Record<string, { value: string; label: string }[]>,
+  key: string,
+  value: string
+) => {
+  const options = filterOptions[key];
   return options?.find((o) => o.value === value)?.label ?? value;
 };
-
-
-
 
 export function FilterDrawer({
   isOpen,
@@ -81,6 +39,7 @@ export function FilterDrawer({
   onFilterChange,
   onApply,
   onClear,
+  filterOptions,
 }: FilterDrawerProps) {
   const activeFilters = Object.entries(filters).filter(([_, v]) => v);
 
@@ -124,7 +83,7 @@ export function FilterDrawer({
                     variant="secondary"
                     className="bg-secondary text-secondary-foreground"
                   >
-                    {getFilterLabel(key, value)}
+                    {getFilterLabel(filterOptions, key, value)}
                     <button
                       onClick={() => onFilterChange(key, "")}
                       className="ml-1 hover:text-primary"

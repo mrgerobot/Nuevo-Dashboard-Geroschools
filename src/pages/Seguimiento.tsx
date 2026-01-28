@@ -153,20 +153,20 @@ export default function Seguimiento() {
                   <td className="text-sm">{record.campusSede}</td>
                   <td className="text-sm">{record.mentor}</td>
                   <td className="text-sm max-w-32" title="Carreras de interés">
-                    {record.carreraInteres1 !== "No manifiesta carrera de interés" && (
+                    {record.carreraInteres1 !== "No manifiesta carrera de interés" && record.carreraInteres1 !== "" && (
                       <p>1. {record.carreraInteres1}</p>
                     )}
 
-                    {record.carreraInteres2 !== "No manifiesta carrera de interés" && (
+                    {record.carreraInteres2 !== "No manifiesta carrera de interés" && record.carreraInteres2 !== "" && (
                       <p>2. {record.carreraInteres2}</p>
                     )}
                   </td>
                   <td className="text-sm max-w-32" title="Instituciones de interés">
-                    {record.institucionInteres1 !== "No especifica institución de interés" && (
+                    {record.institucionInteres1 !== "No especifica institución de interés" && record.institucionInteres1 !== "" && (
                       <p>1. {record.institucionInteres1}</p>
                     )}
 
-                    {record.institucionInteres2 !== "No especifica institución de interés" && (
+                    {record.institucionInteres2 !== "No especifica institución de interés" && record.institucionInteres2 !== "" && (
                       <p>2. {record.institucionInteres2}</p>
                     )}
                   </td>

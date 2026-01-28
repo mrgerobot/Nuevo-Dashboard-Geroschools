@@ -19,7 +19,7 @@ export function DashboardLayout({
 
 }: DashboardLayoutProps) {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
-  const { draftFilters, setDraftFilter, applyFilters, clearFilters } = useFilters();
+  const { draftFilters, setDraftFilter, applyFilters, clearFilters, filterOptions } = useFilters();
 
   const handleApplyFilters = () => {
     applyFilters();       // <-- THIS is where appliedFilters is updated
@@ -52,6 +52,7 @@ export function DashboardLayout({
           onFilterChange={setDraftFilter}
           onApply={handleApplyFilters}
           onClear={handleClearFilters}
+          filterOptions={filterOptions}
         />
       )}
     </div>

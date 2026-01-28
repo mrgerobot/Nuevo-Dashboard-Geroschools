@@ -1,5 +1,9 @@
 import React, { createContext, useContext, useEffect, useMemo, useState } from "react";
-import {getAuth } from "@/auth/auth";
+import { getAuth } from "@/auth/auth";
+
+// NEW
+import { useStudents } from "@/contexts/StudentsProvider";
+import { buildFilterOptionsFromStudents, type FilterOptionsMap } from "@/lib/filters/buildFilterOptions";
 
 export type Filters = Record<string, string>;
 
@@ -9,6 +13,9 @@ type FiltersContextValue = {
   setDraftFilter: (key: keyof Filters, value: string) => void;
   applyFilters: () => void;
   clearFilters: () => void;
+
+  // NEW
+  filterOptions: FilterOptionsMap;
 };
 
 const FiltersContext = createContext<FiltersContextValue | null>(null);
@@ -61,9 +68,24 @@ export function FiltersProvider({ children }: { children: React.ReactNode }) {
     return () => window.removeEventListener("gero:auth-updated", syncCampus);
   }, []);
 
+  // NEW: dynamic filter options from students dataset
+  const { students } = useStudents();
+
+  const filterOptions = useMemo(() => {
+    const opts = buildFilterOptionsFromStudents(students);
+
+    // Respect campus lock: only show that campus in options
+    const locked = getLockedCampus();
+    if (locked) {
+      opts.campus = [{ value: locked, label: locked }];
+    }
+
+    return opts;
+  }, [students]);
+
   const value = useMemo(
-    () => ({ draftFilters, appliedFilters, setDraftFilter, applyFilters, clearFilters }),
-    [draftFilters, appliedFilters]
+    () => ({ draftFilters, appliedFilters, setDraftFilter, applyFilters, clearFilters, filterOptions }),
+    [draftFilters, appliedFilters, filterOptions]
   );
 
   return <FiltersContext.Provider value={value}>{children}</FiltersContext.Provider>;
