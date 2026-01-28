@@ -139,7 +139,7 @@ export default function Seguimiento() {
                 <th>Estado</th> {/*si terminó todo -> finalizado, si no se marca la(s) actividad(es) que le falta(n)*/}
                 <th>Reporte estudiantes</th>
                 <th>Reporte familias</th>
-                <th>Interacción coach</th>
+                {/* <th>Interacción coach</th> */}
                 <th>Acciones</th>
               </tr>
             </thead>

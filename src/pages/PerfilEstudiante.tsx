@@ -222,12 +222,7 @@ export default function PerfilEstudiante() {
                   <div className="bg-card rounded-xl border border-border p-6">
                     <h3 className="font-semibold text-foreground mb-3">Orientación de intereses</h3>
                     <ul className="space-y-2">
-                      {vocational.orientacionIntereses.map((int, index) => (
-                        <li key={index} className="text-sm text-muted-foreground flex items-start gap-2">
-                          <span className="text-primary">•</span>
-                          {int}
-                        </li>
-                      ))}
+                      {vocational.orientacionIntereses}
                     </ul>
                   </div>
 
