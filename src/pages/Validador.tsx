@@ -4,7 +4,7 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { setAuth, getAuth } from "@/auth/auth";
-import { useStudents } from "@/contexts/StudentsProvider";
+import { useStudents} from "@/contexts/StudentsProvider";
 
 type ValidateResponse = {
   status: "allowed" | "denied" | "error";
@@ -21,6 +21,8 @@ export default function Validar() {
   const [msg, setMsg] = useState<string>("");
   const [ok, setOk] = useState<boolean | null>(null);
   const [entering, setEntering] = useState(false);
+  const { refresh } = useStudents();
+
 
   if (entering) {
     return (
@@ -58,6 +60,10 @@ export default function Validar() {
         });
       
         window.dispatchEvent(new Event("gero:auth-updated"));
+
+        try {
+          await refresh();
+        } catch {}
       
         navigate("/resumen", { replace: true });
         return;
