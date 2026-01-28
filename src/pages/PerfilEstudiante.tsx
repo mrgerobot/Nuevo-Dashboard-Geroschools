@@ -7,8 +7,16 @@ import { ArrowLeft, Mail, Phone, MapPin, GraduationCap, BookOpen, MessageSquare,
 import { useStudents } from "@/contexts/StudentsProvider";
 import type { Student } from "@/data/studentsStore";
 import { Input } from "@/components/ui/input";
-import React, { createContext, useContext, useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useFilters } from "@/contexts/FiltersContext";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { Info } from "lucide-react";
+
 
 
 function normalize(s: unknown) {
@@ -30,7 +38,7 @@ function BuscarEstudianteInline({
   onPick: (id: string) => void;
 }) {
   const [q, setQ] = useState("");
-
+  const [open, setOpen] = useState(false);
   const nq = normalize(q);
 
   const results = useMemo(() => {
@@ -48,16 +56,35 @@ function BuscarEstudianteInline({
   return (
     <div className="bg-card rounded-xl border border-border p-6">
       <div className="flex items-start justify-between gap-4">
-        <div>
-          <h2 className="text-lg font-semibold text-foreground">Buscar estudiante</h2>
-          <p className="text-sm text-muted-foreground">
-            Ingresa la <b>matrícula</b>, el <b>correo</b> o el <b>nombre</b>.
-            <br />
-            <span className="text-xs">
-              También puedes verlo desde la tabla, presionando el botón de <b>Ver</b>.
-            </span>
-          </p>
-        </div>
+        <div className="flex items-center gap-2">
+  <h2 className="text-lg font-semibold text-foreground">
+    Buscar estudiante
+  </h2>
+
+  <TooltipProvider>
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <button
+          type="button"
+          className="text-muted-foreground hover:text-foreground transition"
+          aria-label="Información sobre búsqueda"
+        >
+          <Info size={16} />
+        </button>
+      </TooltipTrigger>
+
+      <TooltipContent side="right" className="max-w-xs text-sm">
+        <p>
+          - Puedes buscar por <b>matrícula</b>, <b>correo</b> o <b>nombre</b>.
+        </p>
+        <p className="mt-1 text-xs text-muted-foreground">
+          - También puedes acceder al perfil desde la tabla,
+          usando el botón <b>Ver</b>.
+        </p>
+      </TooltipContent>
+    </Tooltip>
+  </TooltipProvider>
+</div>
 
         {selectedId ? (
           <Button variant="outline" onClick={() => setQ("")}>
@@ -69,20 +96,32 @@ function BuscarEstudianteInline({
       <div className="mt-4">
         <Input
           value={q}
-          onChange={(e) => setQ(e.target.value)}
-          placeholder="Ej: A01712781, a01712781@tec.mx, Iñaki Dorantes…"
-        />
+          onChange={(e) => {
+            const v = e.target.value;
+            setQ(v);
+            setOpen(v.trim().length >= 2);
+          }}
+          onFocus={() => {
+            if (q.trim().length >= 2) setOpen(true);
+          }}
+          onBlur={() => {
+            // small delay so click on a result still registers
+            setTimeout(() => setOpen(false), 120);
+          }}
+          placeholder="Buscar por matrícula, correo o nombre…"
+          />
       </div>
-
+      {open && (
       <div className="mt-3 max-h-72 overflow-auto border rounded-lg">
         {nq.length < 2 ? (
           <div className="p-3 text-sm text-muted-foreground">
-            Escribe al menos 2 caracteres.
+            <i>Escribe al menos 2 caracteres.</i>
           </div>
+
         ) : results.length === 0 ? (
-          <div className="p-3 text-sm text-muted-foreground">
+          <p className="text-muted-foreground">
             No encontramos coincidencias.
-          </div>
+          </p>
         ) : (
           results.map((s) => (
             <button
@@ -91,7 +130,11 @@ function BuscarEstudianteInline({
                 "w-full text-left p-3 hover:bg-muted flex flex-col gap-0.5",
                 selectedId === s.id ? "bg-muted" : "",
               ].join(" ")}
-              onClick={() => onPick(s.id)}
+              onClick={() => {
+                onPick(s.id);
+                setOpen(false);
+                setQ(""); 
+              }}
             >
               <div className="font-medium">{s.nombreCompleto}</div>
               <div className="text-xs text-muted-foreground">
@@ -100,7 +143,7 @@ function BuscarEstudianteInline({
             </button>
           ))
         )}
-      </div>
+      </div> )}
     </div>
   );
 }
@@ -117,7 +160,6 @@ export default function PerfilEstudiante() {
   const navigate = useNavigate();
   const { appliedFilters } = useFilters();
   const [currentPage, setCurrentPage] = useState(1);
-
 
   useEffect(() => {setCurrentPage(1);}, [appliedFilters]);
 
@@ -156,10 +198,9 @@ export default function PerfilEstudiante() {
 
   return (
     <DashboardLayout title="Perfil del estudiante" showFilter={false}>
-      {/* Back Button */}
       <Button
         variant="ghost"
-        onClick={() => navigate(-1)}
+        onClick={() => navigate(`/estudiante`)}
         className="mb-6 text-muted-foreground hover:text-foreground"
       >
         <ArrowLeft className="h-4 w-4 mr-2" />
