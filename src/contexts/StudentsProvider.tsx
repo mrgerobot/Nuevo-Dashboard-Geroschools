@@ -6,7 +6,7 @@ type StudentsCtx = {
   loading: boolean;
   error: string | null;
   refresh: () => Promise<void>;
-};
+};  
 
 const Ctx = createContext<StudentsCtx | null>(null);
 
