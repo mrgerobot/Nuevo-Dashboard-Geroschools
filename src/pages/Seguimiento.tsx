@@ -3,18 +3,20 @@ import { useNavigate } from "react-router-dom";
 import { DashboardLayout } from "@/components/layout/DashboardLayout";
 import { KPICard } from "@/components/ui/KPICard";
 import { StatusChip } from "@/components/ui/StatusChip";
-import { CoachInteractionChart } from "@/components/charts/CoachInteractionChart";
 import { Button } from "@/components/ui/button";
-import { getStudents  } from "@/data/studentsStore";
-import { Search, Download, CheckCircle, Users, AlertCircle, Eye, ExternalLink, ChevronLeft, ChevronRight } from "lucide-react";
+import { useStudents } from "@/contexts/StudentsProvider";
+import type { Student } from "@/data/studentsStore";
 import { useFilters } from "@/contexts/FiltersContext";
 import { Input } from "@/components/ui/input";
 import { exportAllColumnsToExcel } from "@/lib/utils";
+import { Search, Download, CheckCircle, Users, AlertCircle, Eye, ExternalLink, ChevronLeft, ChevronRight } from "lucide-react";
+
+
+const { students, loading, error, refresh } = useStudents();
 
 
 const ITEMS_PER_PAGE = 8;
 
-const students = await getStudents(); 
 
 export default function Seguimiento() {
   const navigate = useNavigate();
