@@ -11,14 +11,11 @@ import { Input } from "@/components/ui/input";
 import { exportAllColumnsToExcel } from "@/lib/utils";
 import { Search, Download, CheckCircle, Users, AlertCircle, Eye, ExternalLink, ChevronLeft, ChevronRight } from "lucide-react";
 
-
-const { students, loading, error, refresh } = useStudents();
-
-
 const ITEMS_PER_PAGE = 8;
 
-
 export default function Seguimiento() {
+  const { students, loading, error } = useStudents();
+
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const { appliedFilters } = useFilters();

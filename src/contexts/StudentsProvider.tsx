@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import type { Student } from "@/data/studentsStore";
 
 type StudentsCtx = {
@@ -6,7 +6,7 @@ type StudentsCtx = {
   loading: boolean;
   error: string | null;
   refresh: () => Promise<void>;
-};  
+};
 
 const Ctx = createContext<StudentsCtx | null>(null);
 
@@ -38,13 +38,18 @@ export function StudentsProvider({ children }: { children: React.ReactNode }) {
     load();
   }, []);
 
-  const value = useMemo(() => ({ students, loading, error, refresh: load }), [students, loading, error]);
+  const value = useMemo(
+    () => ({ students, loading, error, refresh: load }),
+    [students, loading, error]
+  );
 
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>;
 }
 
 export function useStudents() {
   const ctx = useContext(Ctx);
-  if (!ctx) throw new Error("useStudents must be used within <StudentsProvider>");
+  if (!ctx) {
+    throw new Error("useStudents() must be used inside <StudentsProvider> (wrap your App in it)");
+  }
   return ctx;
 }

@@ -10,9 +10,10 @@ import { useFilters } from "@/contexts/FiltersContext";
 import { useStudents } from "@/contexts/StudentsProvider";
 import type { Student } from "@/data/studentsStore";
 
-const { students, loading, error, refresh } = useStudents();
+
 
 export default function Resumen() {
+  const { students, loading, error, refresh } = useStudents();
   const { appliedFilters } = useFilters();
   const campus = appliedFilters.campus;
   

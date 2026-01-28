@@ -15,6 +15,7 @@ export const getStudentById = (id: string): Student | undefined => {
 };
 
 export default function PerfilEstudiante() {
+  const { students, loading, error, refresh } = useStudents();
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   
