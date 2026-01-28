@@ -9,7 +9,7 @@ import { Users, TrendingUp, Target, AlertCircle } from "lucide-react";
 import { useFilters } from "@/contexts/FiltersContext";
 import { useStudents } from "@/contexts/StudentsProvider";
 import type { Student } from "@/data/studentsStore";
-
+import { StudentsDebug } from "@/components/StudentsDebug";
 
 
 export default function Resumen() {
@@ -33,6 +33,7 @@ export default function Resumen() {
 
   return (
     <DashboardLayout title="Resumen" showFilter={false}>
+      <StudentsDebug />
       {/* KPI Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         <KPICard

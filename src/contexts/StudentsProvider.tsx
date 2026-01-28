@@ -22,17 +22,31 @@ export function StudentsProvider({ children }: { children: React.ReactNode }) {
   const [error, setError] = useState<string | null>(null);
 
   const load = async () => {
-    setLoading(true);
-    setError(null);
-    try {
-      const data = await fetchStudents();
-      setStudents(Array.isArray(data) ? data : []);
-    } catch (e: any) {
-      setError(e?.message ?? String(e));
-    } finally {
-      setLoading(false);
-    }
-  };
+  console.log("[StudentsProvider] load() starting…");
+
+  setLoading(true);
+  setError(null);
+
+  try {
+    console.log("[StudentsProvider] fetching /api/students");
+    const res = await fetch("/api/students");
+
+    console.log("[StudentsProvider] response:", res.status, res.statusText);
+    const data = await res.json();
+
+    console.log("[StudentsProvider] JSON received. IsArray:", Array.isArray(data), "len:", Array.isArray(data) ? data.length : "n/a");
+    console.log("[StudentsProvider] sample[0]:", Array.isArray(data) ? data[0] : data);
+
+    setStudents(Array.isArray(data) ? data : []);
+  } catch (e: any) {
+    console.error("[StudentsProvider] ERROR:", e);
+    setError(e?.message ?? String(e));
+  } finally {
+    console.log("[StudentsProvider] load() finished");
+    setLoading(false);
+  }
+};
+
 
   useEffect(() => {
     load();
