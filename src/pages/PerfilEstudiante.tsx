@@ -307,7 +307,7 @@ export default function PerfilEstudiante() {
             <h2 className="text-lg font-semibold text-foreground mb-4">Intereses</h2>
             
             <div className="space-y-4">
-              {(student.carreraInteres1 || student.carreraInteres2) && (
+              {(student.carreraInteres1 != "No manifiesta carrera de interés" || student.carreraInteres2 != "No manifiesta carrera de interés") && (
                 <div>
                   <p className="text-xs text-muted-foreground uppercase tracking-wide mb-2">
                     Carreras de interés
@@ -323,7 +323,7 @@ export default function PerfilEstudiante() {
                 </div>
               )}
 
-              {(student.institucionInteres1 || student.institucionInteres2) && (
+              {(student.institucionInteres1 != "No especifica institución de interés" || student.institucionInteres2 != "No especifica institución de interés") && (
                 <div>
                   <p className="text-xs text-muted-foreground uppercase tracking-wide mb-2">
                     Instituciones de interés
