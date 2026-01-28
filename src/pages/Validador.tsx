@@ -58,8 +58,6 @@ export default function Validar() {
           campus: data.campus ?? null,
           ts: Date.now(),
         });
-
-        localStorage.removeItem("gero:studentsCache:v1");
         window.dispatchEvent(new Event("gero:auth-updated"));
 
         setEntering(true);
