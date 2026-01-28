@@ -232,7 +232,7 @@ export default function Seguimiento() {
                       className="text-primary hover:text-primary/80 hover:bg-primary/10"
                     >
                       <Eye className="h-4 w-4 mr-1" />
-                      Ver
+                      Ver Perfil
                     </Button>
                     ):(
                     <span className="text-muted-foreground text-xs">-</span>

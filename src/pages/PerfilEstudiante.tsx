@@ -15,9 +15,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { Info } from "lucide-react";
-
-
+import { Info , Search} from "lucide-react";
 
 function normalize(s: unknown) {
   return (s ?? "")
@@ -54,8 +52,13 @@ function BuscarEstudianteInline({
   }, [students, nq]);
 
   return (
-    <div className="bg-card rounded-xl border border-border p-6">
-      <div className="flex items-start justify-between gap-4">
+<div
+  className="bg-card rounded-xl p-6
+             border border-orange-200
+             shadow-sm
+             hover:shadow-md
+             transition-shadow"
+>      <div className="flex items-start justify-between gap-4">
         <div className="flex items-center gap-2">
   <h2 className="text-lg font-semibold text-foreground">
     Buscar estudiante
@@ -73,13 +76,17 @@ function BuscarEstudianteInline({
         </button>
       </TooltipTrigger>
 
-      <TooltipContent side="right" className="max-w-xs text-sm">
+      <TooltipContent
+        side="right"
+        className="max-w-xs text-sm 
+             bg-orange-50 text-orange-900 
+             border border-orange-200 
+             shadow-md"
+      >
         <p>
-          También puedes acceder al perfil desde la tabla de <i>Seguimiento</i>,
-          usando el botón <i className="text-primary hover:text-primary/80 hover:bg-primary/10">
-          <Eye className="h-4 w-4 mr-1" />
-                      Ver
-          </i>!.
+         También puedes acceder al perfil de estudiante de un alumno desde la tabla de <i>Seguimiento</i>!
+          <br/>
+          Solo presiona el botón <b>Ver Perfil</b> de la columna <i>Acciones</i>!.
         </p>
       </TooltipContent>
     </Tooltip>
@@ -93,24 +100,29 @@ function BuscarEstudianteInline({
         ) : null}
       </div>
 
-      <div className="mt-4">
-        <Input
-          value={q}
-          onChange={(e) => {
-            const v = e.target.value;
-            setQ(v);
-            setOpen(v.trim().length >= 2);
-          }}
-          onFocus={() => {
-            if (q.trim().length >= 2) setOpen(true);
-          }}
-          onBlur={() => {
-            // small delay so click on a result still registers
-            setTimeout(() => setOpen(false), 120);
-          }}
-          placeholder="ingresa un nombre, matrícula o correo"
-          />
-      </div>
+      <div className="relative">
+  <Search
+    className="absolute left-3 top-1/2 -translate-y-1/2 
+               h-4 w-4 text-muted-foreground"
+  />
+
+  <Input
+    value={q}
+    onChange={(e) => {
+      const v = e.target.value;
+      setQ(v);
+      setOpen(v.trim().length >= 2);
+    }}
+    onFocus={() => {
+      if (q.trim().length >= 2) setOpen(true);
+    }}
+    onBlur={() => {
+      setTimeout(() => setOpen(false), 120);
+    }}
+    placeholder="Ingresa un nombre, matrícula o correo"
+    className="pl-10"
+  />
+</div>
       {open && (
       <div className="mt-3 max-h-72 overflow-auto border rounded-lg">
         {nq.length < 2 ? (
@@ -186,12 +198,6 @@ export default function PerfilEstudiante() {
         selectedId={id}
         onPick={(studentId) => navigate(`/estudiante/${studentId}`)}
       />
-
-      <div className="mt-8 bg-card rounded-xl border border-border p-6 text-center">
-        <p className="text-muted-foreground">
-          No hay un estudiante seleccionado. Busca uno arriba para ver su perfil.
-        </p>
-      </div>
     </DashboardLayout>
   );
 }
