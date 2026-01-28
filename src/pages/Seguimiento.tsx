@@ -37,9 +37,17 @@ export default function Seguimiento() {
       if (s.estado !== appliedFilters.estado) return false;
     }
   
-    // if (appliedFilters.interaccion) {
-    //   if (s.interaccionCoach !== appliedFilters.interaccion) return false;
-    // }
+    if (appliedFilters.grupo) {
+      if(s.grupoDivision !== appliedFilters.grupo) return false;
+    }
+
+    if (appliedFilters.mentor){
+      if(s.mentor !== appliedFilters.mentor) return false;
+    }
+
+    if (appliedFilters.probabilidad){
+      if(s.probabilidadElegirTec !== appliedFilters.probabilidad) return false;
+    }
 
     if (appliedFilters.campus){
       if(s.campusSede !== appliedFilters.campus) return false;
@@ -133,8 +141,8 @@ export default function Seguimiento() {
                 <th>Grupo</th>
                 <th>Campus</th>
                 <th>Mentor</th>
-                <th>Carreras de interés</th> {/*lista de las carreras todo junto*/}
-                <th>Instituciones de interés</th> {/*lista de las instituciones todo junto*/}
+                <th className="w-[320px] min-w-[320px]">Carreras de interés</th>
+                <th className="w-[380px] min-w-[380px]">Instituciones de interés</th>
                 <th>Probabilidad de elegir el TEC</th>
                 <th>Estado</th> {/*si terminó todo -> finalizado, si no se marca la(s) actividad(es) que le falta(n)*/}
                 <th>Reporte estudiantes</th>
@@ -152,7 +160,7 @@ export default function Seguimiento() {
                   <td>{record.grupoDivision}</td>
                   <td className="text-sm">{record.campusSede}</td>
                   <td className="text-sm">{record.mentor}</td>
-                  <td className="text-sm max-w-32" title="Carreras de interés">
+                  <td className="text-sm whitespace-normal break-words min-w-[320px]" title="Carreras de interés">
                     {record.carreraInteres1 !== "No manifiesta carrera de interés" && record.carreraInteres1 !== "" && (
                       <p>1. {record.carreraInteres1}</p>
                     )}
@@ -161,7 +169,7 @@ export default function Seguimiento() {
                       <p>2. {record.carreraInteres2}</p>
                     )}
                   </td>
-                  <td className="text-sm max-w-32" title="Instituciones de interés">
+                  <td className="text-sm whitespace-normal break-words min-w-[380px]" title="Instituciones de interés">
                     {record.institucionInteres1 !== "No especifica institución de interés" && record.institucionInteres1 !== "" && (
                       <p>1. {record.institucionInteres1}</p>
                     )}

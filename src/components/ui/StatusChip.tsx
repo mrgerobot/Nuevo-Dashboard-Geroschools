@@ -40,12 +40,21 @@ const statusStyles: Record<StatusType, string> = {
 };
 
 const getDisplayText = (status: string): string => {
-  if (status.includes("1.")) return "Alta";
-  if (status.includes("2.")) return "Media";
-  if (status.includes("3.")) return "Baja";
-  if (status.includes("4.")) return "No especifica";
-  if (status.includes("5.")) return "Falta completar";
-  return status;
+  if (!status) return "";
+
+  const s = status.toLowerCase();
+
+  if (s.includes("alta")) return "Alta";
+  if (s.includes("media")) return "Media";
+  if (s.includes("baja")) return "Baja";
+  if (s.includes("sin comenzar")) return "Sin comenzar";
+  if (s.includes("en progreso") || s.includes("en camino")) return "En progreso";
+  if (s.includes("finalizado")) return "Finalizado";
+  if (s.includes("no especifica")) return "No especifica";
+  if (s.includes("falta completar")) return "Falta completar";
+
+  // Fallback: Capitalize first letter only
+  return status.charAt(0).toUpperCase() + status.slice(1).toLowerCase();
 };
 
 export function StatusChip({ status, className }: StatusChipProps) {

@@ -131,21 +131,38 @@ export default function PerfilEstudiante() {
             <h2 className="text-lg font-semibold text-foreground mb-4">Intereses</h2>
             
             <div className="space-y-4">
-              <div>
-                <p className="text-xs text-muted-foreground uppercase tracking-wide mb-2">Carreras de interés</p>
-                <ul className="space-y-1">
-                  <li className="text-sm">1. {student.carreraInteres1}</li>
-                  <li className="text-sm">2. {student.carreraInteres2}</li>
-                </ul>
-              </div>
-              
-              <div>
-                <p className="text-xs text-muted-foreground uppercase tracking-wide mb-2">Instituciones de interés</p>
-                <ul className="space-y-1">
-                  <li className="text-sm">1. {student.institucionInteres1}</li>
-                  <li className="text-sm">2. {student.institucionInteres2}</li>
-                </ul>
-              </div>
+              {(student.carreraInteres1 || student.carreraInteres2) && (
+                <div>
+                  <p className="text-xs text-muted-foreground uppercase tracking-wide mb-2">
+                    Carreras de interés
+                  </p>
+                  <ul className="space-y-1">
+                    {student.carreraInteres1 && (
+                      <li className="text-sm">1. {student.carreraInteres1}</li>
+                    )}
+                    {student.carreraInteres2 && (
+                      <li className="text-sm">2. {student.carreraInteres2}</li>
+                    )}
+                  </ul>
+                </div>
+              )}
+
+              {(student.institucionInteres1 || student.institucionInteres2) && (
+                <div>
+                  <p className="text-xs text-muted-foreground uppercase tracking-wide mb-2">
+                    Instituciones de interés
+                  </p>
+                  <ul className="space-y-1">
+                    {student.institucionInteres1 && (
+                      <li className="text-sm">1. {student.institucionInteres1}</li>
+                    )}
+                    {student.institucionInteres2 && (
+                      <li className="text-sm">2. {student.institucionInteres2}</li>
+                    )}
+                  </ul>
+                </div>
+              )}
+
             </div>
           </div>
 
@@ -162,7 +179,7 @@ export default function PerfilEstudiante() {
             <TabsList className="grid w-full grid-cols-3 mb-6">
               <TabsTrigger value="vocacional">Resumen vocacional</TabsTrigger>
               <TabsTrigger value="carreras">Carreras recomendadas</TabsTrigger>
-              <TabsTrigger value="seguimiento">Seguimiento y coach</TabsTrigger>
+              <TabsTrigger value="seguimiento">Seguimiento</TabsTrigger>
             </TabsList>
 
             <TabsContent value="vocacional" className="space-y-6">

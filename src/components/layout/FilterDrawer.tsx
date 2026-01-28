@@ -193,7 +193,7 @@ export function FilterDrawer({
               </Select>
             </div>
 
-            <div className="space-y-2">
+            {/* <div className="space-y-2">
               <Label className="text-sm font-medium text-foreground">Interacción con coach</Label>
               <Select
                 value={filters.interaccion || ""}
@@ -210,7 +210,7 @@ export function FilterDrawer({
                   ))}
                 </SelectContent>
               </Select>
-            </div>
+            </div> */}
           </div>
 
           {/* Actions */}
