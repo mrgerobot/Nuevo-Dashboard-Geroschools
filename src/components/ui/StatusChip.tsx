@@ -14,19 +14,51 @@ interface StatusChipProps {
   status: string;
   className?: string;
 }
+const norm = (v: unknown) =>
+  (v ?? "")
+    .toString()
+    .trim()
+    .replace(/\s+/g, " ")
+    .toLowerCase();
 
-const getStatusType = (status: string): StatusType => {
-  const lower = status.toLowerCase();
-  if (lower.includes("alta")) return "alta";
-  if (lower.includes("media")) return "media";
-  if (lower.includes("baja")) return "baja";
-  if (lower.includes("sin comenzar")) return "sin-comenzar";
-  if (lower.includes("en progreso") || lower.includes("en camino")) return "en-progreso";
-  if (lower.includes("finalizado")) return "finalizado";
-  if (lower.includes("no especifica")) return "no-especifica";
-  if (lower.includes("falta completar")) return "falta-completar";
-  return "sin-comenzar";
-};
+function getStatusType(status: unknown): StatusType {
+  const s = norm(status);
+
+  // IMPORTANT: check these first
+  if (s.includes("falta completar")) return "falta-completar";
+  if (s.includes("no especifica")) return "no-especifica";
+
+  // exact-ish word matches (avoid substring accidents)
+  if (/\balta\b/.test(s)) return "alta";
+  if (/\bmedia\b/.test(s)) return "media";
+  if (/\bbaja\b/.test(s)) return "baja";
+
+  if (s.includes("sin comenzar")) return "sin-comenzar";
+  if (s.includes("en progreso")) return "en-progreso";
+  if (s.includes("finalizado")) return "finalizado";
+
+  // neutral fallback (don’t lie)
+  return "no-especifica";
+}
+
+function getDisplayText(status: unknown): string {
+  const s = norm(status);
+  if (!s) return "";
+
+  if (s.includes("falta completar")) return "Falta completar";
+  if (s.includes("no especifica")) return "No especifica";
+
+  if (/\balta\b/.test(s)) return "Alta";
+  if (/\bmedia\b/.test(s)) return "Media";
+  if (/\bbaja\b/.test(s)) return "Baja";
+
+  if (s.includes("sin comenzar")) return "Sin comenzar";
+  if (s.includes("en progreso")) return "En progreso";
+  if (s.includes("finalizado")) return "Finalizado";
+
+  return status?.toString?.().trim?.() ?? "";
+}
+
 
 const statusStyles: Record<StatusType, string> = {
   alta: "bg-green-100 text-green-800 border-green-200",
@@ -37,24 +69,6 @@ const statusStyles: Record<StatusType, string> = {
   finalizado: "bg-green-100 text-green-800 border-green-200",
   "no-especifica": "bg-gray-100 text-gray-600 border-gray-200",
   "falta-completar": "bg-orange-100 text-orange-800 border-orange-200",
-};
-
-const getDisplayText = (status: string): string => {
-  if (!status) return "";
-
-  const s = status.toLowerCase();
-
-  if (s.includes("alta")) return "Alta";
-  if (s.includes("media")) return "Media";
-  if (s.includes("baja")) return "Baja";
-  if (s.includes("sin comenzar")) return "Sin comenzar";
-  if (s.includes("en progreso") || s.includes("en camino")) return "En progreso";
-  if (s.includes("finalizado")) return "Finalizado";
-  if (s.includes("no especifica")) return "No especifica";
-  if (s.includes("falta completar")) return "Falta completar";
-
-  // Fallback: Capitalize first letter only
-  return status.charAt(0).toUpperCase() + status.slice(1).toLowerCase();
 };
 
 export function StatusChip({ status, className }: StatusChipProps) {
