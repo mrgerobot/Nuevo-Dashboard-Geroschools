@@ -3,13 +3,11 @@ import { DashboardLayout } from "@/components/layout/DashboardLayout";
 import { StatusChip } from "@/components/ui/StatusChip";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { Student, 
-  getStudents 
-} from "@/data/studentsStore";
 import { ArrowLeft, Mail, Phone, MapPin, GraduationCap, BookOpen, MessageSquare, CheckCircle } from "lucide-react";
+import { useStudents } from "@/contexts/StudentsProvider";
+import type { Student } from "@/data/studentsStore";
 
-const students = await getStudents(); // async, but shared
+const { students, loading, error, refresh } = useStudents();
 
 // Helper functions
 export const getStudentById = (id: string): Student | undefined => {

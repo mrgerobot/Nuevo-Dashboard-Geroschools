@@ -7,8 +7,10 @@ import { TopInstitucionesChart } from "@/components/charts/TopInstitucionesChart
 import {getStudents, getOverviewStats, getTopCarreras, getTopInstituciones } from "@/data/studentsStore";
 import { Users, TrendingUp, Target, AlertCircle } from "lucide-react";
 import { useFilters } from "@/contexts/FiltersContext";
+import { useStudents } from "@/contexts/StudentsProvider";
+import type { Student } from "@/data/studentsStore";
 
-const students = await getStudents(); // async, but shared
+const { students, loading, error, refresh } = useStudents();
 
 export default function Resumen() {
   const { appliedFilters } = useFilters();

@@ -11,6 +11,7 @@ import { FiltersProvider } from "@/contexts/FiltersContext";
 import Validar from "./pages/Validador";
 import { RequireAuth } from "@/auth/RequireAuth";
 import { getAuth } from "@/auth/auth";
+import { StudentsProvider } from "@/contexts/StudentsProvider";
 
 const queryClient = new QueryClient();
 
@@ -19,6 +20,7 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
+      <StudentsProvider>
       <FiltersProvider>
         <BrowserRouter>
           <Routes>
@@ -68,6 +70,7 @@ const App = () => (
           </Routes>
         </BrowserRouter>
       </FiltersProvider>
+    </StudentsProvider>
     </TooltipProvider>
   </QueryClientProvider>
 );
