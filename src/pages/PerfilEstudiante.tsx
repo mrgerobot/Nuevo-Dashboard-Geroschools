@@ -4,11 +4,17 @@ import { StatusChip } from "@/components/ui/StatusChip";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { 
-  getStudentById, 
-  students 
-} from "@/data/mockData";
+import { Student, 
+  getStudents 
+} from "@/data/studentsStore";
 import { ArrowLeft, Mail, Phone, MapPin, GraduationCap, BookOpen, MessageSquare, CheckCircle } from "lucide-react";
+
+const students = await getStudents(); // async, but shared
+
+// Helper functions
+export const getStudentById = (id: string): Student | undefined => {
+  return students.find(s => s.id === id);
+};
 
 export default function PerfilEstudiante() {
   const { id } = useParams<{ id: string }>();
@@ -190,7 +196,6 @@ export default function PerfilEstudiante() {
                               style={{ width: arq.nivel === "Alta" ? "100%" : arq.nivel === "Media" ? "66%" : "33%" }}
                             />
                           </div>
-                          <p className="text-xs text-muted-foreground">{arq.descripcion}</p>
                         </div>
                       ))}
                     </div>

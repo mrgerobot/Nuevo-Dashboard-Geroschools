@@ -5,7 +5,7 @@ import { KPICard } from "@/components/ui/KPICard";
 import { StatusChip } from "@/components/ui/StatusChip";
 import { CoachInteractionChart } from "@/components/charts/CoachInteractionChart";
 import { Button } from "@/components/ui/button";
-import { students } from "@/data/mockData";
+import { getStudents  } from "@/data/studentsStore";
 import { Search, Download, CheckCircle, Users, AlertCircle, Eye, ExternalLink, ChevronLeft, ChevronRight } from "lucide-react";
 import { useFilters } from "@/contexts/FiltersContext";
 import { Input } from "@/components/ui/input";
@@ -13,6 +13,8 @@ import { exportAllColumnsToExcel } from "@/lib/utils";
 
 
 const ITEMS_PER_PAGE = 8;
+
+const students = await getStudents(); 
 
 export default function Seguimiento() {
   const navigate = useNavigate();

@@ -1,4 +1,4 @@
-// Types
+// studentsStore.ts
 export interface Student {
   id: string;
   correoInstitucional: string;
@@ -18,7 +18,7 @@ export interface Student {
   estiloDeVida: string;
   reporteEstudiantesUrl: string;
   reporteFamiliasUrl: string;
-  rankingArquetiposPersonalidad: {tipo: string; nivel: string; descripcion: string;}[];
+  rankingArquetiposPersonalidad: {tipo: string; nivel: string; }[];
   orientacionIntereses: string[];
   rankingInteligenciasMultiples: { tipo: string; nivel: 'Alta' | 'Media' | 'Baja' }[];
   habilidadesCognitivas: { tipo: string; nivel: 'Alta' | 'Media' | 'Baja' }[];
@@ -28,18 +28,30 @@ export interface Student {
   carrerasRecomendadasPorFortalezas: string[];
 }
 
+let cache: Student[] | null = null;
+let inflight: Promise<Student[]> | null = null;
 
-// Mock Students Data
-export const students: Student[] = await fetch("/api/students").then(r => r.json());
+async function loadStudents(): Promise<Student[]> {
+  const res = await fetch("/api/students");
+  if (!res.ok) throw new Error("Failed to load students");
+  return res.json();
+}
 
+export async function getStudents(): Promise<Student[]> {
+  if (cache) return cache;
 
-// Helper functions
-export const getStudentById = (id: string): Student | undefined => {
-  return students.find(s => s.id === id);
-};
+  if (!inflight) {
+    inflight = loadStudents().then(data => {
+      cache = data;
+      return data;
+    });
+  }
+
+  return inflight;
+}
 
 // Statistics helpers
-export const getOverviewStats = (rows: typeof students) => {
+export const getOverviewStats = (rows: Student[]) => {
   const total = rows.length;
   const alta = rows.filter(s => s.probabilidadElegirTec.includes("Alta")).length;
   const media = rows.filter(s => s.probabilidadElegirTec.includes("Media")).length;
@@ -71,10 +83,10 @@ export const getOverviewStats = (rows: typeof students) => {
   };
 };
 
-export const getTopCarreras = () => {
+export const getTopCarreras = (rows: Student[]) => {
   const carreraCount: Record<string, number> = {};
   
-  students.forEach(s => {
+  rows.forEach(s => {
     [s.carreraInteres1, s.carreraInteres2].forEach(c => {
       if (c && !c.includes("No manifiesta")) {
         carreraCount[c] = (carreraCount[c] || 0) + 1;
@@ -88,10 +100,10 @@ export const getTopCarreras = () => {
     .map(([name, count]) => ({ name, count }));
 };
 
-export const getTopInstituciones = () => {
+export const getTopInstituciones = (rows: Student[]) => {
   const instCount: Record<string, number> = {};
   
-  students.forEach(s => {
+  rows.forEach(s => {
     [s.institucionInteres1, s.institucionInteres2].forEach(i => {
       if (i && !i.includes("No especifica")) {
         instCount[i] = (instCount[i] || 0) + 1;

@@ -4,10 +4,11 @@ import { ProbabilityChart } from "@/components/charts/ProbabilityChart";
 import { ActivityProgressChart } from "@/components/charts/ActivityProgressChart";
 import { TopCarrerasChart } from "@/components/charts/TopCarrerasChart";
 import { TopInstitucionesChart } from "@/components/charts/TopInstitucionesChart";
-import { students, getOverviewStats, getTopCarreras, getTopInstituciones } from "@/data/mockData";
+import {getStudents, getOverviewStats, getTopCarreras, getTopInstituciones } from "@/data/studentsStore";
 import { Users, TrendingUp, Target, AlertCircle } from "lucide-react";
 import { useFilters } from "@/contexts/FiltersContext";
 
+const students = await getStudents(); // async, but shared
 
 export default function Resumen() {
   const { appliedFilters } = useFilters();
@@ -22,8 +23,8 @@ export default function Resumen() {
 
   const stats = getOverviewStats(scopedStudents);
 
-  const topCarreras = getTopCarreras();
-  const topInstituciones = getTopInstituciones();
+  const topCarreras = getTopCarreras(students);
+  const topInstituciones = getTopInstituciones(students);
 
   
 
