@@ -1,6 +1,19 @@
 import { createContext, useContext, useEffect, useMemo, useRef, useState } from "react";
 import type { Student } from "@/data/studentsStore";
 
+const CACHE_KEY = "gero:studentsCache:v1";
+
+function readCache<T>(key: string): T | null {
+  try {
+    const raw = localStorage.getItem(key);
+    if (!raw) return null;
+    return JSON.parse(raw) as T;
+  } catch {
+    return null;
+  }
+}
+
+
 type StudentsCtx = {
   students: Student[];
   loading: boolean;
@@ -20,7 +33,12 @@ async function fetchStudentsJSON(): Promise<Student[]> {
 }
 
 export function StudentsProvider({ children }: { children: React.ReactNode }) {
-  const [students, setStudents] = useState<Student[]>([]);
+  const [students, setStudents] = useState<Student[]>(() => {
+    if (typeof window === "undefined") return [];
+    const cached = readCache<{ students: Student[] }>(CACHE_KEY);
+    return cached?.students ?? [];
+  });
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -35,6 +53,7 @@ export function StudentsProvider({ children }: { children: React.ReactNode }) {
       try {
         const data = await fetchStudentsJSON();
         setStudents(data);
+        localStorage.setItem(CACHE_KEY, JSON.stringify({ students, ts: Date.now() }));
       } catch (e: any) {
         setError(e?.message ?? String(e));
         setStudents([]);
@@ -50,6 +69,7 @@ export function StudentsProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     // initial boot fetch
+    if (students.length > 0) setLoading(false);
     refresh().catch(() => {});
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
