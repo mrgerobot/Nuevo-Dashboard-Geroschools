@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft, Mail, Phone, MapPin, GraduationCap, BookOpen, MessageSquare, CheckCircle } from "lucide-react";
 import { useStudents } from "@/contexts/StudentsProvider";
 import type { Student } from "@/data/studentsStore";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import React, { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { useFilters } from "@/contexts/FiltersContext";
@@ -21,92 +20,88 @@ function normalize(s: unknown) {
     .replace(/[\u0300-\u036f]/g, "");
 }
 
-function BuscarEstudianteModal({
+function BuscarEstudianteInline({
   students,
+  selectedId,
   onPick,
 }: {
   students: Student[];
+  selectedId?: string;
   onPick: (id: string) => void;
 }) {
-  const [open, setOpen] = React.useState(true); // open by default in not-found state
-  const [q, setQ] = React.useState("");
+  const [q, setQ] = useState("");
 
   const nq = normalize(q);
 
-  const results =
-    nq.length < 2
-      ? []
-      : students
-          .filter((s) => {
-            const id = normalize(s.id);
-            const mail = normalize(s.correoInstitucional);
-            const name = normalize(s.nombreCompleto);
-
-            return (
-              id.includes(nq) ||
-              mail.includes(nq) ||
-              name.includes(nq)
-            );
-          })
-          .slice(0, 12);
+  const results = useMemo(() => {
+    if (nq.length < 2) return [];
+    return students
+      .filter((s) => {
+        const id = normalize(s.id);
+        const mail = normalize(s.correoInstitucional);
+        const name = normalize(s.nombreCompleto);
+        return id.includes(nq) || mail.includes(nq) || name.includes(nq);
+      })
+      .slice(0, 12);
+  }, [students, nq]);
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="sm:max-w-lg">
-        <DialogHeader>
-          <DialogTitle>Buscar estudiante</DialogTitle>
-        </DialogHeader>
+    <div className="bg-card rounded-xl border border-border p-6">
+      <div className="flex items-start justify-between gap-4">
+        <div>
+          <h2 className="text-lg font-semibold text-foreground">Buscar estudiante</h2>
+          <p className="text-sm text-muted-foreground">
+            Ingresa la <b>matrícula</b>, el <b>correo</b> o el <b>nombre</b>.
+            <br />
+            <span className="text-xs">
+              También puedes verlo desde la tabla, presionando el botón de <b>Ver</b>.
+            </span>
+          </p>
+        </div>
 
-        <p className="text-sm text-muted-foreground">
-          Ingresa la <b>matrícula</b>, el <b>correo</b> o el <b>nombre</b>.
-          <br />
-          <span className="text-xs">
-            También puedes verlo desde la tabla, presionando el botón de <b>Ver</b>.
-          </span>
-        </p>
+        {selectedId ? (
+          <Button variant="outline" onClick={() => setQ("")}>
+            Limpiar
+          </Button>
+        ) : null}
+      </div>
 
+      <div className="mt-4">
         <Input
           value={q}
           onChange={(e) => setQ(e.target.value)}
           placeholder="Ej: A01712781, a01712781@tec.mx, Iñaki Dorantes…"
-          autoFocus
         />
+      </div>
 
-        <div className="mt-2 max-h-72 overflow-auto border rounded-lg">
-          {nq.length < 2 ? (
-            <div className="p-3 text-sm text-muted-foreground">
-              Escribe al menos 2 caracteres.
-            </div>
-          ) : results.length === 0 ? (
-            <div className="p-3 text-sm text-muted-foreground">
-              No encontramos coincidencias.
-            </div>
-          ) : (
-            results.map((s) => (
-              <button
-                key={s.id}
-                className="w-full text-left p-3 hover:bg-muted flex flex-col gap-0.5"
-                onClick={() => {
-                  onPick(s.id);
-                  setOpen(false);
-                }}
-              >
-                <div className="font-medium">{s.nombreCompleto}</div>
-                <div className="text-xs text-muted-foreground">
-                  {s.id} • {s.correoInstitucional} • {s.campusSede}
-                </div>
-              </button>
-            ))
-          )}
-        </div>
-
-        <div className="flex justify-end gap-2">
-          <Button variant="ghost" onClick={() => setOpen(false)}>
-            Cerrar
-          </Button>
-        </div>
-      </DialogContent>
-    </Dialog>
+      <div className="mt-3 max-h-72 overflow-auto border rounded-lg">
+        {nq.length < 2 ? (
+          <div className="p-3 text-sm text-muted-foreground">
+            Escribe al menos 2 caracteres.
+          </div>
+        ) : results.length === 0 ? (
+          <div className="p-3 text-sm text-muted-foreground">
+            No encontramos coincidencias.
+          </div>
+        ) : (
+          results.map((s) => (
+            <button
+              key={s.id}
+              className={[
+                "w-full text-left p-3 hover:bg-muted flex flex-col gap-0.5",
+                selectedId === s.id ? "bg-muted" : "",
+              ].join(" ")}
+              onClick={() => onPick(s.id)}
+            >
+              <div className="font-medium">{s.nombreCompleto}</div>
+              <div className="text-xs text-muted-foreground">
+                {s.id} • {s.correoInstitucional} • {s.campusSede}
+              </div>
+            </button>
+          ))
+        )}
+      </div>
+    </div>
   );
 }
 
@@ -138,37 +133,26 @@ export default function PerfilEstudiante() {
   
   // If no ID, show the first student as default
   const student = filteredStudents.find(s => s.id === id);
-  const tracking = filteredStudents.find(s => s.id === id);
-  const vocational = filteredStudents.find(s => s.id === id);
+  const tracking = student;
+  const vocational = student;
 
   if (!student) {
   return (
     <DashboardLayout title="Perfil del estudiante" showFilter={false}>
-      <BuscarEstudianteModal
+      <BuscarEstudianteInline
         students={filteredStudents}
+        selectedId={id}
         onPick={(studentId) => navigate(`/estudiante/${studentId}`)}
       />
 
-      <div className="flex flex-col items-center justify-center py-20">
-        <p className="text-muted-foreground mb-2">Estudiante no encontrado</p>
-        <p className="text-xs text-muted-foreground mb-6 text-center max-w-md">
-          También puedes verlo desde la tabla, presionando el botón de <b>Ver</b>.
+      <div className="mt-8 bg-card rounded-xl border border-border p-6 text-center">
+        <p className="text-muted-foreground">
+          No hay un estudiante seleccionado. Busca uno arriba para ver su perfil.
         </p>
-
-        <div className="flex gap-2">
-          <Button variant="outline" onClick={() => navigate(-1)}>
-            Volver
-          </Button>
-          {/* Optional: button to reopen modal if they closed it
-          <Button onClick={() => navigate("/resumen")}>
-            Ir al dashboard
-          </Button> */}
-        </div>
       </div>
     </DashboardLayout>
   );
 }
-
 
   return (
     <DashboardLayout title="Perfil del estudiante" showFilter={false}>
@@ -181,6 +165,14 @@ export default function PerfilEstudiante() {
         <ArrowLeft className="h-4 w-4 mr-2" />
         Volver
       </Button>
+
+    <div className="mb-6">
+      <BuscarEstudianteInline
+        students={filteredStudents}
+        selectedId={student.id}
+        onPick={(studentId) => navigate(`/estudiante/${studentId}`)}
+      />
+    </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Left Column - Student Info */}
