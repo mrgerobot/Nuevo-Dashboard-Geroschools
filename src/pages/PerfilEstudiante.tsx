@@ -197,20 +197,27 @@ export default function PerfilEstudiante() {
                   <div className="bg-card rounded-xl border border-border p-6">
                     <h3 className="font-semibold text-foreground mb-4">Arquetipos de personalidad</h3>
                     <div className="space-y-3">
-                      {vocational.rankingArquetiposPersonalidad.slice(0, 6).map((arq, index) => (
-                        <div key={arq.tipo} className="space-y-2">
-                          <div className="flex items-center justify-between">
-                            <span className="font-medium text-sm">{arq.tipo}</span>
-                            <StatusChip status={arq.nivel} />
+                      {vocational.rankingArquetiposPersonalidad.slice(0, 6).map((arq) => {
+                        const level = String(arq.nivel ?? "").trim().toLowerCase();
+                        const width =
+                          level.includes("alta") ? "100%" :
+                          level.includes("media") ? "66%" :
+                          "33%";
+
+                        return (
+                          <div key={arq.tipo} className="space-y-2">
+                            <div className="flex items-center justify-between">
+                              <span className="font-medium text-sm">{arq.tipo}</span>
+                              <StatusChip status={arq.nivel} />
+                            </div>
+                        
+                            <div className="h-2 bg-muted rounded-full overflow-hidden">
+                              <div className="h-full bg-primary rounded-full" style={{ width }} />
+                            </div>
                           </div>
-                          <div className="h-2 bg-muted rounded-full overflow-hidden">
-                            <div 
-                              className="h-full bg-primary rounded-full"
-                              style={{ width: arq.nivel === "Alta" ? "100%" : arq.nivel === "Media" ? "66%" : "33%" }}
-                            />
-                          </div>
-                        </div>
-                      ))}
+                        );
+                      })}
+
                     </div>
                   </div>
 
@@ -218,20 +225,26 @@ export default function PerfilEstudiante() {
                   <div className="bg-card rounded-xl border border-border p-6">
                     <h3 className="font-semibold text-foreground mb-4">Inteligencias múltiples</h3>
                     <div className="space-y-3">
-                      {vocational.rankingInteligenciasMultiples.slice(0, 6).map((arq, index) => (
-                        <div key={arq.tipo} className="space-y-2">
-                          <div className="flex items-center justify-between">
-                            <span className="font-medium text-sm">{arq.tipo}</span>
-                            <StatusChip status={arq.nivel} />
+                      {vocational.rankingInteligenciasMultiples.slice(0, 6).map((arq) => {
+                        const level = String(arq.nivel ?? "").trim().toLowerCase();
+                        const width =
+                          level.includes("alta") ? "100%" :
+                          level.includes("media") ? "66%" :
+                          "33%";
+
+                        return (
+                          <div key={arq.tipo} className="space-y-2">
+                            <div className="flex items-center justify-between">
+                              <span className="font-medium text-sm">{arq.tipo}</span>
+                              <StatusChip status={arq.nivel} />
+                            </div>
+                        
+                            <div className="h-2 bg-muted rounded-full overflow-hidden">
+                              <div className="h-full bg-primary rounded-full" style={{ width }} />
+                            </div>
                           </div>
-                          <div className="h-2 bg-muted rounded-full overflow-hidden">
-                            <div 
-                              className="h-full bg-primary rounded-full"
-                              style={{ width: arq.nivel === "Alta" ? "100%" : arq.nivel === "Media" ? "66%" : "33%" }}
-                            />
-                          </div>
-                        </div>
-                      ))}
+                        );
+                      })}
                     </div>
                   </div>
 
@@ -321,7 +334,7 @@ export default function PerfilEstudiante() {
                           <div className="h-2 bg-muted rounded-full overflow-hidden">
                             <div 
                               className="h-full bg-primary rounded-full transition-all duration-500"
-                              style={{ width: `${area.porcentaje * 100}%` }}
+                              style={{ width: `${area.porcentaje}%` }}
                             />
                           </div>
                         </div>

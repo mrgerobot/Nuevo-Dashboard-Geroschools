@@ -71,17 +71,27 @@ export function FiltersProvider({ children }: { children: React.ReactNode }) {
   // NEW: dynamic filter options from students dataset
   const { students } = useStudents();
 
+  const lockedCampus = getLockedCampus(); // your existing function
+  const selectedCampus = draftFilters.campus || appliedFilters.campus || "";
+
+  const campusToUse = lockedCampus || selectedCampus;
+
+  const scopedStudents = useMemo(() => {
+    if (!campusToUse) return students;
+    return students.filter(s => s.campusSede === campusToUse);
+  }, [students, campusToUse]);
+
   const filterOptions = useMemo(() => {
-    const opts = buildFilterOptionsFromStudents(students);
+  const opts = buildFilterOptionsFromStudents(scopedStudents);
 
-    // Respect campus lock: only show that campus in options
-    const locked = getLockedCampus();
-    if (locked) {
-      opts.campus = [{ value: locked, label: locked }];
-    }
+  // if campus is locked, keep campus as single option
+  if (lockedCampus) {
+    opts.campus = [{ value: lockedCampus, label: lockedCampus }];
+  }
 
-    return opts;
-  }, [students]);
+  return opts;
+}, [scopedStudents, lockedCampus]);
+
 
   const value = useMemo(
     () => ({ draftFilters, appliedFilters, setDraftFilter, applyFilters, clearFilters, filterOptions }),
