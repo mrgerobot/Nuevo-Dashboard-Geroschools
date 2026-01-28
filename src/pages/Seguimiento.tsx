@@ -135,11 +135,11 @@ export default function Seguimiento() {
           <table className="data-table">
             <thead>
               <tr>
-                <th>Nombre completo</th>
+                <th className="text-center w-[300px] min-w-[200px]">Nombre completo</th>
                 <th>Correo</th>
                 <th>Semestre</th>
                 <th>Grupo</th>
-                <th>Campus</th>
+                <th className="text-center w-[300px] min-w-[200px]">Campus</th>
                 <th>Mentor</th>
                 <th className="text-center w-[300px] min-w-[300px]">Carreras de interés</th>
                 <th className="text-center w-[380px] min-w-[380px]">Instituciones de interés</th>
@@ -154,11 +154,11 @@ export default function Seguimiento() {
             <tbody>
               {paginatedRecords.map((record) => (
                 <tr key={record.id}>
-                  <td className="font-medium">{record.nombreCompleto}</td>
+                  <td className="font-medium whitespace-normal break-words min-w-[200px]">{record.nombreCompleto}</td>
                   <td className="text-sm">{record.correoInstitucional}</td>
                   <td className="text-center">{record.semestre}</td>
                   <td>{record.grupoDivision}</td>
-                  <td className="text-sm">{record.campusSede}</td>
+                  <td className="text-sm whitespace-normal break-words min-w-[200px]">{record.campusSede}</td>
                   <td className="text-sm">{record.mentor}</td>
                   <td className="text-sm whitespace-normal break-words min-w-[300px]" title="Carreras de interés">
                     {record.carreraInteres1 !== "No manifiesta carrera de interés" && record.carreraInteres1 !== "" && (
