@@ -3,7 +3,7 @@ import { DashboardLayout } from "@/components/layout/DashboardLayout";
 import { StatusChip } from "@/components/ui/StatusChip";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Mail, Phone, MapPin, GraduationCap, BookOpen, MessageSquare, CheckCircle } from "lucide-react";
+import { ArrowLeft, Mail, Phone, MapPin, GraduationCap, BookOpen, MessageSquare, CheckCircle,  Eye} from "lucide-react";
 import { useStudents } from "@/contexts/StudentsProvider";
 import type { Student } from "@/data/studentsStore";
 import { Input } from "@/components/ui/input";
@@ -75,11 +75,11 @@ function BuscarEstudianteInline({
 
       <TooltipContent side="right" className="max-w-xs text-sm">
         <p>
-          - Puedes buscar por <b>matrícula</b>, <b>correo</b> o <b>nombre</b>.
-        </p>
-        <p className="mt-1 text-xs text-muted-foreground">
-          - También puedes acceder al perfil desde la tabla,
-          usando el botón <b>Ver</b>.
+          También puedes acceder al perfil desde la tabla de <i>Seguimiento</i>,
+          usando el botón <i className="text-primary hover:text-primary/80 hover:bg-primary/10">
+          <Eye className="h-4 w-4 mr-1" />
+                      Ver
+          </i>!.
         </p>
       </TooltipContent>
     </Tooltip>
@@ -108,7 +108,7 @@ function BuscarEstudianteInline({
             // small delay so click on a result still registers
             setTimeout(() => setOpen(false), 120);
           }}
-          placeholder="Buscar por matrícula, correo o nombre…"
+          placeholder="ingresa un nombre, matrícula o correo"
           />
       </div>
       {open && (
@@ -207,6 +207,7 @@ export default function PerfilEstudiante() {
         Volver
       </Button>
 
+    {!id && (
     <div className="mb-6">
       <BuscarEstudianteInline
         students={filteredStudents}
@@ -214,6 +215,7 @@ export default function PerfilEstudiante() {
         onPick={(studentId) => navigate(`/estudiante/${studentId}`)}
       />
     </div>
+    )}
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Left Column - Student Info */}
