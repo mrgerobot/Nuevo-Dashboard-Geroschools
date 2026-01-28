@@ -22,8 +22,6 @@ export default function Validar() {
   const [ok, setOk] = useState<boolean | null>(null);
   const [entering, setEntering] = useState(false);
 
-  const { refresh } = useStudents(); // ✅ NEW (uses provider loader)
-
   if (entering) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background">
@@ -51,23 +49,20 @@ export default function Validar() {
 
       if (data.status === "allowed") {
         setOk(true);
-        setMsg("Email válido. Cargando...");
+        setMsg("Email válido. Entrando...");
 
         setAuth({
           email: email.trim(),
           campus: data.campus ?? null,
           ts: Date.now(),
         });
+      
         window.dispatchEvent(new Event("gero:auth-updated"));
-
-        setEntering(true);
-
-        // ✅ Wait for students to fully load BEFORE navigating
-        await refresh();
-
+      
         navigate("/resumen", { replace: true });
         return;
       }
+
 
       setOk(false);
       setMsg(data.message || "No autorizado");

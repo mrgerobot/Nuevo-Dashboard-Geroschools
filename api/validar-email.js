@@ -9,7 +9,7 @@ export default async function handler(req, res) {
     url_origen: String(url_origen || "vercel-dashboard"),
   }).toString();
 
-  const r = await fetch("https://staging2.geroeducacion.com/validacion/validar_email.php", {
+  const r = await fetch("https://geroeducacion.com/validacion/validar_email.php", {
     method: "POST",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
     body,

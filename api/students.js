@@ -29,7 +29,7 @@ export default async function handler(req, res) {
     }
 
     const data = await r.json();
-    res.setHeader("Cache-Control", "no-store");
+    res.setHeader("Cache-Control", "s-maxage=300, stale-while-revalidate=86400");
     return res.status(200).json(data);
   } catch (e) {
     return res.status(500).json({ error: String(e?.message || e) });
