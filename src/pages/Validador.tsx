@@ -23,7 +23,6 @@ export default function Validar() {
   const [entering, setEntering] = useState(false);
   const { refresh } = useStudents();
 
-
   if (entering) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background">
@@ -60,6 +59,7 @@ export default function Validar() {
         });
       
         window.dispatchEvent(new Event("gero:auth-updated"));
+        setEntering(true);
 
         try {
           await refresh();
