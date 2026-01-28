@@ -69,21 +69,21 @@ export default function PerfilEstudiante() {
                 </div>
               </div>
               
-              <div className="flex items-center gap-2">
+              {/* <div className="flex items-center gap-2">
                 <Mail className="h-4 w-4 text-muted-foreground" />
                 <div>
                   <p className="text-sm text-muted-foreground">Correo personal</p>
                   <p className="text-sm text-foreground">{student.correoPersonal}</p>
                 </div>
-              </div>
+              </div> */}
               
-              <div className="flex items-center gap-2">
+              {/* <div className="flex items-center gap-2">
                 <Phone className="h-4 w-4 text-muted-foreground" />
                 <div>
                   <p className="text-sm text-muted-foreground">Teléfono</p>
                   <p className="text-sm text-foreground">{student.telefono}</p>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
           
@@ -94,10 +94,10 @@ export default function PerfilEstudiante() {
                 <span className="text-sm text-muted-foreground">Estado:</span>
                 <StatusChip status={tracking.estado} />
               </div>
-              <div className="flex items-center gap-2">
+              {/* <div className="flex items-center gap-2">
                 <span className="text-sm text-muted-foreground">Coach:</span>
                 <StatusChip status={tracking.interaccionCoach} />
-              </div>
+              </div> */}
             </div>
           )}
 
@@ -134,7 +134,6 @@ export default function PerfilEstudiante() {
                 <ul className="space-y-1">
                   <li className="text-sm">1. {student.carreraInteres1}</li>
                   <li className="text-sm">2. {student.carreraInteres2}</li>
-                  <li className="text-sm">3. {student.carreraInteres3}</li>
                 </ul>
               </div>
               
@@ -143,7 +142,6 @@ export default function PerfilEstudiante() {
                 <ul className="space-y-1">
                   <li className="text-sm">1. {student.institucionInteres1}</li>
                   <li className="text-sm">2. {student.institucionInteres2}</li>
-                  <li className="text-sm">3. {student.institucionInteres3}</li>
                 </ul>
               </div>
             </div>
@@ -353,7 +351,7 @@ export default function PerfilEstudiante() {
                     </div>
                   </div>
 
-                  {/* Coach Interaction */}
+                  {/* Coach Interaction
                   <div className="bg-card rounded-xl border border-border p-6">
                     <h3 className="font-semibold text-foreground mb-4 flex items-center gap-2">
                       <MessageSquare className="h-5 w-5 text-primary" />
@@ -372,7 +370,7 @@ export default function PerfilEstudiante() {
                         ? "El estudiante mantiene una interacción regular con el coach."
                         : "El estudiante tiene una interacción activa y frecuente con el coach."}
                     </p>
-                  </div>
+                  </div> */}
 
                   {/* Internal Notes
                   <div className="bg-card rounded-xl border border-border p-6">

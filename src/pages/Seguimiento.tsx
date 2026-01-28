@@ -5,7 +5,7 @@ import { KPICard } from "@/components/ui/KPICard";
 import { StatusChip } from "@/components/ui/StatusChip";
 import { CoachInteractionChart } from "@/components/charts/CoachInteractionChart";
 import { Button } from "@/components/ui/button";
-import { students, getCoachInteractionStats } from "@/data/mockData";
+import { students } from "@/data/mockData";
 import { Search, Download, CheckCircle, Users, AlertCircle, Eye, ExternalLink, ChevronLeft, ChevronRight } from "lucide-react";
 import { useFilters } from "@/contexts/FiltersContext";
 import { Input } from "@/components/ui/input";
@@ -36,9 +36,9 @@ export default function Seguimiento() {
       if (s.estado !== appliedFilters.estado) return false;
     }
   
-    if (appliedFilters.interaccion) {
-      if (s.interaccionCoach !== appliedFilters.interaccion) return false;
-    }
+    // if (appliedFilters.interaccion) {
+    //   if (s.interaccionCoach !== appliedFilters.interaccion) return false;
+    // }
 
     if (appliedFilters.campus){
       if(s.campusSede !== appliedFilters.campus) return false;
@@ -54,23 +54,14 @@ export default function Seguimiento() {
       s.correoInstitucional.toLowerCase().includes(search.toLowerCase())
   ).filter(matchesFilters);
 
-  const coachStats = getCoachInteractionStats(filteredStudents);
+  // const coachStats = getCoachInteractionStats(filteredStudents);
   const finalizados = filteredStudents.filter(t => t.estado === "Finalizado").length;
-  const conInteraccion = filteredStudents.filter(t => t.interaccionCoach !== "Sin comenzar").length;
+  // const conInteraccion = filteredStudents.filter(t => t.interaccionCoach !== "Sin comenzar").length;
   const sinComenzar = filteredStudents.filter(t => t.estado === "Sin comenzar").length;
 
   const totalPages = Math.ceil(filteredStudents.length / ITEMS_PER_PAGE);
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
   const paginatedRecords = filteredStudents.slice(startIndex, startIndex + ITEMS_PER_PAGE);
-
-  const exportColumns = [
-    { key: "semestre", header: "Semestre" },
-    { key: "grupoDivision", header: "Grupo" },
-    { key: "campusSede", header: "Campus" },
-    { key: "mentor", header: "Mentor" },
-    { key: "probabilidadElegirTec", header: "Probabilidad elegir TEC" },
-    { key: "estado", header: "Estado" },
-  ];
 
   const handleExport = () => {
     exportAllColumnsToExcel(
@@ -102,12 +93,12 @@ export default function Seguimiento() {
           subtitle="Pendientes de iniciar"
           icon={<AlertCircle className="h-5 w-5" />}
         />
-        <KPICard
+        {/* <KPICard
           title="Estudiantes con interacción del coach"
           value={conInteraccion}
           subtitle="Han interactuado con el sistema"
           icon={<Users className="h-5 w-5" />}
-        />
+        /> */}
       </div>
 
       {/* Search and Controls */}
@@ -168,10 +159,6 @@ export default function Seguimiento() {
                     {record.carreraInteres2 !== "No manifiesta carrera de interés" && (
                       <p>2. {record.carreraInteres2}</p>
                     )}
-
-                    {record.carreraInteres3 !== "No manifiesta carrera de interés" && (
-                      <p>3. {record.carreraInteres3}</p>
-                    )}
                   </td>
                   <td className="text-sm max-w-32" title="Instituciones de interés">
                     {record.institucionInteres1 !== "No especifica institución de interés" && (
@@ -180,10 +167,6 @@ export default function Seguimiento() {
 
                     {record.institucionInteres2 !== "No especifica institución de interés" && (
                       <p>2. {record.institucionInteres2}</p>
-                    )}
-
-                    {record.institucionInteres3 !== "No especifica institución de interés" && (
-                      <p>3. {record.institucionInteres3}</p>
                     )}
                   </td>
                   <td>
@@ -228,11 +211,12 @@ export default function Seguimiento() {
                       <span className="text-muted-foreground text-xs">-</span>
                     )}
                   </td>
-                  <td>
+                  {/* <td>
                     <StatusChip status={record.interaccionCoach} />
-                  </td>
+                  </td> */}
                   <td>
-                    <Button
+                    {record.avanceAutoconocimiento == "Completo" ? (
+                      <Button
                       variant="ghost"
                       size="sm"
                       onClick={() => navigate(`/estudiante/${record.id}`)}
@@ -241,6 +225,9 @@ export default function Seguimiento() {
                       <Eye className="h-4 w-4 mr-1" />
                       Ver
                     </Button>
+                    ):(
+                    <span className="text-muted-foreground text-xs">-</span>
+                    )}
                   </td>
                 </tr>
               ))}
@@ -278,8 +265,8 @@ export default function Seguimiento() {
         </div>
       </div>
 
-      {/* Coach Interaction Chart */}
-      <CoachInteractionChart data={coachStats} />
+      {/* Coach Interaction Chart
+      <CoachInteractionChart data={[]} /> */}
     </DashboardLayout>
   );
 }
