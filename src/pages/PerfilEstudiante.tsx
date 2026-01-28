@@ -6,6 +6,110 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft, Mail, Phone, MapPin, GraduationCap, BookOpen, MessageSquare, CheckCircle } from "lucide-react";
 import { useStudents } from "@/contexts/StudentsProvider";
 import type { Student } from "@/data/studentsStore";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import React, { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { useFilters } from "@/contexts/FiltersContext";
+
+
+function normalize(s: unknown) {
+  return (s ?? "")
+    .toString()
+    .trim()
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
+}
+
+function BuscarEstudianteModal({
+  students,
+  onPick,
+}: {
+  students: Student[];
+  onPick: (id: string) => void;
+}) {
+  const [open, setOpen] = React.useState(true); // open by default in not-found state
+  const [q, setQ] = React.useState("");
+
+  const nq = normalize(q);
+
+  const results =
+    nq.length < 2
+      ? []
+      : students
+          .filter((s) => {
+            const id = normalize(s.id);
+            const mail = normalize(s.correoInstitucional);
+            const name = normalize(s.nombreCompleto);
+
+            return (
+              id.includes(nq) ||
+              mail.includes(nq) ||
+              name.includes(nq)
+            );
+          })
+          .slice(0, 12);
+
+  return (
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogContent className="sm:max-w-lg">
+        <DialogHeader>
+          <DialogTitle>Buscar estudiante</DialogTitle>
+        </DialogHeader>
+
+        <p className="text-sm text-muted-foreground">
+          Ingresa la <b>matrícula</b>, el <b>correo</b> o el <b>nombre</b>.
+          <br />
+          <span className="text-xs">
+            También puedes verlo desde la tabla, presionando el botón de <b>Ver</b>.
+          </span>
+        </p>
+
+        <Input
+          value={q}
+          onChange={(e) => setQ(e.target.value)}
+          placeholder="Ej: A01712781, a01712781@tec.mx, Iñaki Dorantes…"
+          autoFocus
+        />
+
+        <div className="mt-2 max-h-72 overflow-auto border rounded-lg">
+          {nq.length < 2 ? (
+            <div className="p-3 text-sm text-muted-foreground">
+              Escribe al menos 2 caracteres.
+            </div>
+          ) : results.length === 0 ? (
+            <div className="p-3 text-sm text-muted-foreground">
+              No encontramos coincidencias.
+            </div>
+          ) : (
+            results.map((s) => (
+              <button
+                key={s.id}
+                className="w-full text-left p-3 hover:bg-muted flex flex-col gap-0.5"
+                onClick={() => {
+                  onPick(s.id);
+                  setOpen(false);
+                }}
+              >
+                <div className="font-medium">{s.nombreCompleto}</div>
+                <div className="text-xs text-muted-foreground">
+                  {s.id} • {s.correoInstitucional} • {s.campusSede}
+                </div>
+              </button>
+            ))
+          )}
+        </div>
+
+        <div className="flex justify-end gap-2">
+          <Button variant="ghost" onClick={() => setOpen(false)}>
+            Cerrar
+          </Button>
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
 
 // Helper functions
 export const getStudentById = (students, id: string): Student | undefined => {
@@ -16,24 +120,55 @@ export default function PerfilEstudiante() {
   const { students, loading, error, refresh } = useStudents();
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const { appliedFilters } = useFilters();
+  const [currentPage, setCurrentPage] = useState(1);
+
+
+  useEffect(() => {setCurrentPage(1);}, [appliedFilters]);
+
+  const matchesFilters = (s: (typeof students)[number]) => {
+    if (appliedFilters.campus){
+      if(s.campusSede !== appliedFilters.campus) return false;
+    }
+
+    return true;
+  };
+
+  const filteredStudents = students.filter(matchesFilters);
   
   // If no ID, show the first student as default
-  const student = students.find(s => s.id === id);
-  const tracking = students.find(s => s.id === id);
-  const vocational = students.find(s => s.id === id);
+  const student = filteredStudents.find(s => s.id === id);
+  const tracking = filteredStudents.find(s => s.id === id);
+  const vocational = filteredStudents.find(s => s.id === id);
 
   if (!student) {
-    return (
-      <DashboardLayout title="Perfil del estudiante" showFilter={false}>
-        <div className="flex flex-col items-center justify-center py-20">
-          <p className="text-muted-foreground mb-4">Estudiante no encontrado</p>
-          <Button onClick={() => navigate(-1)}>
+  return (
+    <DashboardLayout title="Perfil del estudiante" showFilter={false}>
+      <BuscarEstudianteModal
+        students={filteredStudents}
+        onPick={(studentId) => navigate(`/estudiante/${studentId}`)}
+      />
+
+      <div className="flex flex-col items-center justify-center py-20">
+        <p className="text-muted-foreground mb-2">Estudiante no encontrado</p>
+        <p className="text-xs text-muted-foreground mb-6 text-center max-w-md">
+          También puedes verlo desde la tabla, presionando el botón de <b>Ver</b>.
+        </p>
+
+        <div className="flex gap-2">
+          <Button variant="outline" onClick={() => navigate(-1)}>
             Volver
           </Button>
+          {/* Optional: button to reopen modal if they closed it
+          <Button onClick={() => navigate("/resumen")}>
+            Ir al dashboard
+          </Button> */}
         </div>
-      </DashboardLayout>
-    );
-  }
+      </div>
+    </DashboardLayout>
+  );
+}
+
 
   return (
     <DashboardLayout title="Perfil del estudiante" showFilter={false}>
