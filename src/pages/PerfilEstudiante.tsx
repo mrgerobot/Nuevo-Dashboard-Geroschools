@@ -7,10 +7,8 @@ import { ArrowLeft, Mail, Phone, MapPin, GraduationCap, BookOpen, MessageSquare,
 import { useStudents } from "@/contexts/StudentsProvider";
 import type { Student } from "@/data/studentsStore";
 
-const { students, loading, error, refresh } = useStudents();
-
 // Helper functions
-export const getStudentById = (id: string): Student | undefined => {
+export const getStudentById = (students, id: string): Student | undefined => {
   return students.find(s => s.id === id);
 };
 
@@ -20,10 +18,9 @@ export default function PerfilEstudiante() {
   const navigate = useNavigate();
   
   // If no ID, show the first student as default
-  const studentId = id || students[0].id;
-  const student = getStudentById(studentId);
-  const tracking = getStudentById(studentId);
-  const vocational = getStudentById(studentId);
+  const student = students.find(s => s.id === id);
+  const tracking = students.find(s => s.id === id);
+  const vocational = students.find(s => s.id === id);
 
   if (!student) {
     return (
