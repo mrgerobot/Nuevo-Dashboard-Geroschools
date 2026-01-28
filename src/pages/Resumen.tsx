@@ -26,8 +26,8 @@ export default function Resumen() {
 
   const stats = getOverviewStats(scopedStudents);
 
-  const topCarreras = getTopCarreras(students);
-  const topInstituciones = getTopInstituciones(students);
+  const topCarreras = getTopCarreras(scopedStudents);
+  const topInstituciones = getTopInstituciones(scopedStudents);
 
   return (
     <DashboardLayout title="Resumen" showFilter={false}>
