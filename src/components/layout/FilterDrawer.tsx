@@ -118,6 +118,44 @@ export function FilterDrawer({
             </div> */}
 
             <div className="space-y-2">
+              <Label className="text-sm font-medium text-foreground">Estado</Label>
+              <Select
+                value={filters.estado || ""}
+                onValueChange={(v) => onFilterChange("estado", v)}
+              >
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Seleccionar estado" />
+                </SelectTrigger>
+                <SelectContent>
+                  {filterOptions.estado.map((opt) => (
+                    <SelectItem key={opt.value} value={opt.value}>
+                      {opt.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="space-y-2">
+              <Label className="text-sm font-medium text-foreground">Mentor</Label>
+              <Select
+                value={filters.mentor || ""}
+                onValueChange={(v) => onFilterChange("mentor", v)}
+              >
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Seleccionar mentor" />
+                </SelectTrigger>
+                <SelectContent>
+                  {filterOptions.mentor.map((opt) => (
+                    <SelectItem key={opt.value} value={opt.value}>
+                      {opt.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="space-y-2">
               <Label className="text-sm font-medium text-foreground">Semestre</Label>
               <Select
                 value={filters.semestre || ""}
@@ -166,25 +204,6 @@ export function FilterDrawer({
                 </SelectTrigger>
                 <SelectContent>
                   {filterOptions.probabilidad.map((opt) => (
-                    <SelectItem key={opt.value} value={opt.value}>
-                      {opt.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div className="space-y-2">
-              <Label className="text-sm font-medium text-foreground">Estado</Label>
-              <Select
-                value={filters.estado || ""}
-                onValueChange={(v) => onFilterChange("estado", v)}
-              >
-                <SelectTrigger className="w-full">
-                  <SelectValue placeholder="Seleccionar estado" />
-                </SelectTrigger>
-                <SelectContent>
-                  {filterOptions.estado.map((opt) => (
                     <SelectItem key={opt.value} value={opt.value}>
                       {opt.label}
                     </SelectItem>

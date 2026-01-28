@@ -4,6 +4,7 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { setAuth, getAuth } from "@/auth/auth";
+import { useStudents } from "@/contexts/StudentsProvider";
 
 type ValidateResponse = {
   status: "allowed" | "denied" | "error";
@@ -12,73 +13,70 @@ type ValidateResponse = {
 };
 
 export default function Validar() {
-    const navigate = useNavigate();
-    const location = useLocation() as any;
+  const navigate = useNavigate();
 
-    // If already authed, bounce into app
-    const existing = getAuth();
-    const [email, setEmail] = useState(existing?.email ?? "");
-    const [loading, setLoading] = useState(false);
-    const [msg, setMsg] = useState<string>("");
-    const [ok, setOk] = useState<boolean | null>(null);
-    const [entering, setEntering] = useState(false);
+  const existing = getAuth();
+  const [email, setEmail] = useState(existing?.email ?? "");
+  const [loading, setLoading] = useState(false);
+  const [msg, setMsg] = useState<string>("");
+  const [ok, setOk] = useState<boolean | null>(null);
+  const [entering, setEntering] = useState(false);
 
-      if (entering) {
+  const { refresh } = useStudents(); // ✅ NEW (uses provider loader)
+
+  if (entering) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background">
         <div className="flex flex-col items-center gap-3">
           <div className="h-10 w-10 animate-spin rounded-full border-4 border-muted border-t-primary" />
-          <p className="text-sm text-muted-foreground">
-            Cargando dashboard…
-          </p>
+          <p className="text-sm text-muted-foreground">Cargando dashboard…</p>
         </div>
       </div>
     );
   }
 
-    
-    async function validate() {
-        setLoading(true);
-        setMsg(""); 
-        setOk(null);
+  async function validate() {
+    setLoading(true);
+    setMsg("");
+    setOk(null);
 
     try {
-        const res = await fetch("/api/validar-email", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ email, url_origen: window.location.href }),
+      const res = await fetch("/api/validar-email", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, url_origen: window.location.href }),
+      });
+
+      const data = (await res.json()) as ValidateResponse;
+
+      if (data.status === "allowed") {
+        setOk(true);
+        setMsg("Email válido. Cargando...");
+
+        setAuth({
+          email: email.trim(),
+          campus: data.campus ?? null,
+          ts: Date.now(),
         });
 
-        const data = (await res.json()) as ValidateResponse;
+        window.dispatchEvent(new Event("gero:auth-updated"));
 
-        if (data.status === "allowed") {
-            setOk(true);
-            setMsg("Email válido. Cargando...");
+        setEntering(true);
 
-            setAuth({
-                email: email.trim(),
-                campus: data.campus ?? null,
-                ts: Date.now(),
-            });
+        // ✅ Wait for students to fully load BEFORE navigating
+        await refresh();
 
-            window.dispatchEvent(new Event("gero:auth-updated"));
+        navigate("/resumen", { replace: true });
+        return;
+      }
 
-            setEntering(true);
-
-            setTimeout(() => {
-              navigate("/resumen", { replace: true });
-            }, 900);
-
-            return;
-        }
-
-        setOk(false);
-        setMsg(data.message || "No autorizado");
-    } catch {
-        setOk(false);
-        setMsg("Ocurrió un error. Inténtalo nuevamente.");
+      setOk(false);
+      setMsg(data.message || "No autorizado");
+    } catch (e) {
+      setOk(false);
+      setMsg("Ocurrió un error. Inténtalo nuevamente.");
     } finally {
-        setLoading(false);
+      setLoading(false);
     }
   }
 

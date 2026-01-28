@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { createContext, useContext, useEffect, useMemo, useRef, useState } from "react";
 import type { Student } from "@/data/studentsStore";
 
 type StudentsCtx = {
@@ -10,10 +10,13 @@ type StudentsCtx = {
 
 const Ctx = createContext<StudentsCtx | null>(null);
 
-async function fetchStudents(): Promise<Student[]> {
+async function fetchStudentsJSON(): Promise<Student[]> {
   const res = await fetch("/api/students");
   if (!res.ok) throw new Error("Failed to load students");
-  return res.json();
+  const data = await res.json();
+
+  // supports either: array OR {students:[...]}
+  return Array.isArray(data) ? data : (data.students ?? []);
 }
 
 export function StudentsProvider({ children }: { children: React.ReactNode }) {
@@ -21,49 +24,43 @@ export function StudentsProvider({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const load = async () => {
-  console.log("[StudentsProvider] load() starting…");
+  const inflight = useRef<Promise<void> | null>(null);
 
-  setLoading(true);
-  setError(null);
+  const refresh = async () => {
+    if (inflight.current) return inflight.current;
 
-  try {
-    console.log("[StudentsProvider] fetching /api/students");
-    const res = await fetch("/api/students");
+    inflight.current = (async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const data = await fetchStudentsJSON();
+        setStudents(data);
+      } catch (e: any) {
+        setError(e?.message ?? String(e));
+        setStudents([]);
+        throw e;
+      } finally {
+        setLoading(false);
+        inflight.current = null;
+      }
+    })();
 
-    console.log("[StudentsProvider] response:", res.status, res.statusText);
-    const data = await res.json();
-
-    console.log("[StudentsProvider] JSON received. IsArray:", Array.isArray(data), "len:", Array.isArray(data) ? data.length : "n/a");
-    console.log("[StudentsProvider] sample[0]:", Array.isArray(data) ? data[0] : data);
-
-    setStudents(Array.isArray(data) ? data : []);
-  } catch (e: any) {
-    console.error("[StudentsProvider] ERROR:", e);
-    setError(e?.message ?? String(e));
-  } finally {
-    console.log("[StudentsProvider] load() finished");
-    setLoading(false);
-  }
-};
-
+    return inflight.current;
+  };
 
   useEffect(() => {
-    load();
+    // initial boot fetch
+    refresh().catch(() => {});
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const value = useMemo(
-    () => ({ students, loading, error, refresh: load }),
-    [students, loading, error]
-  );
+  const value = useMemo(() => ({ students, loading, error, refresh }), [students, loading, error]);
 
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>;
 }
 
 export function useStudents() {
   const ctx = useContext(Ctx);
-  if (!ctx) {
-    throw new Error("useStudents() must be used inside <StudentsProvider> (wrap your App in it)");
-  }
+  if (!ctx) throw new Error("useStudents must be used within <StudentsProvider>");
   return ctx;
 }

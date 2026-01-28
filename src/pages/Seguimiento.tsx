@@ -141,8 +141,8 @@ export default function Seguimiento() {
                 <th>Grupo</th>
                 <th>Campus</th>
                 <th>Mentor</th>
-                <th className="w-[320px] min-w-[320px]">Carreras de interés</th>
-                <th className="w-[380px] min-w-[380px]">Instituciones de interés</th>
+                <th className="text-center w-[300px] min-w-[300px]">Carreras de interés</th>
+                <th className="text-center w-[380px] min-w-[380px]">Instituciones de interés</th>
                 <th>Probabilidad de elegir el TEC</th>
                 <th>Estado</th> {/*si terminó todo -> finalizado, si no se marca la(s) actividad(es) que le falta(n)*/}
                 <th>Reporte estudiantes</th>
@@ -160,7 +160,7 @@ export default function Seguimiento() {
                   <td>{record.grupoDivision}</td>
                   <td className="text-sm">{record.campusSede}</td>
                   <td className="text-sm">{record.mentor}</td>
-                  <td className="text-sm whitespace-normal break-words min-w-[320px]" title="Carreras de interés">
+                  <td className="text-sm whitespace-normal break-words min-w-[300px]" title="Carreras de interés">
                     {record.carreraInteres1 !== "No manifiesta carrera de interés" && record.carreraInteres1 !== "" && (
                       <p>1. {record.carreraInteres1}</p>
                     )}

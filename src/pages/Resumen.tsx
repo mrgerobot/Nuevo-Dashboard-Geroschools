@@ -29,8 +29,6 @@ export default function Resumen() {
   const topCarreras = getTopCarreras(students);
   const topInstituciones = getTopInstituciones(students);
 
-  
-
   return (
     <DashboardLayout title="Resumen" showFilter={false}>
       {/* KPI Cards */}
