@@ -33,7 +33,7 @@ const filterOptions = {
   ],
   campus: [
     { value: "Ciudad de México - Tec", label: "Ciudad de México - Tec" },
-    { value: "Monterrey", label: "Monterrey" },
+    { value: "Toluca - Tec", label: "Toluca - Tec" },
     { value: "Guadalajara", label: "Guadalajara" },
   ],
   semestre: [
@@ -70,6 +70,8 @@ const getFilterLabel = (key: string, value: string) => {
 
   return options?.find((o) => o.value === value)?.label ?? value;
 };
+
+
 
 
 export function FilterDrawer({

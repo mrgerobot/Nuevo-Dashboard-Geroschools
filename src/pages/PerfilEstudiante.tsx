@@ -27,8 +27,8 @@ export default function PerfilEstudiante() {
       <DashboardLayout title="Perfil del estudiante" showFilter={false}>
         <div className="flex flex-col items-center justify-center py-20">
           <p className="text-muted-foreground mb-4">Estudiante no encontrado</p>
-          <Button onClick={() => navigate("/poblacion")}>
-            Volver a Población
+          <Button onClick={() => navigate(-1)}>
+            Volver
           </Button>
         </div>
       </DashboardLayout>
@@ -166,7 +166,7 @@ export default function PerfilEstudiante() {
             </TabsList>
 
             <TabsContent value="vocacional" className="space-y-6">
-              {vocational ? (
+              {vocational.avanceAutoconocimiento == "Completo" ? (
                 <>
                   {/* Estilo de vida */}
                   <div className="bg-card rounded-xl border border-border p-6">
