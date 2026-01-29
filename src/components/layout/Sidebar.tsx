@@ -3,6 +3,8 @@ import { LayoutDashboard, Users, ClipboardList, UserCircle, MessageCircle } from
 import { cn } from "@/lib/utils";
 import geroLogo from "@/assets/gero-logo-2.png";
 import { getAuth } from "@/auth/auth";
+import { LogOut } from "lucide-react";
+import { logout } from "@/lib/logout";
 
 const auth = getAuth();
 const message = `Hola, soy ${auth?.email ?? "un tutor"} y necesito asistencia con el dashboard.`;
@@ -63,6 +65,15 @@ export function Sidebar() {
           <span className="font-medium text-sm">¡Contáctanos!</span>
         </button>
         </a>
+      </div>
+      <div className="mt-auto p-3">
+        <button
+          onClick={logout}
+          className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-muted-foreground hover:bg-orange-50 hover:text-orange-700"
+        >
+          <LogOut className="h-4 w-4" />
+          Cerrar sesión
+        </button>
       </div>
     </aside>
   );
