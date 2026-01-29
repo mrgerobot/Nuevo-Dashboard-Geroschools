@@ -68,7 +68,9 @@ export function Sidebar() {
       </div>
       <div className="mt-auto p-3">
         <button
-          onClick={logout}
+          onClick={() => {
+            if (confirm("¿Cerrar sesión?")) logout();
+              }}
           className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-muted-foreground hover:bg-orange-50 hover:text-orange-700"
         >
           <LogOut className="h-4 w-4" />
