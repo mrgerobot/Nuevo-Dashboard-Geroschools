@@ -62,6 +62,7 @@ export function StudentsProvider({ children }: { children: React.ReactNode }) {
       // IMPORTANT: do NOT wipe students here — keep last known good (cache or previous state)
     } finally {
       setLoading(false);
+      console.log(students);
     }
   };
 
