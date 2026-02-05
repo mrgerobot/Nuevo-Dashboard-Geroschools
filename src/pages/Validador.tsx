@@ -53,7 +53,8 @@ export default function Validar() {
         setOk(true);
         setMsg("Email válido. Entrando...");
         const emailNorm = email.trim().toLowerCase();
-        reconcileCacheOwner(emailNorm);
+        localStorage.clear();
+        sessionStorage.clear(); // optional but recommended
 
         setAuth({
           email: emailNorm.trim(),
