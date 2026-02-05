@@ -12,7 +12,8 @@ export function logout() {
     if (
       key.startsWith("gero:dashboard:") ||
       key.startsWith("gero:miniCoach:") ||
-      key.startsWith("gero:filters:")
+      key.startsWith("gero:filters:") ||
+      key.startsWith("gero:students")
     ) {
       localStorage.removeItem(key);
     }
