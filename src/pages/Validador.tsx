@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { setAuth, getAuth } from "@/auth/auth";
 import { useStudents} from "@/contexts/StudentsProvider";
+import { reconcileCacheOwner } from "@/lib/cache";
 
 type ValidateResponse = {
   status: "allowed" | "denied" | "error";
@@ -49,11 +50,13 @@ export default function Validar() {
       const data = (await res.json()) as ValidateResponse;
 
       if (data.status === "allowed") {
+        const emailNorm = email.trim().toLowerCase();
+        reconcileCacheOwner(emailNorm);
         setOk(true);
         setMsg("Email válido. Entrando...");
 
         setAuth({
-          email: email.trim(),
+          email: emailNorm.trim(),
           campus: data.campus ?? null,
           ts: Date.now(),
         });

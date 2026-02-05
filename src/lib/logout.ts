@@ -1,16 +1,23 @@
-const APP_PREFIX = "gero:";
-
+// src/lib/logout.ts
 export function logout() {
-  try {
-    localStorage.clear();
-    sessionStorage.clear(); // optional but recommended
-  } catch (e) {
-    console.log("ERROR AT LOGOUT")
-  } finally {
-    // If you also keep auth/user in memory, reset it before reload
-    // setAuth(null) etc. (do that where you call hardLogout)
+  // 1) Remove auth
+  localStorage.removeItem("gero:dashboardAuth");
 
-    // Hard reload to guarantee providers re-init cleanly
-    window.location.href = "/";
+  // 2) Remove dashboard-scoped cached keys (safe wipe)
+  for (let i = localStorage.length - 1; i >= 0; i--) {
+    const key = localStorage.key(i);
+    if (!key) continue;
+
+    // Adjust prefixes to match your app
+    if (
+      key.startsWith("gero:dashboard:") ||
+      key.startsWith("gero:miniCoach:") ||
+      key.startsWith("gero:filters:")
+    ) {
+      localStorage.removeItem(key);
+    }
   }
+
+  // 3) Hard reload to fully reset in-memory state
+  window.location.href = "/";
 }
