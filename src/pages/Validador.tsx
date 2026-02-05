@@ -50,10 +50,10 @@ export default function Validar() {
       const data = (await res.json()) as ValidateResponse;
 
       if (data.status === "allowed") {
-        const emailNorm = email.trim().toLowerCase();
-        reconcileCacheOwner(emailNorm);
         setOk(true);
         setMsg("Email válido. Entrando...");
+        const emailNorm = email.trim().toLowerCase();
+        reconcileCacheOwner(emailNorm);
 
         setAuth({
           email: emailNorm.trim(),
