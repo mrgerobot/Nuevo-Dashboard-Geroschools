@@ -19,29 +19,18 @@ export default async function handler(req, res) {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body,
+      // optional: keep it explicit
+      cache: "no-store",
     });
     text = await r.text();
-  } catch (err) {
-    return res.status(502).json({
-      status: "error",
-      message: "Upstream validator fetch failed",
-    });
+  } catch {
+    return res.status(502).json({ status: "error", message: "Upstream validator fetch failed" });
   }
 
   const ct = r.headers.get("content-type") || "";
   const snippet = (text || "").slice(0, 300);
 
-  // If upstream didn't return JSON, surface that clearly
-  if (!ct.includes("application/json")) {
-    return res.status(502).json({
-      status: "error",
-      message: "Validator did not return JSON",
-      upstream_status: r.status,
-      upstream_content_type: ct,
-      upstream_snippet: snippet,
-    });
-  }
-
+  // ✅ Don’t trust content-type; trust parseability
   try {
     const json = JSON.parse(text);
 
@@ -51,15 +40,19 @@ export default async function handler(req, res) {
         status: "error",
         message: "Validator JSON missing status",
         upstream_status: r.status,
+        upstream_content_type: ct,
         upstream_snippet: snippet,
       });
     }
+
+    // Also: prevent caching at your API layer
+    res.setHeader("Cache-Control", "no-store");
 
     return res.status(200).json(json);
   } catch {
     return res.status(502).json({
       status: "error",
-      message: "Validator returned invalid JSON",
+      message: "Invalid response from validator (not JSON)",
       upstream_status: r.status,
       upstream_content_type: ct,
       upstream_snippet: snippet,
