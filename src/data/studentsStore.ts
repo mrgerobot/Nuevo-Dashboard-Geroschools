@@ -16,6 +16,7 @@ export interface Student {
   avanceConocete: string;
   avanceAutoconocimiento: string;
   estiloDeVida: string;
+  reportesCCR: string;
   reporteEstudiantesUrl: string;
   reporteFamiliasUrl: string;
   rankingArquetiposPersonalidad: {tipo: string; nivel: string; }[];

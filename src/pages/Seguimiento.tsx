@@ -145,6 +145,7 @@ export default function Seguimiento() {
                 <th className="text-center w-[380px] min-w-[380px]">Instituciones de interés</th>
                 <th>Probabilidad de elegir el TEC</th>
                 <th>Estado</th> {/*si terminó todo -> finalizado, si no se marca la(s) actividad(es) que le falta(n)*/}
+                <th>Reporte "¿Cuán preparado estás?"</th>
                 <th>Reporte estudiantes</th>
                 <th>Reporte familias</th>
                 {/* <th>Interacción coach</th> */}
@@ -190,6 +191,21 @@ export default function Seguimiento() {
                   <td className="text-sm max-w-24 truncate" title={record.avanceAutoconocimiento}>
                     {record.avanceAutoconocimiento}
                   </td> */}
+                  <td>
+                    {record.reportesCCR ? (
+                      <a
+                        href={record.reportesCCR}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-primary hover:text-primary/80 flex items-center gap-1"
+                      >
+                        <ExternalLink className="h-3 w-3" />
+                        <span className="text-xs">Ver</span>
+                      </a>
+                    ) : (
+                      <span className="text-muted-foreground text-xs">-</span>
+                    )}
+                  </td>
                   <td>
                     {record.reporteEstudiantesUrl ? (
                       <a
