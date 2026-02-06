@@ -192,7 +192,7 @@ export default function Seguimiento() {
                     {record.avanceAutoconocimiento}
                   </td> */}
                   <td>
-                    {record.reportesCCR ? (
+                    {record.reportesCCR != "No completó la actividad" ? (
                       <a
                         href={record.reportesCCR}
                         target="_blank"
@@ -207,7 +207,7 @@ export default function Seguimiento() {
                     )}
                   </td>
                   <td>
-                    {record.reporteEstudiantesUrl ? (
+                    {record.reporteEstudiantesUrl != "No completó la actividad" ? (
                       <a
                         href={record.reporteEstudiantesUrl}
                         target="_blank"
@@ -222,7 +222,7 @@ export default function Seguimiento() {
                     )}
                   </td>
                   <td>
-                    {record.reporteFamiliasUrl ? (
+                    {record.reporteFamiliasUrl != "No completó la actividad" ? (
                       <a
                         href={record.reporteFamiliasUrl}
                         target="_blank"
