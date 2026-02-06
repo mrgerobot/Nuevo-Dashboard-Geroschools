@@ -14,7 +14,6 @@ interface DashboardLayoutProps {
 export function DashboardLayout({
   children,
   title,
-  subtitle = "Última actualización: 26/03/2025 a las 16:34 hs.",
   showFilter = true,
 
 }: DashboardLayoutProps) {
@@ -37,7 +36,6 @@ export function DashboardLayout({
       <main className="ml-60 p-8">
         <Header
           title={title}
-          subtitle={subtitle}
           onFilterClick={showFilter ? () => setIsFilterOpen(true) : undefined}
         />
         
