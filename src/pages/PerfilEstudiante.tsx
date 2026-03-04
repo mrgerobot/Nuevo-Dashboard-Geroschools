@@ -161,63 +161,65 @@ function BuscarEstudianteInline({
   );
 }
 
-
-// Helper functions
-export const getStudentById = (students, id: string): Student | undefined => {
-  return students.find(s => s.id === id);
-};
-
 export default function PerfilEstudiante() {
-  
-  const { students, loading, error, refresh } = useStudents();
-  const { id } = useParams<{ id: string }>();
-  const navigate = useNavigate();
-  const { appliedFilters } = useFilters();
-  const [currentPage, setCurrentPage] = useState(1);
-
-  useEffect(() => {setCurrentPage(1);}, [appliedFilters]);
-
-  const matchesFilters = (s: (typeof students)[number]) => {
-    if (appliedFilters.campus){
-      if(s.campusSede !== appliedFilters.campus) return false;
-    }
-
-    return true;
-  };
-
-  const filteredStudents = students.filter(matchesFilters);
-  
-  // If no ID, show the first student as default
-  const student = filteredStudents.find(s => s.id === id);
-  const tracking = student;
-  const vocational = student;
-
-  if (!student) {
   return (
     <DashboardLayout title="Perfil del estudiante" showFilter={false}>
-      <BuscarEstudianteInline
-        students={filteredStudents}
-        selectedId={id}
-        onPick={(studentId) => navigate(`/estudiante/${studentId}`)}
-      />
+      <div className="flex items-center justify-center h-[70vh]">
+        <div className="bg-yellow-100 border border-yellow-400 text-yellow-800 px-6 py-4 rounded text-center">
+          <h2 className="text-xl font-semibold mb-2">
+            🚧 Sección en mantenimiento 🚧
+          </h2>
+          <p>
+            Estamos realizando mejoras en el perfil del estudiante.
+            Vuelve en un rato.
+          </p>
+        </div>
+      </div>
     </DashboardLayout>
   );
 }
-return (
-  <DashboardLayout title="Perfil del estudiante" showFilter={false}>
-    <div className="flex items-center justify-center h-[70vh]">
-      <div className="bg-yellow-100 border border-yellow-400 text-yellow-800 px-6 py-4 rounded text-center">
-        <h2 className="text-xl font-semibold mb-2">
-          🚧 Sección en mantenimiento 🚧
-        </h2>
-        <p>
-          Estamos realizando mejoras en el perfil del estudiante.
-          Vuelve en un rato.
-        </p>
-      </div>
-    </div>
-  </DashboardLayout>
-);
+// // Helper functions
+// export const getStudentById = (students, id: string): Student | undefined => {
+//   return students.find(s => s.id === id);
+// };
+
+// export default function PerfilEstudiante() {
+  
+//   const { students, loading, error, refresh } = useStudents();
+//   const { id } = useParams<{ id: string }>();
+//   const navigate = useNavigate();
+//   const { appliedFilters } = useFilters();
+//   const [currentPage, setCurrentPage] = useState(1);
+
+//   useEffect(() => {setCurrentPage(1);}, [appliedFilters]);
+
+//   const matchesFilters = (s: (typeof students)[number]) => {
+//     if (appliedFilters.campus){
+//       if(s.campusSede !== appliedFilters.campus) return false;
+//     }
+
+//     return true;
+//   };
+
+//   const filteredStudents = students.filter(matchesFilters);
+  
+//   // If no ID, show the first student as default
+//   const student = filteredStudents.find(s => s.id === id);
+//   const tracking = student;
+//   const vocational = student;
+
+//   if (!student) {
+//   return (
+//     <DashboardLayout title="Perfil del estudiante" showFilter={false}>
+//       <BuscarEstudianteInline
+//         students={filteredStudents}
+//         selectedId={id}
+//         onPick={(studentId) => navigate(`/estudiante/${studentId}`)}
+//       />
+//     </DashboardLayout>
+//   );
+// }
+
 //   return (
 //     <DashboardLayout title="Perfil del estudiante" showFilter={false}>
 //       <Button
