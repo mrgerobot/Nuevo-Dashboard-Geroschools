@@ -40,7 +40,7 @@ export function StudentsProvider({ children }: { children: React.ReactNode }) {
 
     // 2) Fetch latest snapshot (revalidate)
     try {
-      const res = await fetch("/api/students"); // snapshot endpoint should be cache-friendly server-side
+      const res = await fetch("/students.json"); // snapshot endpoint should be cache-friendly server-side
       if (!res.ok) throw new Error(`Failed to load students (${res.status})`);
 
       const data = await res.json();
