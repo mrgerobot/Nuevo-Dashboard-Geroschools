@@ -240,7 +240,7 @@ export default function Seguimiento() {
                     <StatusChip status={record.interaccionCoach} />
                   </td> */}
                   <td>
-                    {record.avanceAutoconocimiento == "Finalizado" ? (
+                    {record.avanceAutoconocimiento == "Completo" ? (
                       <Button
                       variant="ghost"
                       size="sm"
