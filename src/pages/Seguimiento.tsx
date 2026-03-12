@@ -12,6 +12,7 @@ import { exportAllColumnsToExcel } from "@/lib/utils";
 import { Search, Download, CheckCircle, Users, AlertCircle, Eye, ExternalLink, ChevronLeft, ChevronRight } from "lucide-react";
 
 const ITEMS_PER_PAGE = 8;
+const LAST_UPDATED = "12 de marzo de 2026, 13:20";
 
 export default function Seguimiento() {
   const { students, loading, error } = useStudents();
@@ -87,6 +88,13 @@ export default function Seguimiento() {
 
   return (
     <DashboardLayout title="Seguimiento">
+      {/* Fecha de actualización */}
+      <div className="flex items-center gap-2 -mt-3 mb-6">
+        <span className="text-sm text-muted-foreground">
+          Fecha de actualización: <span className="font-medium text-foreground">{LAST_UPDATED}</span>
+        </span>
+      </div>
+
       {/* Mini KPIs */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
         <KPICard
@@ -240,7 +248,7 @@ export default function Seguimiento() {
                     <StatusChip status={record.interaccionCoach} />
                   </td> */}
                   <td>
-                    {record.avanceAutoconocimiento == "Completo" ? (
+                    {record.avanceAutoconocimiento == "Completo" && record.carrerasRecomendadasPorFortalezas?.length > 0 && record.carrerasRecomendadasPorFortalezas[0] != "" ? (
                       <Button
                       variant="ghost"
                       size="sm"

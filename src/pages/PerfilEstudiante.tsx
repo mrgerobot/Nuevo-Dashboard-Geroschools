@@ -162,6 +162,35 @@ function BuscarEstudianteInline({
 }
 
 export default function PerfilEstudiante() {
+  const { students, loading, error, refresh } = useStudents();
+  const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
+  const { appliedFilters } = useFilters();
+  const [currentPage, setCurrentPage] = useState(1);
+
+  useEffect(() => {setCurrentPage(1);}, [appliedFilters]);
+
+  const matchesFilters = (s: (typeof students)[number]) => {
+    if (appliedFilters.campus){
+      if(s.campusSede !== appliedFilters.campus) return false;
+    }
+
+    return true;
+  };
+
+  const filteredStudents = students.filter(matchesFilters);
+  const studentsWithProfile = filteredStudents.filter(
+  s => s.avanceAutoconocimiento === "Completo" &&
+       s.carrerasRecomendadasPorFortalezas?.length > 0 && 
+       s.carrerasRecomendadasPorFortalezas[0] !== ""
+);  
+  
+  // If no ID, show the first student as default
+  const student = filteredStudents.find(s => s.id === id);
+  const tracking = student;
+  const vocational = student;
+
+  if (!student) {
   return (
     <DashboardLayout title="Perfil del estudiante" showFilter={false}>
       <div className="flex items-center justify-center h-[70vh]">
@@ -178,78 +207,72 @@ export default function PerfilEstudiante() {
     </DashboardLayout>
   );
 }
-// // Helper functions
-// export const getStudentById = (students, id: string): Student | undefined => {
-//   return students.find(s => s.id === id);
-// };
+if (!student) {
+  return (
+    <DashboardLayout title="Perfil del estudiante" showFilter={false}>
+      <BuscarEstudianteInline
+        students={filteredStudents}
+        selectedId={id}
+        onPick={(studentId) => navigate(`/estudiante/${studentId}`)}
+      />
+    </DashboardLayout>
+  );
+}
 
-// export default function PerfilEstudiante() {
-  
-//   const { students, loading, error, refresh } = useStudents();
-//   const { id } = useParams<{ id: string }>();
-//   const navigate = useNavigate();
-//   const { appliedFilters } = useFilters();
-//   const [currentPage, setCurrentPage] = useState(1);
+// 👇 Add this right after
+if (
+  student.avanceAutoconocimiento !== "Completo" ||
+  !student.carrerasRecomendadasPorFortalezas?.length ||
+  student.carrerasRecomendadasPorFortalezas[0] === ""
+) {
+  return (
+    <DashboardLayout title="Perfil del estudiante" showFilter={false}>
+      <Button
+        variant="ghost"
+        onClick={() => navigate(`/estudiante`)}
+        className="mb-6 text-muted-foreground hover:text-foreground"
+      >
+        <ArrowLeft className="h-4 w-4 mr-2" />
+        Volver
+      </Button>
+      <div className="bg-card rounded-xl border border-border p-12 text-center">
+        <p className="text-lg font-medium text-foreground mb-2">{student.nombreCompleto}</p>
+        <p className="text-muted-foreground">Este estudiante aún no tiene perfil vocacional disponible.</p>
+      </div>
+    </DashboardLayout>
+  );
+}
 
-//   useEffect(() => {setCurrentPage(1);}, [appliedFilters]);
+  return (
+    <DashboardLayout title="Perfil del estudiante" showFilter={false}>
+      <Button
+        variant="ghost"
+        onClick={() => navigate(`/estudiante`)}
+        className="mb-6 text-muted-foreground hover:text-foreground"
+      >
+        <ArrowLeft className="h-4 w-4 mr-2" />
+        Volver
+      </Button>
 
-//   const matchesFilters = (s: (typeof students)[number]) => {
-//     if (appliedFilters.campus){
-//       if(s.campusSede !== appliedFilters.campus) return false;
-//     }
+    {!id && (
+    <div className="mb-6">
+      <BuscarEstudianteInline
+        students={studentsWithProfile}
+        selectedId={student.id}
+        onPick={(studentId) => navigate(`/estudiante/${studentId}`)}
+      />
+    </div>
+    )}
 
-//     return true;
-//   };
-
-//   const filteredStudents = students.filter(matchesFilters);
-  
-//   // If no ID, show the first student as default
-//   const student = filteredStudents.find(s => s.id === id);
-//   const tracking = student;
-//   const vocational = student;
-
-//   if (!student) {
-//   return (
-//     <DashboardLayout title="Perfil del estudiante" showFilter={false}>
-//       <BuscarEstudianteInline
-//         students={filteredStudents}
-//         selectedId={id}
-//         onPick={(studentId) => navigate(`/estudiante/${studentId}`)}
-//       />
-//     </DashboardLayout>
-//   );
-// }
-
-//   return (
-//     <DashboardLayout title="Perfil del estudiante" showFilter={false}>
-//       <Button
-//         variant="ghost"
-//         onClick={() => navigate(`/estudiante`)}
-//         className="mb-6 text-muted-foreground hover:text-foreground"
-//       >
-//         <ArrowLeft className="h-4 w-4 mr-2" />
-//         Volver
-//       </Button>
-
-//     {!id && (
-//     <div className="mb-6">
-//       <BuscarEstudianteInline
-//         students={filteredStudents}
-//         selectedId={student.id}
-//         onPick={(studentId) => navigate(`/estudiante/${studentId}`)}
-//       />
-//     </div>
-//     )}
-
-//       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-//         {/* Left Column - Student Info */}
-//         <div className="space-y-6">
-//           {/* Student Info Card */}
-//           <div className="bg-card rounded-xl border border-border p-6">
-//             <h2 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
-//               <GraduationCap className="h-5 w-5 text-primary" />
-//               Información del estudiante
-//             </h2>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        {/* Left Column - Student Info */}
+        <div className="space-y-6">
+          {/* Student Info Card */}
+          <div className="bg-card rounded-xl border border-border p-6">
+            <h2 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
+              <GraduationCap className="h-5 w-5 text-primary" />
+              Información del estudiante
+            </h2>
             
 //             <div className="space-y-4">
 //               <div>
@@ -324,86 +347,87 @@ export default function PerfilEstudiante() {
 //           <div className="bg-card rounded-xl border border-border p-6">
 //             <h2 className="text-lg font-semibold text-foreground mb-4">Intereses</h2>
             
-//             <div className="space-y-4">
-//               {(student.carreraInteres1 != "No manifiesta carrera de interés" || student.carreraInteres2 != "No manifiesta carrera de interés") && (
-//                 <div>
-//                   <p className="text-xs text-muted-foreground uppercase tracking-wide mb-2">
-//                     Carreras de interés
-//                   </p>
-//                   <ul className="space-y-1">
-//                     {student.carreraInteres1 && (
-//                       <li className="text-sm">1. {student.carreraInteres1}</li>
-//                     )}
-//                     {student.carreraInteres2 && (
-//                       <li className="text-sm">2. {student.carreraInteres2}</li>
-//                     )}
-//                   </ul>
-//                 </div>
-//               )}
+            <div className="space-y-4">
+              {(student.carreraInteres1 != "No manifiesta carrera de interés" || student.carreraInteres2 != "No manifiesta carrera de interés") && (
+                <div>
+                  <p className="text-xs text-muted-foreground uppercase tracking-wide mb-2">
+                    Carreras de interés
+                  </p>
+                  <ul className="space-y-1">
+                    {student.carreraInteres1 && (
+                      <li className="text-sm">1. {student.carreraInteres1}</li>
+                    )}
+                    {student.carreraInteres2 && (
+                      <li className="text-sm">2. {student.carreraInteres2}</li>
+                    )}
+                  </ul>
+                </div>
+              )}
 
-//               {(student.institucionInteres1 != "No especifica institución de interés" || student.institucionInteres2 != "No especifica institución de interés") && (
-//                 <div>
-//                   <p className="text-xs text-muted-foreground uppercase tracking-wide mb-2">
-//                     Instituciones de interés
-//                   </p>
-//                   <ul className="space-y-1">
-//                     {student.institucionInteres1 && (
-//                       <li className="text-sm">1. {student.institucionInteres1}</li>
-//                     )}
-//                     {student.institucionInteres2 && (
-//                       <li className="text-sm">2. {student.institucionInteres2}</li>
-//                     )}
-//                   </ul>
-//                 </div>
-//               )}
+              {(student.institucionInteres1 != "No especifica institución de interés" || student.institucionInteres2 != "No especifica institución de interés") && (
+                <div>
+                  <p className="text-xs text-muted-foreground uppercase tracking-wide mb-2">
+                    Instituciones de interés
+                  </p>
+                  <ul className="space-y-1">
+                    {student.institucionInteres1 && (
+                      <li className="text-sm">1. {student.institucionInteres1}</li>
+                    )}
+                    {student.institucionInteres2 && (
+                      <li className="text-sm">2. {student.institucionInteres2}</li>
+                    )}
+                  </ul>
+                </div>
+              )}
 
-//             </div>
-//           </div>
+            </div>
+          </div>
 
-//           {/* Probability Badge */}
-//           <div className="bg-primary/10 rounded-xl p-6 border border-primary/20">
-//             <p className="text-sm text-muted-foreground mb-2">Probabilidad de elegir el Tec</p>
-//             <StatusChip status={student.probabilidadElegirTec} className="text-sm px-4 py-1" />
-//           </div>
-//         </div>
+          {/* Probability Badge */}
+          <div className="bg-primary/10 rounded-xl p-6 border border-primary/20">
+            <p className="text-sm text-muted-foreground mb-2">Probabilidad de elegir el Tec</p>
+            <StatusChip status={student.probabilidadElegirTec} className="text-sm px-4 py-1" />
+          </div>
+        </div>
 
-//         {/* Right Column - Tabs */}
-//         <div className="lg:col-span-2">
-//           <Tabs defaultValue="vocacional" className="w-full">
-//             <TabsList className="grid w-full grid-cols-3 mb-6">
-//               <TabsTrigger value="vocacional">Resumen vocacional</TabsTrigger>
-//               <TabsTrigger value="carreras">Carreras recomendadas</TabsTrigger>
-//               <TabsTrigger value="seguimiento">Seguimiento</TabsTrigger>
-//             </TabsList>
+        {/* Right Column - Tabs */}
+        <div className="lg:col-span-2">
+          <Tabs defaultValue="vocacional" className="w-full">
+            <TabsList className="grid w-full grid-cols-3 mb-6">
+              <TabsTrigger value="vocacional">Resumen vocacional</TabsTrigger>
+              <TabsTrigger value="carreras">Carreras recomendadas</TabsTrigger>
+              <TabsTrigger value="seguimiento">Seguimiento</TabsTrigger>
+            </TabsList>
 
-//             <TabsContent value="vocacional" className="space-y-6">
-//               {vocational.avanceAutoconocimiento == "Completo" ? (
-//                 <>
-//                   {/* Estilo de vida */}
-//                   <div className="bg-card rounded-xl border border-border p-6">
-//                     <h3 className="font-semibold text-foreground mb-3">Estilo de vida</h3>
-//                     <p className="text-sm text-muted-foreground leading-relaxed">
-//                       {vocational.estiloDeVida}
-//                     </p>
-//                   </div>
+            <TabsContent value="vocacional" className="space-y-6">
+              {vocational.avanceAutoconocimiento == "Completo" && 
+ vocational.rankingArquetiposPersonalidad?.length > 0 ? (
+                <>
+                  {/* Estilo de vida */}
+                  <div className="bg-card rounded-xl border border-border p-6">
+                    <h3 className="font-semibold text-foreground mb-3">Estilo de vida</h3>
+                    <p className="text-sm text-muted-foreground leading-relaxed">
+                      {vocational.estiloDeVida}
+                    </p>
+                  </div>
 
-//                   {/* Arquetipos */}
-//                   <div className="bg-card rounded-xl border border-border p-6">
-//                     <h3 className="font-semibold text-foreground mb-4">Arquetipos de personalidad</h3>
-//                     <div className="space-y-3">
-//                       {vocational.rankingArquetiposPersonalidad.slice(0, 6).map((arq) => {
-//                         const level = String(arq.nivel ?? "").trim().toLowerCase();
-//                         const width =
-//                           level.includes("alta") ? "100%" :
-//                           level.includes("media") ? "66%" :
-//                           "33%";
+                  {/* Arquetipos */}
+                  <div className="bg-card rounded-xl border border-border p-6">
+                    <h3 className="font-semibold text-foreground mb-4">Arquetipos de personalidad</h3>
+                    <div className="space-y-3">
+                      {vocational.rankingArquetiposPersonalidad.slice(0, 6).map((arq) => {
+                        const level = String(arq.nivel ?? "").trim().toLowerCase();
+                        const width =
+                          level.includes("alta") ? "100%" :
+                          level.includes("media") ? "66%" :
+                          "33%";
 
-//                         return (
-//                           <div key={arq.tipo} className="space-y-2">
-//                             <div className="flex items-center justify-between">
-//                               <span className="font-medium text-sm">{arq.tipo}</span>
-//                               <StatusChip status={arq.nivel} />
-//                             </div>
+                        return (
+                          <div key={arq.tipo} className="space-y-2">
+                            <div className="flex items-center justify-between">
+                              <span className="font-medium text-sm">{arq.tipo}</span>
+                              <StatusChip status={arq.nivel} />
+                            </div>
                         
 //                             <div className="h-2 bg-muted rounded-full overflow-hidden">
 //                               <div className="h-full bg-primary rounded-full" style={{ width }} />
@@ -433,185 +457,186 @@ export default function PerfilEstudiante() {
 //                               <StatusChip status={arq.nivel} />
 //                             </div>
                         
-//                             <div className="h-2 bg-muted rounded-full overflow-hidden">
-//                               <div className="h-full bg-primary rounded-full" style={{ width }} />
-//                             </div>
-//                           </div>
-//                         );
-//                       })}
-//                     </div>
-//                   </div>
+                            <div className="h-2 bg-muted rounded-full overflow-hidden">
+                              <div className="h-full bg-primary rounded-full" style={{ width }} />
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
 
-//                   {/* Orientación de intereses */}
-//                   <div className="bg-card rounded-xl border border-border p-6">
-//                     <h3 className="font-semibold text-foreground mb-3">Orientación de intereses</h3>
-//                     <ul className="space-y-2">
-//                       {vocational.orientacionIntereses}
-//                     </ul>
-//                   </div>
+                  {/* Orientación de intereses */}
+                  <div className="bg-card rounded-xl border border-border p-6">
+                    <h3 className="font-semibold text-foreground mb-3">Orientación de intereses</h3>
+                    <ul className="space-y-2">
+                      {vocational.orientacionIntereses}
+                    </ul>
+                  </div>
 
-//                   {/* Habilidades */}
-//                   <div className="bg-card rounded-xl border border-border p-6">
-//                     <h3 className="font-semibold text-foreground mb-4">Habilidades y fortalezas</h3>
-//                     <div className="grid grid-cols-2 gap-4">
-//                       <div>
-//                         <p className="text-xs text-muted-foreground uppercase tracking-wide mb-2">Cognitivas</p>
-//                         {vocational.habilidadesCognitivas.map((h) => (
-//                           <div key={h.tipo} className="flex justify-between text-sm py-1">
-//                             <span>{h.tipo}</span>
-//                             <StatusChip status={h.nivel} />
-//                           </div>
-//                         ))}
-//                       </div>
-//                       <div>
-//                         <p className="text-xs text-muted-foreground uppercase tracking-wide mb-2">Blandas</p>
-//                         {vocational.habilidadesBlandas.map((h) => (
-//                           <div key={h.tipo} className="flex justify-between text-sm py-1">
-//                             <span>{h.tipo}</span>
-//                             <StatusChip status={h.nivel} />
-//                           </div>
-//                         ))}
-//                       </div>
-//                     </div>
-//                   </div>
-//                 </>
-//               ) : (
-//                 <div className="bg-card rounded-xl border border-border p-6 text-center">
-//                   <p className="text-muted-foreground">No hay perfil vocacional disponible para este estudiante.</p>
-//                 </div>
-//               )}
-//             </TabsContent>
+                  {/* Habilidades */}
+                  <div className="bg-card rounded-xl border border-border p-6">
+                    <h3 className="font-semibold text-foreground mb-4">Habilidades y fortalezas</h3>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <p className="text-xs text-muted-foreground uppercase tracking-wide mb-2">Cognitivas</p>
+                        {vocational.habilidadesCognitivas.map((h) => (
+                          <div key={h.tipo} className="flex justify-between text-sm py-1">
+                            <span>{h.tipo}</span>
+                            <StatusChip status={h.nivel} />
+                          </div>
+                        ))}
+                      </div>
+                      <div>
+                        <p className="text-xs text-muted-foreground uppercase tracking-wide mb-2">Blandas</p>
+                        {vocational.habilidadesBlandas.map((h) => (
+                          <div key={h.tipo} className="flex justify-between text-sm py-1">
+                            <span>{h.tipo}</span>
+                            <StatusChip status={h.nivel} />
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <div className="bg-card rounded-xl border border-border p-6 text-center">
+                  <p className="text-muted-foreground">No hay perfil vocacional disponible para este estudiante.</p>
+                </div>
+              )}
+            </TabsContent>
 
-//             <TabsContent value="carreras" className="space-y-6">
-//               {vocational.avanceAutoconocimiento == "Completo" ? (
-//                 <>
-//                   {/* Por intereses */}
-//                   <div className="bg-card rounded-xl border border-border p-6">
-//                     <h3 className="font-semibold text-foreground mb-4">Carreras recomendadas por intereses</h3>
-//                     <ul className="space-y-2">
-//                       {vocational.carrerasRecomendadasPorIntereses.map((carrera, index) => (
-//                         <li key={index} className="flex items-center gap-3 p-3 bg-secondary/50 rounded-lg">
-//                           <span className="flex items-center justify-center w-6 h-6 rounded-full bg-primary text-primary-foreground text-xs font-bold">
-//                             {index + 1}
-//                           </span>
-//                           <span className="text-sm font-medium">{carrera}</span>
-//                         </li>
-//                       ))}
-//                     </ul>
-//                   </div>
+            <TabsContent value="carreras" className="space-y-6">
+              {vocational.avanceAutoconocimiento == "Completo" && vocational.carrerasRecomendadasPorFortalezas?.length > 0 && vocational.carrerasRecomendadasPorFortalezas[0] != "" ? (
+                <>
+                  {/* Por intereses */}
+                  <div className="bg-card rounded-xl border border-border p-6">
+                    <h3 className="font-semibold text-foreground mb-4">Carreras recomendadas por intereses</h3>
+                    <ul className="space-y-2">
+                      {vocational.carrerasRecomendadasPorIntereses.map((carrera, index) => (
+                        <li key={index} className="flex items-center gap-3 p-3 bg-secondary/50 rounded-lg">
+                          <span className="flex items-center justify-center w-6 h-6 rounded-full bg-primary text-primary-foreground text-xs font-bold">
+                            {index + 1}
+                          </span>
+                          <span className="text-sm font-medium">{carrera}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
 
-//                   {/* Por fortalezas */}
-//                   <div className="bg-card rounded-xl border border-border p-6">
-//                     <h3 className="font-semibold text-foreground mb-4">Carreras recomendadas por fortalezas</h3>
-//                     <ul className="space-y-2">
-//                       {vocational.carrerasRecomendadasPorFortalezas.map((carrera, index) => (
-//                         <li key={index} className="flex items-center gap-3 p-3 bg-muted/50 rounded-lg">
-//                           <span className="flex items-center justify-center w-6 h-6 rounded-full bg-muted-foreground/20 text-foreground text-xs font-bold">
-//                             {index + 1}
-//                           </span>
-//                           <span className="text-sm font-medium">{carrera}</span>
-//                         </li>
-//                       ))}
-//                     </ul>
-//                   </div>
+                  {/* Por fortalezas */}
+                  <div className="bg-card rounded-xl border border-border p-6">
+                    <h3 className="font-semibold text-foreground mb-4">Carreras recomendadas por fortalezas</h3>
+                    <ul className="space-y-2">
+                      {vocational.carrerasRecomendadasPorFortalezas.map((carrera, index) => (
+                        <li key={index} className="flex items-center gap-3 p-3 bg-muted/50 rounded-lg">
+                          <span className="flex items-center justify-center w-6 h-6 rounded-full bg-muted-foreground/20 text-foreground text-xs font-bold">
+                            {index + 1}
+                          </span>
+                          <span className="text-sm font-medium">{carrera}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
 
-//                   {/* Áreas de estudio */}
-//                   <div className="bg-card rounded-xl border border-border p-6">
-//                     <h3 className="font-semibold text-foreground mb-4">Ranking de áreas de estudio</h3>
-//                     <div className="space-y-3">
-//                       {vocational.rankingAreaEstudio.map((area) => (
-//                         <div key={area.area} className="space-y-1">
-//                           <div className="flex justify-between text-sm">
-//                             <span>{area.area}</span>
-//                             <span className="font-medium">{area.porcentaje}%</span>
-//                           </div>
-//                           <div className="h-2 bg-muted rounded-full overflow-hidden">
-//                             <div 
-//                               className="h-full bg-primary rounded-full transition-all duration-500"
-//                               style={{ width: `${area.porcentaje}%` }}
-//                             />
-//                           </div>
-//                         </div>
-//                       ))}
-//                     </div>
-//                   </div>
-//                 </>
-//               ) : (
-//                 <div className="bg-card rounded-xl border border-border p-6 text-center">
-//                   <p className="text-muted-foreground">No hay recomendaciones disponibles para este estudiante.</p>
-//                 </div>
-//               )}
-//             </TabsContent>
+                  {/* Áreas de estudio */}
+                  <div className="bg-card rounded-xl border border-border p-6">
+                    <h3 className="font-semibold text-foreground mb-4">Ranking de áreas de estudio</h3>
+                    <div className="space-y-3">
+                      {vocational.rankingAreaEstudio.map((area) => (
+                        <div key={area.area} className="space-y-1">
+                          <div className="flex justify-between text-sm">
+                            <span>{area.area}</span>
+                            <span className="font-medium">{area.porcentaje}%</span>
+                          </div>
+                          <div className="h-2 bg-muted rounded-full overflow-hidden">
+                            <div 
+                              className="h-full bg-primary rounded-full transition-all duration-500"
+                              style={{ width: `${area.porcentaje}%` }}
+                            />
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <div className="bg-card rounded-xl border border-border p-6 text-center">
+                  <p className="text-muted-foreground">No hay recomendaciones disponibles para este estudiante.</p>
+                </div>
+              )}
+            </TabsContent>
 
-//             <TabsContent value="seguimiento" className="space-y-6">
-//               {tracking ? (
-//                 <>
-//                   {/* Timeline */}
-//                   <div className="bg-card rounded-xl border border-border p-6">
-//                     <h3 className="font-semibold text-foreground mb-4">Línea de tiempo de actividades</h3>
-//                     <div className="space-y-4">
-//                       <div className="flex items-start gap-4">
-//                         <div className={`flex items-center justify-center w-8 h-8 rounded-full ${tracking.avanceConocete === "Finalizado" ? "bg-green-100 text-green-600" : "bg-muted text-muted-foreground"}`}>
-//                           <CheckCircle className="h-4 w-4" />
-//                         </div>
-//                         <div>
-//                           <p className="font-medium text-sm">Conócete</p>
-//                           <p className="text-xs text-muted-foreground">{tracking.avanceConocete}</p>
-//                         </div>
-//                       </div>
-//                       <div className="flex items-start gap-4">
-//                         <div className={`flex items-center justify-center w-8 h-8 rounded-full ${tracking.avanceAutoconocimiento === "Finalizado" ? "bg-green-100 text-green-600" : "bg-muted text-muted-foreground"}`}>
-//                           <CheckCircle className="h-4 w-4" />
-//                         </div>
-//                         <div>
-//                           <p className="font-medium text-sm">Autoconocimiento</p>
-//                           <p className="text-xs text-muted-foreground">{tracking.avanceAutoconocimiento}</p>
-//                         </div>
-//                       </div>
-//                     </div>
-//                   </div>
+            <TabsContent value="seguimiento" className="space-y-6">
+              {tracking ? (
+                <>
+                  {/* Timeline */}
+                  <div className="bg-card rounded-xl border border-border p-6">
+                    <h3 className="font-semibold text-foreground mb-4">Línea de tiempo de actividades</h3>
+                    <div className="space-y-4">
+                      <div className="flex items-start gap-4">
+                        <div className={`flex items-center justify-center w-8 h-8 rounded-full ${tracking.avanceConocete === "Finalizado" ? "bg-green-100 text-green-600" : "bg-muted text-muted-foreground"}`}>
+                          <CheckCircle className="h-4 w-4" />
+                        </div>
+                        <div>
+                          <p className="font-medium text-sm">Conócete</p>
+                          <p className="text-xs text-muted-foreground">{tracking.avanceConocete}</p>
+                        </div>
+                      </div>
+                      <div className="flex items-start gap-4">
+                        <div className={`flex items-center justify-center w-8 h-8 rounded-full ${tracking.avanceAutoconocimiento === "Finalizado" ? "bg-green-100 text-green-600" : "bg-muted text-muted-foreground"}`}>
+                          <CheckCircle className="h-4 w-4" />
+                        </div>
+                        <div>
+                          <p className="font-medium text-sm">Autoconocimiento</p>
+                          <p className="text-xs text-muted-foreground">{tracking.avanceAutoconocimiento}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
 
-//                   {/* Coach Interaction
-//                   <div className="bg-card rounded-xl border border-border p-6">
-//                     <h3 className="font-semibold text-foreground mb-4 flex items-center gap-2">
-//                       <MessageSquare className="h-5 w-5 text-primary" />
-//                       Interacción con coach
-//                     </h3>
-//                     <div className="flex items-center gap-3 mb-4">
-//                       <span className="text-sm text-muted-foreground">Nivel actual:</span>
-//                       <StatusChip status={tracking.interaccionCoach} />
-//                     </div>
-//                     <p className="text-sm text-muted-foreground">
-//                       {tracking.interaccionCoach === "Sin comenzar" 
-//                         ? "El estudiante aún no ha interactuado con el coach de orientación."
-//                         : tracking.interaccionCoach === "BAJA"
-//                         ? "El estudiante ha tenido una interacción mínima con el coach."
-//                         : tracking.interaccionCoach === "MEDIA"
-//                         ? "El estudiante mantiene una interacción regular con el coach."
-//                         : "El estudiante tiene una interacción activa y frecuente con el coach."}
-//                     </p>
-//                   </div> */}
+                  {/* Coach Interaction
+                  <div className="bg-card rounded-xl border border-border p-6">
+                    <h3 className="font-semibold text-foreground mb-4 flex items-center gap-2">
+                      <MessageSquare className="h-5 w-5 text-primary" />
+                      Interacción con coach
+                    </h3>
+                    <div className="flex items-center gap-3 mb-4">
+                      <span className="text-sm text-muted-foreground">Nivel actual:</span>
+                      <StatusChip status={tracking.interaccionCoach} />
+                    </div>
+                    <p className="text-sm text-muted-foreground">
+                      {tracking.interaccionCoach === "Sin comenzar" 
+                        ? "El estudiante aún no ha interactuado con el coach de orientación."
+                        : tracking.interaccionCoach === "BAJA"
+                        ? "El estudiante ha tenido una interacción mínima con el coach."
+                        : tracking.interaccionCoach === "MEDIA"
+                        ? "El estudiante mantiene una interacción regular con el coach."
+                        : "El estudiante tiene una interacción activa y frecuente con el coach."}
+                    </p>
+                  </div> */}
 
-//                   {/* Internal Notes
-//                   <div className="bg-card rounded-xl border border-border p-6">
-//                     <h3 className="font-semibold text-foreground mb-4">Notas internas</h3>
-//                     <Textarea 
-//                       placeholder="Agregar notas internas sobre el estudiante..."
-//                       className="min-h-32 resize-none"
-//                     />
-//                     <Button className="mt-3 bg-primary hover:bg-primary/90 text-primary-foreground">
-//                       Guardar notas
-//                     </Button>
-//                   </div> */}
-//                 </>
-//               ) : (
-//                 <div className="bg-card rounded-xl border border-border p-6 text-center">
-//                   <p className="text-muted-foreground">No hay datos de seguimiento disponibles para este estudiante.</p>
-//                 </div>
-//               )}
-//             </TabsContent>
-//           </Tabs>
-//         </div>
-//       </div>
-//     </DashboardLayout>
-//   );
+                  {/* Internal Notes
+                  <div className="bg-card rounded-xl border border-border p-6">
+                    <h3 className="font-semibold text-foreground mb-4">Notas internas</h3>
+                    <Textarea 
+                      placeholder="Agregar notas internas sobre el estudiante..."
+                      className="min-h-32 resize-none"
+                    />
+                    <Button className="mt-3 bg-primary hover:bg-primary/90 text-primary-foreground">
+                      Guardar notas
+                    </Button>
+                  </div> */}
+                </>
+              ) : (
+                <div className="bg-card rounded-xl border border-border p-6 text-center">
+                  <p className="text-muted-foreground">No hay datos de seguimiento disponibles para este estudiante.</p>
+                </div>
+              )}
+            </TabsContent>
+          </Tabs>
+        </div>
+      </div>
+    </DashboardLayout>
+  );
+}
