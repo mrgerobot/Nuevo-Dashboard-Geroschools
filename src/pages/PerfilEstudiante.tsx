@@ -465,7 +465,7 @@ export default function PerfilEstudiante() {
             </TabsContent>
 
             <TabsContent value="carreras" className="space-y-6">
-              {vocational.avanceAutoconocimiento == "Completo" ? (
+              {vocational.avanceAutoconocimiento == "Completo" && vocational.carrerasRecomendadasPorFortalezas?.length > 0 && vocational.carrerasRecomendadasPorFortalezas[0] != "" ? (
                 <>
                   {/* Por intereses */}
                   <div className="bg-card rounded-xl border border-border p-6">
