@@ -184,6 +184,11 @@ export default function PerfilEstudiante() {
   };
 
   const filteredStudents = students.filter(matchesFilters);
+  const studentsWithProfile = filteredStudents.filter(
+  s => s.avanceAutoconocimiento === "Completo" &&
+       s.carrerasRecomendadasPorFortalezas?.length > 0 && 
+       s.carrerasRecomendadasPorFortalezas[0] !== ""
+);
   
   // If no ID, show the first student as default
   const student = filteredStudents.find(s => s.id === id);
@@ -216,7 +221,7 @@ export default function PerfilEstudiante() {
     {!id && (
     <div className="mb-6">
       <BuscarEstudianteInline
-        students={filteredStudents}
+        students={studentsWithProfile}
         selectedId={student.id}
         onPick={(studentId) => navigate(`/estudiante/${studentId}`)}
       />
