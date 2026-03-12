@@ -399,7 +399,8 @@ if (
             </TabsList>
 
             <TabsContent value="vocacional" className="space-y-6">
-              {vocational.avanceAutoconocimiento == "Completo" ? (
+              {vocational.avanceAutoconocimiento == "Completo" && 
+ vocational.rankingArquetiposPersonalidad?.length > 0 ? (
                 <>
                   {/* Estilo de vida */}
                   <div className="bg-card rounded-xl border border-border p-6">
