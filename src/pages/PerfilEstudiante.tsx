@@ -188,7 +188,7 @@ export default function PerfilEstudiante() {
   s => s.avanceAutoconocimiento === "Completo" &&
        s.carrerasRecomendadasPorFortalezas?.length > 0 && 
        s.carrerasRecomendadasPorFortalezas[0] !== ""
-);
+);  
   
   // If no ID, show the first student as default
   const student = filteredStudents.find(s => s.id === id);
@@ -203,6 +203,41 @@ export default function PerfilEstudiante() {
         selectedId={id}
         onPick={(studentId) => navigate(`/estudiante/${studentId}`)}
       />
+    </DashboardLayout>
+  );
+}
+if (!student) {
+  return (
+    <DashboardLayout title="Perfil del estudiante" showFilter={false}>
+      <BuscarEstudianteInline
+        students={filteredStudents}
+        selectedId={id}
+        onPick={(studentId) => navigate(`/estudiante/${studentId}`)}
+      />
+    </DashboardLayout>
+  );
+}
+
+// 👇 Add this right after
+if (
+  student.avanceAutoconocimiento !== "Completo" ||
+  !student.carrerasRecomendadasPorFortalezas?.length ||
+  student.carrerasRecomendadasPorFortalezas[0] === ""
+) {
+  return (
+    <DashboardLayout title="Perfil del estudiante" showFilter={false}>
+      <Button
+        variant="ghost"
+        onClick={() => navigate(`/estudiante`)}
+        className="mb-6 text-muted-foreground hover:text-foreground"
+      >
+        <ArrowLeft className="h-4 w-4 mr-2" />
+        Volver
+      </Button>
+      <div className="bg-card rounded-xl border border-border p-12 text-center">
+        <p className="text-lg font-medium text-foreground mb-2">{student.nombreCompleto}</p>
+        <p className="text-muted-foreground">Este estudiante aún no tiene perfil vocacional disponible.</p>
+      </div>
     </DashboardLayout>
   );
 }
