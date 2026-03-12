@@ -248,7 +248,7 @@ export default function Seguimiento() {
                     <StatusChip status={record.interaccionCoach} />
                   </td> */}
                   <td>
-                    {record.avanceAutoconocimiento == "Completo" ? (
+                    {record.avanceAutoconocimiento == "Completo" && record.carrerasRecomendadasPorFortalezas[0] != "" ? (
                       <Button
                       variant="ghost"
                       size="sm"
