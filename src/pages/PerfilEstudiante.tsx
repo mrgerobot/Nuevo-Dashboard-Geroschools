@@ -190,23 +190,6 @@ export default function PerfilEstudiante() {
   const tracking = student;
   const vocational = student;
 
-  if (!student) {
-  return (
-    <DashboardLayout title="Perfil del estudiante" showFilter={false}>
-      <div className="flex items-center justify-center h-[70vh]">
-        <div className="bg-yellow-100 border border-yellow-400 text-yellow-800 px-6 py-4 rounded text-center">
-          <h2 className="text-xl font-semibold mb-2">
-            🚧 Sección en mantenimiento 🚧
-          </h2>
-          <p>
-            Estamos realizando mejoras en el perfil del estudiante.
-            Vuelve en un rato.
-          </p>
-        </div>
-      </div>
-    </DashboardLayout>
-  );
-}
 if (!student) {
   return (
     <DashboardLayout title="Perfil del estudiante" showFilter={false}>
