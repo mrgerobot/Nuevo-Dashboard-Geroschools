@@ -274,78 +274,78 @@ if (
               Información del estudiante
             </h2>
             
-//             <div className="space-y-4">
-//               <div>
-//                 <p className="text-sm text-muted-foreground">Nombre completo</p>
-//                 <p className="font-medium text-foreground">{student.nombreCompleto}</p>
-//               </div>
+            <div className="space-y-4">
+              <div>
+                <p className="text-sm text-muted-foreground">Nombre completo</p>
+                <p className="font-medium text-foreground">{student.nombreCompleto}</p>
+              </div>
               
-//               <div className="flex items-center gap-2">
-//                 <Mail className="h-4 w-4 text-muted-foreground" />
-//                 <div>
-//                   <p className="text-sm text-muted-foreground">Correo institucional</p>
-//                   <p className="text-sm text-foreground">{student.correoInstitucional}</p>
-//                 </div>
-//               </div>
+             <div className="flex items-center gap-2">
+               <Mail className="h-4 w-4 text-muted-foreground" />
+               <div>
+                 <p className="text-sm text-muted-foreground">Correo institucional</p>
+                 <p className="text-sm text-foreground">{student.correoInstitucional}</p>
+               </div>
+             </div>
               
-//               {/* <div className="flex items-center gap-2">
-//                 <Mail className="h-4 w-4 text-muted-foreground" />
-//                 <div>
-//                   <p className="text-sm text-muted-foreground">Correo personal</p>
-//                   <p className="text-sm text-foreground">{student.correoPersonal}</p>
-//                 </div>
-//               </div> */}
+             {/* <div className="flex items-center gap-2">
+               <Mail className="h-4 w-4 text-muted-foreground" />
+               <div>
+                 <p className="text-sm text-muted-foreground">Correo personal</p>
+                 <p className="text-sm text-foreground">{student.correoPersonal}</p>
+               </div>
+             </div> */}
               
-//               {/* <div className="flex items-center gap-2">
-//                 <Phone className="h-4 w-4 text-muted-foreground" />
-//                 <div>
-//                   <p className="text-sm text-muted-foreground">Teléfono</p>
-//                   <p className="text-sm text-foreground">{student.telefono}</p>
-//                 </div>
-//               </div> */}
-//             </div>
-//           </div>
+             {/* <div className="flex items-center gap-2">
+               <Phone className="h-4 w-4 text-muted-foreground" />
+               <div>
+                 <p className="text-sm text-muted-foreground">Teléfono</p>
+                 <p className="text-sm text-foreground">{student.telefono}</p>
+               </div>
+             </div> */}
+           </div>
+         </div>
           
-//           {/* Status Chips */}
-//           {tracking && (
-//             <div className="flex flex-wrap gap-3">
-//               <div className="flex items-center gap-2">
-//                 <span className="text-sm text-muted-foreground">Estado:</span>
-//                 <StatusChip status={tracking.estado} />
-//               </div>
-//               {/* <div className="flex items-center gap-2">
-//                 <span className="text-sm text-muted-foreground">Coach:</span>
-//                 <StatusChip status={tracking.interaccionCoach} />
-//               </div> */}
-//             </div>
-//           )}
+         {/* Status Chips */}
+         {tracking && (
+           <div className="flex flex-wrap gap-3">
+             <div className="flex items-center gap-2">
+               <span className="text-sm text-muted-foreground">Estado:</span>
+               <StatusChip status={tracking.estado} />
+             </div>
+             {/* <div className="flex items-center gap-2">
+               <span className="text-sm text-muted-foreground">Coach:</span>
+               <StatusChip status={tracking.interaccionCoach} />
+             </div> */}
+           </div>
+         )}
 
-//           {/* Academic Data Card */}
-//           <div className="bg-card rounded-xl border border-border p-6">
-//             <h2 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
-//               <BookOpen className="h-5 w-5 text-primary" />
-//               Datos académicos
-//             </h2>
+         {/* Academic Data Card */}
+         <div className="bg-card rounded-xl border border-border p-6">
+           <h2 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
+             <BookOpen className="h-5 w-5 text-primary" />
+             Datos académicos
+           </h2>
             
-//             <div className="space-y-3">
-//               <div className="flex justify-between">
-//                 <span className="text-sm text-muted-foreground">Semestre</span>
-//                 <span className="text-sm font-medium">{student.semestre}</span>
-//               </div>
-//               <div className="flex justify-between">
-//                 <span className="text-sm text-muted-foreground">Grupo / División</span>
-//                 <span className="text-sm font-medium">{student.grupoDivision}</span>
-//               </div>
-//               <div className="flex justify-between">
-//                 <span className="text-sm text-muted-foreground">Campus / Sede</span>
-//                 <span className="text-sm font-medium">{student.campusSede}</span>
-//               </div>
-//             </div>
-//           </div>
+           <div className="space-y-3">
+             <div className="flex justify-between">
+               <span className="text-sm text-muted-foreground">Semestre</span>
+               <span className="text-sm font-medium">{student.semestre}</span>
+             </div>
+             <div className="flex justify-between">
+               <span className="text-sm text-muted-foreground">Grupo / División</span>
+               <span className="text-sm font-medium">{student.grupoDivision}</span>
+             </div>
+             <div className="flex justify-between">
+               <span className="text-sm text-muted-foreground">Campus / Sede</span>
+               <span className="text-sm font-medium">{student.campusSede}</span>
+             </div>
+           </div>
+         </div>
 
-//           {/* Interests Card */}
-//           <div className="bg-card rounded-xl border border-border p-6">
-//             <h2 className="text-lg font-semibold text-foreground mb-4">Intereses</h2>
+         {/* Interests Card */}
+         <div className="bg-card rounded-xl border border-border p-6">
+           <h2 className="text-lg font-semibold text-foreground mb-4">Intereses</h2>
             
             <div className="space-y-4">
               {(student.carreraInteres1 != "No manifiesta carrera de interés" || student.carreraInteres2 != "No manifiesta carrera de interés") && (
@@ -429,33 +429,33 @@ if (
                               <StatusChip status={arq.nivel} />
                             </div>
                         
-//                             <div className="h-2 bg-muted rounded-full overflow-hidden">
-//                               <div className="h-full bg-primary rounded-full" style={{ width }} />
-//                             </div>
-//                           </div>
-//                         );
-//                       })}
+                            <div className="h-2 bg-muted rounded-full overflow-hidden">
+                              <div className="h-full bg-primary rounded-full" style={{ width }} />
+                            </div>
+                          </div>
+                        );
+                      })}
 
-//                     </div>
-//                   </div>
+                    </div>
+                  </div>
 
-//                   {/* Arquetipos */}
-//                   <div className="bg-card rounded-xl border border-border p-6">
-//                     <h3 className="font-semibold text-foreground mb-4">Inteligencias múltiples</h3>
-//                     <div className="space-y-3">
-//                       {vocational.rankingInteligenciasMultiples.slice(0, 6).map((arq) => {
-//                         const level = String(arq.nivel ?? "").trim().toLowerCase();
-//                         const width =
-//                           level.includes("alta") ? "100%" :
-//                           level.includes("media") ? "66%" :
-//                           "33%";
+                  {/* Arquetipos */}
+                  <div className="bg-card rounded-xl border border-border p-6">
+                    <h3 className="font-semibold text-foreground mb-4">Inteligencias múltiples</h3>
+                    <div className="space-y-3">
+                      {vocational.rankingInteligenciasMultiples.slice(0, 6).map((arq) => {
+                        const level = String(arq.nivel ?? "").trim().toLowerCase();
+                        const width =
+                          level.includes("alta") ? "100%" :
+                          level.includes("media") ? "66%" :
+                          "33%";
 
-//                         return (
-//                           <div key={arq.tipo} className="space-y-2">
-//                             <div className="flex items-center justify-between">
-//                               <span className="font-medium text-sm">{arq.tipo}</span>
-//                               <StatusChip status={arq.nivel} />
-//                             </div>
+                        return (
+                          <div key={arq.tipo} className="space-y-2">
+                            <div className="flex items-center justify-between">
+                              <span className="font-medium text-sm">{arq.tipo}</span>
+                              <StatusChip status={arq.nivel} />
+                            </div>
                         
                             <div className="h-2 bg-muted rounded-full overflow-hidden">
                               <div className="h-full bg-primary rounded-full" style={{ width }} />
