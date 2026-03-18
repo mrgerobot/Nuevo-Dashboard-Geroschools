@@ -236,7 +236,7 @@ if (
           >
             <Button className="mt-2">
               <Eye className="h-4 w-4 mr-2" />
-              Ver reporte del estudiante
+              Ver reporte
             </Button>
           </a>
         )}
