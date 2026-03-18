@@ -208,6 +208,10 @@ if (
   !student.carrerasRecomendadasPorFortalezas?.length ||
   student.carrerasRecomendadasPorFortalezas[0] === ""
 ) {
+  const hasReport =
+    student.reporteEstudiantesUrl &&
+    student.reporteEstudiantesUrl !== "No completó la actividad";
+
   return (
     <DashboardLayout title="Perfil del estudiante" showFilter={false}>
       <Button
@@ -218,9 +222,24 @@ if (
         <ArrowLeft className="h-4 w-4 mr-2" />
         Volver
       </Button>
-      <div className="bg-card rounded-xl border border-border p-12 text-center">
-        <p className="text-lg font-medium text-foreground mb-2">{student.nombreCompleto}</p>
-        <p className="text-muted-foreground">Este estudiante aún no tiene perfil vocacional disponible.</p>
+      <div className="bg-card rounded-xl border border-border p-12 text-center space-y-4">
+        <p className="text-lg font-medium text-foreground">{student.nombreCompleto}</p>
+        <p className="text-muted-foreground">
+          Pestaña pendiente de actualización. La información presentada aquí es un resumen del
+          reporte que recibe el estudiante.
+        </p>
+        {hasReport && ( <a
+          
+            href={student.reporteEstudiantesUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Button className="mt-2">
+              <Eye className="h-4 w-4 mr-2" />
+              Ver reporte del estudiante
+            </Button>
+          </a>
+        )}
       </div>
     </DashboardLayout>
   );
