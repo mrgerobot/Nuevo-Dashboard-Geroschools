@@ -66,7 +66,7 @@ export const getOverviewStats = (rows: Student[]) => {
 
   return {
     total,
-    tasaRespuesta: ((total - faltaCompletar) / total * 100).toFixed(1),
+    tasaRespuesta: (finalizados / total * 100).toFixed(1),
     probabilidadAlta: alta,
     faltaCompletar,
     distribucionProbabilidad: [
