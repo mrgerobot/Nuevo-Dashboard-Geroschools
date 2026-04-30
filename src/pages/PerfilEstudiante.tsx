@@ -509,38 +509,22 @@ if (
             </TabsContent>
 
             <TabsContent value="carreras" className="space-y-6">
-              {vocational.avanceAutoconocimiento == "Completo" && vocational.carrerasRecomendadasPorFortalezas?.length > 0 && vocational.carrerasRecomendadasPorFortalezas[0] != "" ? (
-                <>
-                  {/* Por intereses */}
-                  <div className="bg-card rounded-xl border border-border p-6">
-                    <h3 className="font-semibold text-foreground mb-4">Carreras recomendadas por intereses</h3>
-                    <ul className="space-y-2">
-                      {vocational.carrerasRecomendadasPorIntereses.map((carrera, index) => (
-                        <li key={index} className="flex items-center gap-3 p-3 bg-secondary/50 rounded-lg">
-                          <span className="flex items-center justify-center w-6 h-6 rounded-full bg-primary text-primary-foreground text-xs font-bold">
-                            {index + 1}
-                          </span>
-                          <span className="text-sm font-medium">{carrera}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  {/* Por fortalezas */}
-                  <div className="bg-card rounded-xl border border-border p-6">
-                    <h3 className="font-semibold text-foreground mb-4">Carreras recomendadas por fortalezas</h3>
-                    <ul className="space-y-2">
-                      {vocational.carrerasRecomendadasPorFortalezas.map((carrera, index) => (
-                        <li key={index} className="flex items-center gap-3 p-3 bg-muted/50 rounded-lg">
-                          <span className="flex items-center justify-center w-6 h-6 rounded-full bg-muted-foreground/20 text-foreground text-xs font-bold">
-                            {index + 1}
-                          </span>
-                          <span className="text-sm font-medium">{carrera}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
+                {vocational.avanceAutoconocimiento == "Completo" && vocational.carrerasRecomendadasPorFortalezas?.length > 0 && vocational.carrerasRecomendadasPorFortalezas[0] != "" && vocational.carrerasRecomendadasPorIntereses.length > 0 && vocational.carrerasRecomendadasPorIntereses[0] != "" ? (
+                  <>
+                    <div className="bg-card rounded-xl border border-border p-6">
+                      <h3 className="font-semibold text-foreground mb-4">Carreras recomendadas</h3>
+                      <ul className="space-y-2">
+                        {[...vocational.carrerasRecomendadasPorIntereses, ...vocational.carrerasRecomendadasPorFortalezas].map((carrera, index) => (
+                          <li key={index} className="flex items-center gap-3 p-3 bg-secondary/50 rounded-lg">
+                            <span className="flex items-center justify-center w-6 h-6 rounded-full bg-primary text-primary-foreground text-xs font-bold">
+                              {index + 1}
+                            </span>
+                            <span className="text-sm font-medium">{carrera}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                      
                   {/* Áreas de estudio */}
                   <div className="bg-card rounded-xl border border-border p-6">
                     <h3 className="font-semibold text-foreground mb-4">Ranking de áreas de estudio</h3>
